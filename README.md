@@ -1,16 +1,21 @@
-LLoydSampleProject/
-├── app/ // Main app module
-├── core/ // Shared utilities
-├── data/ // Data layer
-│ ├── api/ // Retrofit/OkHttp APIs
-│ ├── repository/ // Repository implementations
-│ └── models/ // Data models
-├── domain/ // Domain layer
-│ ├── usecases/ // Business logic
-│ └── repository/ // Repository interfaces
-└── presentation/ // UI Module (Compose screens)
-├── viewmodel/ // ViewModels
-└── ui/ // Composables
+## Project Structure
+
+| **Module/Directory**   | **Description**                                      |
+|-------------------------|------------------------------------------------------|
+| `LLoydSampleProject/`   | Root directory of the project.                       |
+| `app/`                  | Main application module.                             |
+| `core/`                 | Shared utilities and common functionality.           |
+| `data/`                 | Data layer for the project.                          |
+| ├── `api/`              | Contains Retrofit/OkHttp API definitions.            |
+| ├── `repository/`       | Repository implementations for data sources.         |
+| └── `models/`           | Data models representing the API and database.       |
+| `domain/`               | Domain layer encapsulating business logic.           |
+| ├── `usecases/`         | Contains use case implementations.                   |
+| └── `repository/`       | Interfaces for repository abstractions.              |
+| `presentation/`         | UI module housing all Jetpack Compose screens.       |
+| ├── `viewmodel/`        | Contains ViewModels for UI logic.                    |
+| └── `ui/`               | Composable functions for the UI layer.               |
+
 
 Dividing the project into 4 modules:
 
