@@ -4,7 +4,6 @@
 |-------------------------|------------------------------------------------------|
 | `LLoydSampleProject/`   | Root directory of the project.                       |
 | `app/`                  | Main application module.                             |
-| `core/`                 | Shared utilities and common functionality.           |
 | `data/`                 | Data layer for the project.                          |
 | ├── `api/`              | Contains Retrofit/OkHttp API definitions.            |
 | ├── `repository/`       | Repository implementations for data sources.         |
@@ -17,13 +16,11 @@
 | └── `ui/`               | Composable functions for the UI layer.               |
 
 
-Dividing the project into 4 modules:
+Dividing the project into 3 modules:
 
-**app**: Entry point, composes the modules.
-**core**: Common utilities (e.g., encryption, network utils).
+**app/presentation**: Entry point, composes the modules,UI screens using Jetpack Compose..
 **data**: Data sources, repositories, API clients.
 **domain**: Use cases and repository abstractions.
-**presentation**: UI screens using Jetpack Compose.
 
 A Clean Architecture App to show use of multi-module-architecture in a Jetpack Compose.
 
@@ -57,14 +54,9 @@ The modules are as follow:
 
 
 ## Video
-
-<table style="padding:10px">
-	<tr>
-    	<td align="center">
-			<img src="assets/one.mp4" alt="Tv Shows" width="300"/>
-    	</td>
-  	</tr>
-</table>
+<p>
+ <img align="left" src="assets/tvshow.gif" width="300" height="550"/>
+</p>
 
 ## Tech Stack
 
