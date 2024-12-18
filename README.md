@@ -40,19 +40,16 @@ https://developer.themoviedb.org/reference/intro/authentication
 <table style="padding:10px">
 	<tr>
     	<td align="center">
-			<img src="assets/home.jpeg" alt="Now Playing Screen" width="300"/>
+			<img src="assets/home.jpeg" alt="Tv Shows" width="300"/>
     	</td>
 		<td align="center">
-			<img src="assets/details.jpeg" alt="Popular Screen" width="300"/>
+			<img src="assets/details.jpeg" alt="Show Details" width="300"/>
     	</td>
-<td align="center">
-			<img src="assets/details_bookmark.jpeg.jpeg" alt="Now Playing Screen" width="300"/>
+        <td align="center">
+			<img src="assets/details_bookmark.jpeg" alt="Show Details" width="300"/>
     	</td>
-		<td align="center">
-			<img src="assets/bookmarks.jpeg.jpeg" alt="Popular Screen" width="300"/>
-    	</td>
-  <td align="center">
-			<img src="assets/one.mp4" alt="Upcoming Screen" width="300"/>
+        <td align="center">
+			<img src="assets/bookmarks.jpeg" alt="Bookmarks" width="300"/>
     	</td>
   	</tr>
 </table>
