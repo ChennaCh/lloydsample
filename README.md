@@ -39,17 +39,6 @@ https://developer.themoviedb.org/reference/intro/authentication
 
 <table style="padding:10px">
 	<tr>
-		<td align="center">
-			<h2>Now Playing Screen</h2>
-		</td>
-		<td align="center">
-			<h2>Popular Screen</h2>
-		</td>
-  <td align="center">
-			<h2>Upcoming Screen</h2>
-		</td>
-  	</tr>
-	<tr>
     	<td align="center">
 			<img src="assets/home.jpeg" alt="Now Playing Screen" width="300"/>
     	</td>
