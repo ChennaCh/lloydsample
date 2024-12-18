@@ -55,7 +55,7 @@ The modules are as follow:
 
 ## Video
 <p>
- <img align="left" src="assets/tvshow.gif" width="300" height="550"/>
+ <img align="left" src="assets/tvshow_app.gif" width="300" height="550"/>
 </p>
 
 ## Tech Stack
