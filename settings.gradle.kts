@@ -15,6 +15,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "LLoydSamplePoject"
 include(":app")
-
-include(":data:myapplication")
-include(":domain:main")
+include(":domain")
+include(":data")

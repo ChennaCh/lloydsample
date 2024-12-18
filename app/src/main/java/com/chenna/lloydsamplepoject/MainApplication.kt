@@ -1,6 +1,7 @@
 package com.chenna.lloydsamplepoject
 
 import android.app.Application
+import androidx.multidex.MultiDexApplication
 import dagger.hilt.android.HiltAndroidApp
 
 /**
@@ -9,4 +10,4 @@ import dagger.hilt.android.HiltAndroidApp
  * Frost Interactive
  */
 @HiltAndroidApp
-class MainApplication : Application()
+class MainApplication : MultiDexApplication()

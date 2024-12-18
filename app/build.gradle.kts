@@ -56,11 +56,15 @@ android {
 
 dependencies {
 
+    implementation(project(":domain"))
+    implementation(project(":data"))
+
     // AndroidX
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel)
+    implementation(libs.androidx.material)
 
     // Kotlin Coroutines
     implementation(libs.kotlinx.coroutines.android)
@@ -79,6 +83,7 @@ dependencies {
 
     // Serialization
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.material3) // Use the latest version
 
     // Hilt
     implementation(libs.hilt.dagger.android)
@@ -98,6 +103,9 @@ dependencies {
 
     // Coil
     implementation(libs.coil.compose)
+
+    //multidex
+    implementation(libs.androidx.multidex)
 
     // Test
     androidTestImplementation(libs.androidx.junit)

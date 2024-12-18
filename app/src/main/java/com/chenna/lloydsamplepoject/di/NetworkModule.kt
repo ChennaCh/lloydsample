@@ -1,5 +1,6 @@
 package com.chenna.lloydsamplepoject.di
 
+import com.chenna.domain.utils.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,7 +26,7 @@ class NetworkModule {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
-            .baseUrl("")
+            .baseUrl(BASE_URL)
             .build()
     } // End of function
 
