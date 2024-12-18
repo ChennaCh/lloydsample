@@ -35,11 +35,6 @@ The modules are as follow:
 
 * data: Data Access Layer
 
-## --- Requirement ---
-
-You should add api key to Network Module before build app.
-https://developer.themoviedb.org/reference/intro/authentication
-
 ## Screenshots
 
 <table style="padding:10px">
@@ -55,6 +50,18 @@ https://developer.themoviedb.org/reference/intro/authentication
     	</td>
         <td align="center">
 			<img src="assets/bookmarks.jpeg" alt="Bookmarks" width="300"/>
+    	</td>
+  	</tr>
+</table>
+
+
+
+## Video
+
+<table style="padding:10px">
+	<tr>
+    	<td align="center">
+			<img src="assets/one.mp4" alt="Tv Shows" width="300"/>
     	</td>
   	</tr>
 </table>
