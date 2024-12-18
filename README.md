@@ -54,9 +54,13 @@ The modules are as follow:
 
 
 ## Video
-<p>
- <img align="left" src="assets/tvshow_app.gif" width="300" height="550"/>
-</p>
+<table style="padding:10px">
+	<tr>
+    	<td align="center">
+			<img src="assets/tvshow_app.gif" alt="Tv Shows" width="300"/>
+    	</td>
+  	</tr>
+</table>
 
 ## Tech Stack
 
