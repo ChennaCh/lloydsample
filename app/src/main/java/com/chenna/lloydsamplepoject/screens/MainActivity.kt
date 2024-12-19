@@ -126,7 +126,9 @@ fun MainScreen() {
                                     Text(
                                         navItem.label,
                                         color = Color.Black,
-                                        fontFamily = FontFamily.SansSerif,
+                                        fontSize = 14.sp,
+                                        fontWeight = FontWeight.Medium,
+                                        fontFamily = FontFamily.Default,
                                     )
                                 },
                                 selected = currentRoute == navItem.route,
