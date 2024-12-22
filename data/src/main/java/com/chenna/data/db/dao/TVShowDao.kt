@@ -24,9 +24,6 @@ interface TVShowDao {
     @Delete
     suspend fun removeBookmark(show: ShowEntity)
 
-    @Query("SELECT * FROM tvshow WHERE id = :id")
-    suspend fun getShowById(id: Int): ShowEntity?
-
     @Query("SELECT * FROM tvshow")
     suspend fun getSavedBookMarks(): List<ShowEntity>
 }

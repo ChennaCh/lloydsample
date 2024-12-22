@@ -33,6 +33,18 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    packaging {
+        resources {
+            excludes += listOf(
+                "/META-INF/{AL2.0,LGPL2.1}",
+                "META-INF/LICENSE.md",
+                "META-INF/LICENSE-notice.md",
+                "META-INF/DEPENDENCIES",
+                "META-INF/NOTICE",
+                "META-INF/LICENSE"
+            )
+        }
+    }
 }
 
 dependencies {
@@ -41,9 +53,6 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(project(":domain"))
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 
     // Hilt
     implementation(libs.hilt.dagger.android)
@@ -62,8 +71,15 @@ dependencies {
     annotationProcessor(libs.room.compiler)
     ksp(libs.room.compiler)
 
-    //UnitTest
-    testImplementation(libs.kotlinx.coroutines)
+    //Test
     testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    testImplementation(libs.kotlinx.coroutines)
     testImplementation(libs.mockk)
+    androidTestImplementation(libs.androidx.room.testing)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    androidTestImplementation(libs.mockk.android)
+
 }
