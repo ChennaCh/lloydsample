@@ -1,7 +1,6 @@
 package com.chenna.domain.repository
 
 import com.chenna.domain.entities.ShowEntity
-import com.chenna.domain.utils.BaseApiResponse
 import com.chenna.domain.utils.FailedResponse
 import com.chenna.domain.utils.NetworkResult
 

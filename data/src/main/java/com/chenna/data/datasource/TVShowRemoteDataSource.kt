@@ -2,7 +2,6 @@ package com.chenna.data.datasource
 
 import com.chenna.data.service.ITvShowService
 import com.chenna.domain.entities.ShowEntity
-import com.chenna.domain.utils.BaseApiResponse
 import com.chenna.domain.utils.FailedResponse
 import com.chenna.domain.utils.NetworkResult
 import retrofit2.Retrofit

@@ -4,7 +4,6 @@ import com.chenna.data.datasource.TVShowLocalDataSource
 import com.chenna.data.datasource.TVShowRemoteDataSource
 import com.chenna.domain.entities.ShowEntity
 import com.chenna.domain.repository.TvShowRepository
-import com.chenna.domain.utils.BaseApiResponse
 import com.chenna.domain.utils.FailedResponse
 import com.chenna.domain.utils.NetworkResult
 import javax.inject.Inject
