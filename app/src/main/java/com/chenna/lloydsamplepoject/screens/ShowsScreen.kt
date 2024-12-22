@@ -66,6 +66,10 @@ fun ShowsScreen(
         }
     }
 
+    LaunchedEffect(Unit) {
+        viewModel.onActionEvent(ResultActionEvent.FetchTVShows)
+    }
+
     LaunchedEffect(viewModel) {
         viewModel.resultState.collectLatest {
             uiState.value = it
