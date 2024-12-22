@@ -10,7 +10,6 @@ import com.chenna.domain.utils.Work
  */
 interface ShowsUseCase {
     suspend fun getListOfShows(): Work<List<ShowEntity>>?
-    suspend fun getTvShowById(showId: String): Work<ShowEntity>
     suspend fun saveBookmark(showEntity: ShowEntity)
     suspend fun removeBookmark(showEntity: ShowEntity)
     suspend fun getAllBookmarks(): List<ShowEntity>

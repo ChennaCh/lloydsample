@@ -14,10 +14,6 @@ interface TvShowRepository {
     suspend fun getListOfShows(
     ): NetworkResult<List<ShowEntity>?, FailedResponse, Exception>
 
-    suspend fun getTvShowById(
-        showId: String,
-    ): NetworkResult<BaseApiResponse<ShowEntity>?, FailedResponse, Exception>
-
     suspend fun saveBookmark(
         showEntity: ShowEntity,
     )

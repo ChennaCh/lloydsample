@@ -26,10 +26,6 @@ class ShowsUseCaseImpl @Inject constructor(
         return ResponseUtils.parseNetworkResults(result)
     }
 
-    override suspend fun getTvShowById(showId: String): Work<ShowEntity> {
-        TODO("Not yet implemented")
-    }
-
     override suspend fun saveBookmark(showEntity: ShowEntity) {
         repository.saveBookmark(showEntity)
     }
