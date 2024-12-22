@@ -74,6 +74,7 @@ class TVShowsViewModel @Inject constructor(
 
         viewModelScope.launch {
             val bookMark = ResultActionEvent.ResultActionState(
+                list = resultState.value.data?.list ?: listOf(),
                 bookMarks = useCase.getAllBookmarks()
             )
 
@@ -81,6 +82,7 @@ class TVShowsViewModel @Inject constructor(
                 isLoading = false,
                 error = null,
                 data = resultState.value.data?.copy(
+                    list = resultState.value.data?.list ?: listOf(),
                     bookMarks = useCase.getAllBookmarks()
                 ) ?: bookMark,
             )

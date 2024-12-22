@@ -1,18 +1,11 @@
 [versions]
 androidx-multidex = "2.0.1"
-hiltAndroid = "2.44"
-hiltCompiler = "2.44"
-hiltLifecycleViewmodel = "1.0.0-alpha03"
-junitJupiter = "5.8.2"
-junitJupiterEngine = "5.9.0"
 kotlin = "2.0.21"
 coreKtx = "1.15.0"
 agp = "8.2.0-rc03"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
-kotlinTest = "1.9.10"
-kotlinxCoroutinesTest = "1.7.3"
 lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.9.3"
 composeBom = "2024.12.01"
@@ -32,24 +25,18 @@ roomKtx = "2.6.1"
 roomRuntime = "2.6.1"
 ksp = "2.0.21-1.0.27"
 hiltDagger = "2.51.1"
-hilt = "1.2.0"
 hiltGradlePlugin = "2.51.1"
 appcompat = "1.7.0"
-lifecycle = "2.6.2"
 lifecycle-viewmodel = "2.8.7"
 
 kotlinxCoroutines = "1.8.1"
-androidxCore = "2.2.0"
 material = "1.12.0"
-roomCommon = "2.6.1"
 
 
 [libraries]
 # Native Core
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltLifecycleViewmodel" }
-androidx-hilt-lifecycle-viewmodel = { module = "androidx.hilt:hilt-lifecycle-viewmodel", version.ref = "hiltLifecycleViewmodel" }
 androidx-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle-viewmodel" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 # Compose
@@ -65,14 +52,7 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-material = { module = "androidx.compose.material:material" }
-androidx-animation = { group = "androidx.compose.animation", name = "animation" }
 # Navigation
-hilt-android-v244 = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
-hilt-compiler-v244 = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltCompiler" }
-junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junitJupiter" }
-junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junitJupiterEngine" }
-kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlinTest" }
-kotlinx-coroutines-test-v173 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
 material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk-mockk" }
 navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
@@ -102,14 +82,11 @@ room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRunti
 junit = { module = "junit:junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
-androidx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "androidxCore" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
 mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
-mockk-agent= { module = "io.mockk:mockk-agent", version.ref = "mockk" }
+mockk-agent = { module = "io.mockk:mockk-agent", version.ref = "mockk" }
 hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "hiltDagger" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-androidx-room-common = { group = "androidx.room", name = "room-common", version.ref = "roomCommon" }
-
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

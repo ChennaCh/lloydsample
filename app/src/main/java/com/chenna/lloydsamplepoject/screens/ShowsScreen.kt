@@ -67,7 +67,9 @@ fun ShowsScreen(
     }
 
     LaunchedEffect(Unit) {
-        viewModel.onActionEvent(ResultActionEvent.FetchTVShows)
+        if (uiState.value.data?.list.isNullOrEmpty()) {
+            viewModel.onActionEvent(ResultActionEvent.FetchTVShows)
+        }
     }
 
     LaunchedEffect(viewModel) {

@@ -1,5 +1,6 @@
 package com.chenna.lloydsamplepoject.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -28,14 +30,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.chenna.domain.entities.ShowEntity
+import com.chenna.domain.utils.Constants
 import com.chenna.domain.utils.NavigationEvent
+import com.chenna.lloydsamplepoject.R
 import com.chenna.lloydsamplepoject.components.ResultActionEvent
 import com.chenna.lloydsamplepoject.components.UiState
 import com.chenna.lloydsamplepoject.viewmodels.TVShowsViewModel
@@ -88,21 +94,46 @@ fun BookmarkTVShowListContent(
             .background(color = Color.White)
     ) {
         Spacer(modifier = Modifier.height(16.dp))
-        uiState.data?.bookMarks?.let {
-            LazyColumn(
+
+        if (uiState.data?.bookMarks?.isEmpty() == true) {
+            Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color.White)
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                items(it) { show ->
-                    TvShowItem(
-                        show = show,
-                        onClick = { onShowClick(show) }
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
+                Image(
+                    painter = painterResource(id = R.drawable.no_bookmarks),
+                    contentDescription = "no_bookmarks",
+                    modifier = Modifier.size(200.dp)
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                Text(
+                    text = Constants.NO_BOOKMARKS,
+                    fontWeight = FontWeight.Medium,
+                    fontFamily = FontFamily.Default,
+                    fontSize = 16.sp,
+                    color = Color.Gray,
+                    textAlign = TextAlign.Center
+                )
+            }
+        } else
+            uiState.data?.bookMarks?.let {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.White)
+                ) {
+                    items(it) { show ->
+                        TvShowItem(
+                            show = show,
+                            onClick = { onShowClick(show) }
+                        )
+                        Spacer(modifier = Modifier.height(12.dp))
+                    }
                 }
             }
-        }
     }
 }
 
@@ -149,8 +180,10 @@ fun TvShowItem(
                     )
                 }
 
-                Row(horizontalArrangement = Arrangement.Start,
-                    verticalAlignment = Alignment.CenterVertically) {
+                Row(
+                    horizontalArrangement = Arrangement.Start,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     for (i in 1..3) {
                         Icon(
                             imageVector = Icons.Filled.Star,
