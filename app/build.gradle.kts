@@ -115,6 +115,10 @@ dependencies {
     implementation(libs.androidx.multidex)
 
     // Test
+    //UnitTest
+    testImplementation(libs.junit)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))

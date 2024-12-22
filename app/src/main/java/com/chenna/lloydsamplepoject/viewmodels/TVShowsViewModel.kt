@@ -70,7 +70,7 @@ class TVShowsViewModel @Inject constructor(
         }
     }
 
-    private fun getBookMarks() {
+    fun getBookMarks() {
 
         viewModelScope.launch {
             val bookMark = ResultActionEvent.ResultActionState(
@@ -88,7 +88,7 @@ class TVShowsViewModel @Inject constructor(
 
     }
 
-    private fun fetchTvShows() {
+    fun fetchTvShows() {
         _resultState.value = _resultState.value.copy(isLoading = true)
         viewModelScope.launch {
             when (val work = useCase.getListOfShows()) {
