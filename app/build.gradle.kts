@@ -114,6 +114,7 @@ dependencies {
     //multidex
     implementation(libs.androidx.multidex)
 
+
     // Test
     //UnitTest
     testImplementation(libs.junit)
@@ -129,4 +130,9 @@ dependencies {
     kspAndroidTest(libs.hilt.dagger.android.compiler)
     androidTestImplementation(libs.mockk.android)
     androidTestImplementation(libs.mockk.agent)
+
+
+    testImplementation(libs.kotlinx.coroutines)
+    testImplementation(libs.junit)
+    testImplementation(libs.mockk)
 }
