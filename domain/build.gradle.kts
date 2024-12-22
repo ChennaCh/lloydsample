@@ -57,4 +57,10 @@ dependencies {
 
     //Room
     implementation(libs.room.runtime)
+
+    //UnitTest
+    testImplementation(libs.kotlinx.coroutines)
+    testImplementation(libs.junit)
+    testImplementation(libs.mockk)
+
 }

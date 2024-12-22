@@ -15,6 +15,7 @@ sealed class ResultActionEvent {
 
     data class RedirectToShowDetails(val entity: ShowEntity) : ResultActionEvent()
     data object GetBookmarks : ResultActionEvent()
+    data object FetchTVShows : ResultActionEvent()
     data class SaveBookMark(val entity: ShowEntity) : ResultActionEvent()
     data class RemoveBookMark(val entity: ShowEntity) : ResultActionEvent()
     data class IsShowBookmarked(val showId: Int) : ResultActionEvent()

@@ -1,14 +1,14 @@
 package com.chenna.data.datasource
 
 import android.content.Context
-import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
 import android.content.Intent
 import com.chenna.domain.utils.Constants
 import com.chenna.domain.utils.FailedResponse
 import com.chenna.domain.utils.NetworkResult
 import com.chenna.domain.utils.NetworkUtils
+import dagger.hilt.android.qualifiers.ApplicationContext
 import retrofit2.Response
+import javax.inject.Inject
 
 /**
  * Created by Chenna Rao on 17/12/24.
@@ -46,7 +46,7 @@ abstract class BaseRemoteDataSource {
         }
     }
 
-    private fun forceLogout() {
+    fun forceLogout() {
         val intent = Intent(Constants.Action.LOGOUT_INTENT).apply {
             putExtra("logout", true)
         }

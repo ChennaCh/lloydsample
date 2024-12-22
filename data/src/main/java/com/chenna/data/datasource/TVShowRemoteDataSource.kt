@@ -22,10 +22,4 @@ class TVShowRemoteDataSource @Inject constructor(private val retrofit: Retrofit)
             requestService.getTvShows()
         }
     }
-
-    suspend fun getTvShowById(showId: String): NetworkResult<BaseApiResponse<ShowEntity>?, FailedResponse, Exception> {
-        return performSafeApiRequestCall {
-            requestService.getTvShowById(showId)
-        }
-    }
 }

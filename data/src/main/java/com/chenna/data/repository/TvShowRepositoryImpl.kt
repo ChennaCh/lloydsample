@@ -23,10 +23,6 @@ class TvShowRepositoryImpl @Inject constructor(
         return dataSource.getTvShows()
     }
 
-    override suspend fun getTvShowById(showId: String): NetworkResult<BaseApiResponse<ShowEntity>?, FailedResponse, Exception> {
-        return dataSource.getTvShowById(showId)
-    }
-
     override suspend fun saveBookmark(showEntity: ShowEntity) {
         localDataSource.saveBookMark(showEntity)
     }

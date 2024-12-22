@@ -61,4 +61,9 @@ dependencies {
     implementation(libs.room.ktx)
     annotationProcessor(libs.room.compiler)
     ksp(libs.room.compiler)
+
+    //UnitTest
+    testImplementation(libs.kotlinx.coroutines)
+    testImplementation(libs.junit)
+    testImplementation(libs.mockk)
 }

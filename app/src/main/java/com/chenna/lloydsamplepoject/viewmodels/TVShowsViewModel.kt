@@ -33,10 +33,6 @@ class TVShowsViewModel @Inject constructor(
     private val _isBookmarked = MutableStateFlow(false)
     val isBookmarked: StateFlow<Boolean> = _isBookmarked
 
-    init {
-        fetchTvShows()
-    }
-
     fun onActionEvent(actionEvent: ResultActionEvent) {
         when (actionEvent) {
 
@@ -69,10 +65,12 @@ class TVShowsViewModel @Inject constructor(
                 viewModelScope.launch {
                     _isBookmarked.value = useCase.isShowBookmarked(actionEvent.showId)
                 }
+
+            ResultActionEvent.FetchTVShows -> fetchTvShows()
         }
     }
 
-    private fun getBookMarks() {
+    fun getBookMarks() {
 
         viewModelScope.launch {
             val bookMark = ResultActionEvent.ResultActionState(
@@ -90,7 +88,7 @@ class TVShowsViewModel @Inject constructor(
 
     }
 
-    private fun fetchTvShows() {
+    fun fetchTvShows() {
         _resultState.value = _resultState.value.copy(isLoading = true)
         viewModelScope.launch {
             when (val work = useCase.getListOfShows()) {
