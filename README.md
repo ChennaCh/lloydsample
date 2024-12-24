@@ -64,16 +64,16 @@ The modules are as follow:
 </table>
 
 ## Tech Stack
-* [Multi-Module-Architecture](https://developer.android.com/topic/modularization) - Guide to Android app modularization
-* [Kotlin](https://kotlinlang.org/) 
-* [Jetpack Compose](https://developer.android.com/compose) -  UI Implementation
-* [Material Design](https://developer.android.com/develop/ui/views/theming/look-and-feel) - For visual, motion, and interaction design across devices
-* [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) - Dependency Injection
-* [Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) - Asynchronous or non-blocking programming
-* [Flows](https://developer.android.com/kotlin/flow) -
-* [Navigation-Jetpack](https://developer.android.com/jetpack/androidx/releases/navigation) - Navigating between 'destinations' within an Android application
-* [AndroidX](https://developer.android.com/jetpack/androidx) - 
-* [Retrofit](https://square.github.io/retrofit/) -  API Calls
-* [Solid Principles](https://medium.com/the-android-caf%C3%A9/solid-principles-the-kotlin-way-ff717c0d60da)
+* [Multi-Module-Architecture](https://developer.android.com/topic/modularization) - Guide to Android app modularization.
+* [Kotlin](https://kotlinlang.org/) - Primary programming language for Android development.
+* [Jetpack Compose](https://developer.android.com/compose) -  Modern toolkit for building native UI.
+* [Material Design](https://developer.android.com/develop/ui/views/theming/look-and-feel) - Implements visual, motion, and interaction design principles.
+* [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) - Dependency injection framework for Android.
+* [Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) - For asynchronous or non-blocking programming.
+* [Flows](https://developer.android.com/kotlin/flow) - Reactive streams for handling asynchronous data
+* [Navigation-Jetpack](https://developer.android.com/jetpack/androidx/releases/navigation) - Simplifies app navigation between destinations.
+* [AndroidX](https://developer.android.com/jetpack/androidx) - Libraries for backward-compatible Android components.
+* [Retrofit](https://square.github.io/retrofit/) -  Type-safe HTTP client for API calls.
+* [Solid Principles](https://medium.com/the-android-caf%C3%A9/solid-principles-the-kotlin-way-ff717c0d60da) - Ensures scalable and maintainable code.
 
 
