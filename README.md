@@ -42,6 +42,9 @@ The modules are as follow:
 		<td align="center">
 			<img src="assets/details.jpeg" alt="Show Details" width="300"/>
     	</td>
+		<td align="center">
+			<img src="assets/no_bookmarks.jpeg" alt="No Bookmarks" width="300"/>
+    	</td>
         <td align="center">
 			<img src="assets/details_bookmark.jpeg" alt="Show Details" width="300"/>
     	</td>
