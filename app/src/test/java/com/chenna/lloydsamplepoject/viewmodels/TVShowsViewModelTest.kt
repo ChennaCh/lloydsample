@@ -1,23 +1,40 @@
-package com.chenna.lloydsamplepoject
+package com.chenna.lloydsamplepoject.viewmodels
 
-import com.chenna.domain.model.*
+import com.chenna.domain.model.CountryModel
+import com.chenna.domain.model.NetWorkModel
+import com.chenna.domain.model.ShowImageModel
+import com.chenna.domain.model.ShowModel
+import com.chenna.domain.model.ShowRatingModel
 import com.chenna.domain.usecase.ShowsUseCase
+import com.chenna.domain.utils.Error
 import com.chenna.domain.utils.Message
 import com.chenna.domain.utils.MessageType
 import com.chenna.domain.utils.Work
+import com.chenna.lloydsamplepoject.models.TVShowActionEvent
 import com.chenna.lloydsamplepoject.util.Constants
-import com.chenna.lloydsamplepoject.viewmodels.TVShowsViewModel
+import com.chenna.lloydsamplepoject.util.NavigationEvent
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.*
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
 import org.junit.After
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
-import org.junit.Assert.*
 
 /**
  * Test suite for [TVShowsViewModel].
@@ -37,9 +54,9 @@ class TVShowsViewModelTest {
 
     @Before
     fun setup() {
-        MockKAnnotations.init(this) // Initialize MockK annotations
-        Dispatchers.setMain(testDispatcher)
+        MockKAnnotations.init(this)
         viewModel = TVShowsViewModel(useCase)
+        Dispatchers.setMain(testDispatcher)
     }
 
     @After
@@ -52,7 +69,8 @@ class TVShowsViewModelTest {
         val tvShows = getShowList()
         coEvery { useCase.getListOfShows() } returns Work.Result(data = tvShows)
 
-        viewModel.fetchTvShows()
+        viewModel.onActionEvent(TVShowActionEvent.FetchTVShows)
+
         testDispatcher.scheduler.advanceUntilIdle()
 
         val resultState = viewModel.resultState.value
@@ -71,8 +89,9 @@ class TVShowsViewModelTest {
         // Arrange
         coEvery { useCase.getListOfShows() } returns Work.Result(data = emptyList())
 
-        // Act
-        viewModel.fetchTvShows()
+        viewModel.onActionEvent(TVShowActionEvent.FetchTVShows)
+
+        testDispatcher.scheduler.advanceUntilIdle()
 
         // Assert
         val resultState = viewModel.resultState.value
@@ -92,8 +111,8 @@ class TVShowsViewModelTest {
         )
         coEvery { useCase.getListOfShows() } returns Work.Stop(errorMessage)
 
-        // Act
-        viewModel.fetchTvShows()
+        viewModel.onActionEvent(TVShowActionEvent.FetchTVShows)
+
         testDispatcher.scheduler.advanceUntilIdle()
 
         // Assert
@@ -103,6 +122,44 @@ class TVShowsViewModelTest {
         assertEquals("Error", resultState.error?.title)
         assertEquals(errorMessage.message, resultState.error?.description)
         coVerify(exactly = 1) { useCase.getListOfShows() }
+    }
+
+    @Test
+    fun `fetchTvShows updates resultState with handleConnectionError`() = runTest {
+        // Arrange
+        val errorMessage = Error(
+            title = Constants.Errors.CONNECTION_ERROR,
+            description = Constants.Errors.TV_SHOWS
+        )
+
+        coEvery { useCase.getListOfShows() } returns Work.backfire(RuntimeException())
+
+        viewModel.onActionEvent(TVShowActionEvent.FetchTVShows)
+
+        testDispatcher.scheduler.advanceUntilIdle()
+
+        // Assert
+        val resultState = viewModel.resultState.value
+        assertFalse("Loading state should be false", resultState.isLoading)
+        assertNotNull("Error should not be null", resultState.error)
+        assertEquals(errorMessage, errorMessage)
+        coVerify(exactly = 1) { useCase.getListOfShows() }
+    }
+
+    @Test
+    fun `WHEN click on show THEN redirect to show details`() = runTest {
+        val actionEvent = TVShowActionEvent.RedirectToShowDetails(showModel)
+        val navigationEvent = NavigationEvent(
+            route = Constants.AppRoute.SHOW_DETAILS,
+            any = actionEvent.model
+        )
+        val navigationEvents = mutableListOf<NavigationEvent>()
+        val job = collectEvents(viewModel.navigationEvent, navigationEvents)
+
+        viewModel.onActionEvent(actionEvent)
+        advanceUntilIdle()
+        job.cancel()
+        assertEquals(navigationEvent, navigationEvents.last())
     }
 
     // Sample data generator
@@ -147,5 +204,35 @@ class TVShowsViewModelTest {
                 summary = "A high school chemistry teacher turned methamphetamine producer."
             )
         )
+    }
+
+    companion object {
+        val showModel = ShowModel(
+            id = 1,
+            name = "Under the Dome",
+            language = "English",
+            genres = listOf("Drama", "Science-Fiction", "Thriller"),
+            status = "Ended",
+            runtime = 60,
+            rating = ShowRatingModel(average = 6.5f),
+            weight = 98,
+            type = "Scripted",
+            network = NetWorkModel(
+                country = CountryModel(name = "United States")
+            ),
+            image = ShowImageModel(
+                medium = "https://static.tvmaze.com/uploads/images/medium_portrait/81/202627.jpg",
+                original = "https://static.tvmaze.com/uploads/images/original_untouched/81/202627.jpg"
+            ),
+            summary = "Under the Dome is the story of a small town sealed off by an enormous dome."
+        )
+    }
+}
+
+fun <T> TestScope.collectEvents(flow: Flow<T>, events: MutableList<T>): Job {
+    return launch {
+        flow.collect { event ->
+            events.add(event)
+        }
     }
 }

@@ -1,11 +1,12 @@
 package com.chenna.lloydsamplepoject.viewmodels
 
 import androidx.lifecycle.viewModelScope
+import com.chenna.domain.model.ShowModel
 import com.chenna.domain.usecase.ShowsUseCase
 import com.chenna.domain.utils.Error
 import com.chenna.domain.utils.Work
-import com.chenna.lloydsamplepoject.models.ResultActionStateModel
 import com.chenna.lloydsamplepoject.models.TVShowActionEvent
+import com.chenna.lloydsamplepoject.models.TVShowStateModel
 import com.chenna.lloydsamplepoject.models.UiState
 import com.chenna.lloydsamplepoject.util.Constants
 import com.chenna.lloydsamplepoject.util.NavigationEvent
@@ -22,84 +23,71 @@ import javax.inject.Inject
  * Frost Interactive
  */
 @HiltViewModel
-class TVShowsViewModel @Inject constructor(
-    private val useCase: ShowsUseCase,
-) : BaseViewModel() {
+class TVShowsViewModel @Inject constructor(private val useCase: ShowsUseCase) : BaseViewModel() {
 
-    private val _resultState =
-        MutableStateFlow(UiState<ResultActionStateModel>(isLoading = true))
-    val resultState: StateFlow<UiState<ResultActionStateModel>> = _resultState
-
-    init {
-        fetchTvShows()
-    }
+    private val _resultState = MutableStateFlow(UiState<TVShowStateModel>(isLoading = true))
+    val resultState: StateFlow<UiState<TVShowStateModel>> = _resultState
 
     fun onActionEvent(actionEvent: TVShowActionEvent) {
         when (actionEvent) {
-            is TVShowActionEvent.RedirectToShowDetails -> {
-                viewModelScope.launch {
-                    _navigationEvent.emit(
-                        NavigationEvent(
-                            route = Constants.AppRoute.SHOW_DETAILS,
-                            any = actionEvent.model
-                        )
-                    )
-                }
-            }
+            TVShowActionEvent.FetchTVShows -> fetchTVShows()
+            is TVShowActionEvent.RedirectToShowDetails -> redirectToTVShowDetails(actionEvent)
         }
     }
 
-    fun fetchTvShows() {
+    private fun redirectToTVShowDetails(actionEvent: TVShowActionEvent.RedirectToShowDetails) {
+        viewModelScope.launch {
+            _navigationEvent.emit(
+                NavigationEvent(
+                    route = Constants.AppRoute.SHOW_DETAILS,
+                    any = actionEvent.model
+                )
+            )
+        }
+    }
+
+    private fun fetchTVShows() {
+        if (resultState.value.data?.list?.isNotEmpty() == true) {
+            return
+        }
+
         _resultState.value = _resultState.value.copy(isLoading = true)
         viewModelScope.launch {
-            when (val work = useCase.getListOfShows()) {
-                is Work.Result -> {
-
-                    if (work.data.isNotEmpty()) {
-                        val list = ResultActionStateModel(
-                            list = work.data
-                        )
-
-                        _resultState.value = resultState.value.copy(
-                            isLoading = false,
-                            error = null,
-                            data = resultState.value.data?.copy(
-                                list = work.data
-                            ) ?: list,
-                        )
-                    } else {
-                        _resultState.value = resultState.value.copy(
-                            isLoading = false,
-                            error = Error(
-                                title = "No shows",
-                                description = Constants.Errors.TV_SHOWS
-                            )
-                        )
-                    }
-                }
-
-                is Work.Stop -> {
-                    _resultState.value = resultState.value.copy(
-                        isLoading = false,
-                        error = Error(
-                            title = Constants.Errors.ERROR,
-                            description = work.message.message
-                        )
-                    )
-                    pushMessage(work.message)
-                }
-
-                else -> {
-                    _resultState.value = resultState.value.copy(
-                        isLoading = false,
-                        error = Error(
-                            title = Constants.Errors.CONNECTION_ERROR,
-                            description = Constants.Errors.TV_SHOWS
-                        )
-                    )
-                }
+            _resultState.value = when (val work = useCase.getListOfShows()) {
+                is Work.Result -> handleResult(work)
+                is Work.Stop -> handleStop(work)
+                else -> handleConnectionError()
             }
         }
-
     }
+
+    private fun handleResult(work: Work.Result<List<ShowModel>>): UiState<TVShowStateModel> {
+        return if (work.data.isNotEmpty()) {
+            UiState(data = TVShowStateModel(work.data))
+        } else {
+            UiState(
+                error = Error(
+                    title = "No shows",
+                    description = Constants.Errors.TV_SHOWS
+                )
+            )
+        }
+    }
+
+    private fun handleStop(work: Work.Stop): UiState<TVShowStateModel> {
+        pushMessage(work.message)
+        return UiState(
+            error = Error(
+                title = Constants.Errors.ERROR,
+                description = work.message.message
+            )
+        )
+    }
+
+    private fun handleConnectionError(): UiState<TVShowStateModel> = UiState(
+        error = Error(
+            title = Constants.Errors.CONNECTION_ERROR,
+            description = Constants.Errors.TV_SHOWS
+        )
+    )
 }

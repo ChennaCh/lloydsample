@@ -28,8 +28,6 @@ import org.junit.Test
  * <p>
  * Frost Interactive
  */
-
-@OptIn(ExperimentalCoroutinesApi::class)
 class ShowsUseCaseImplTest {
 
     private lateinit var showsUseCaseImpl: ShowsUseCaseImpl

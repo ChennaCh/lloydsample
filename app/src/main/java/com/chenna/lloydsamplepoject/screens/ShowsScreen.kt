@@ -31,7 +31,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.chenna.domain.model.ShowModel
 import com.chenna.lloydsamplepoject.R
-import com.chenna.lloydsamplepoject.models.ResultActionStateModel
+import com.chenna.lloydsamplepoject.models.TVShowStateModel
 import com.chenna.lloydsamplepoject.models.TVShowActionEvent
 import com.chenna.lloydsamplepoject.models.UiState
 import com.chenna.lloydsamplepoject.util.NavigationEvent
@@ -51,7 +51,7 @@ fun ShowsScreen(
     navigate: (NavigationEvent) -> Unit,
 ) {
 
-    val uiState = remember { mutableStateOf(UiState<ResultActionStateModel>()) }
+    val uiState = remember { mutableStateOf(UiState<TVShowStateModel>()) }
     val context = LocalContext.current
 
 
@@ -67,22 +67,24 @@ fun ShowsScreen(
         }
     }
 
+    LaunchedEffect(Unit) {
+        viewModel.onActionEvent(TVShowActionEvent.FetchTVShows)
+    }
+
     LaunchedEffect(viewModel) {
         viewModel.resultState.collectLatest {
             uiState.value = it
         }
     }
 
-    TvShowsListContent(
-        uiState.value
-    ) { show ->
+    TvShowsListContent(uiState.value) { show ->
         viewModel.onActionEvent(actionEvent = TVShowActionEvent.RedirectToShowDetails(show))
     }
 }
 
 @Composable
 fun TvShowsListContent(
-    uiState: UiState<ResultActionStateModel>,
+    uiState: UiState<TVShowStateModel>,
     onShowClick: (ShowModel) -> Unit,
 ) {
 

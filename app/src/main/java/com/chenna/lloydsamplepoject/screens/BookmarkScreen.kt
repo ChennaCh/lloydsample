@@ -42,7 +42,7 @@ import com.chenna.domain.entities.ShowEntity
 import com.chenna.domain.utils.Constants
 import com.chenna.lloydsamplepoject.R
 import com.chenna.lloydsamplepoject.models.BookmarksActionEvent
-import com.chenna.lloydsamplepoject.models.ResultActionStateModel
+import com.chenna.lloydsamplepoject.models.BookmarksStateModel
 import com.chenna.lloydsamplepoject.models.UiState
 import com.chenna.lloydsamplepoject.util.NavigationEvent
 import com.chenna.lloydsamplepoject.viewmodels.BookmarksViewModel
@@ -59,7 +59,7 @@ fun BookmarkScreen(
     navigate: (NavigationEvent) -> Unit,
 ) {
 
-    val uiState = remember { mutableStateOf(UiState<ResultActionStateModel>()) }
+    val uiState = remember { mutableStateOf(UiState<BookmarksStateModel>()) }
 
     LaunchedEffect(Unit) {
         viewModel.navigationEvent.collectLatest {
@@ -86,7 +86,7 @@ fun BookmarkScreen(
 
 @Composable
 fun BookmarkTVShowListContent(
-    uiState: UiState<ResultActionStateModel>,
+    uiState: UiState<BookmarksStateModel>,
     onShowClick: (ShowEntity) -> Unit,
 ) {
     Column(
@@ -157,7 +157,7 @@ fun TvShowItem(
             modifier = Modifier.padding(0.dp),
             verticalAlignment = Alignment.Top,
         ) {
-            show.image?.let { image ->
+            show.image.let { image ->
                 AsyncImage(
                     model = image.medium,
                     contentDescription = show.name,
@@ -171,7 +171,7 @@ fun TvShowItem(
             }
 
             Column {
-                show.name?.let {
+                show.name.let {
                     Text(
                         text = it,
                         fontWeight = FontWeight.Medium,
@@ -196,14 +196,14 @@ fun TvShowItem(
                         )
                     }
                     Text(
-                        text = "${show.rating?.average}",
+                        text = "${show.rating.average}",
                         fontWeight = FontWeight.Medium,
                         fontFamily = FontFamily.Default,
                         fontSize = 12.sp,
                         color = Color.Gray,
                     )
                 }
-                show.genres?.joinToString(", ")?.let {
+                show.genres.joinToString(", ").let {
                     Text(
                         text = it,
                         color = Color.Gray,

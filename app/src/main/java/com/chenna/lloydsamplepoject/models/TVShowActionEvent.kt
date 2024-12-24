@@ -8,5 +8,6 @@ import com.chenna.domain.model.ShowModel
  * Frost Interactive
  */
 sealed class TVShowActionEvent {
+    data object FetchTVShows : TVShowActionEvent()
     data class RedirectToShowDetails(val model: ShowModel) : TVShowActionEvent()
 }

@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.chenna.domain.model.toShowModel
 import com.chenna.domain.usecase.ShowsUseCase
 import com.chenna.lloydsamplepoject.models.BookmarksActionEvent
-import com.chenna.lloydsamplepoject.models.ResultActionStateModel
+import com.chenna.lloydsamplepoject.models.BookmarksStateModel
 import com.chenna.lloydsamplepoject.models.UiState
 import com.chenna.lloydsamplepoject.util.Constants
 import com.chenna.lloydsamplepoject.util.NavigationEvent
@@ -25,47 +25,31 @@ class BookmarksViewModel @Inject constructor(
     private val useCase: ShowsUseCase,
 ) : BaseViewModel() {
 
-    private val _resultState =
-        MutableStateFlow(UiState<ResultActionStateModel>(isLoading = true))
-    val resultState: StateFlow<UiState<ResultActionStateModel>> = _resultState
-
-    init {
-        getBookMarks()
-    }
+    private val _resultState = MutableStateFlow(UiState<BookmarksStateModel>(isLoading = true))
+    val resultState: StateFlow<UiState<BookmarksStateModel>> = _resultState
 
     fun onActionEvent(actionEvent: BookmarksActionEvent) {
         when (actionEvent) {
-
-            is BookmarksActionEvent.RedirectToShowDetails -> {
-                viewModelScope.launch {
-                    _navigationEvent.emit(
-                        NavigationEvent(
-                            route = Constants.AppRoute.SHOW_DETAILS,
-                            any = actionEvent.entity.toShowModel()
-                        )
-                    )
-                }
-            }
-
+            is BookmarksActionEvent.RedirectToShowDetails -> redirectToShowDetails(actionEvent)
             BookmarksActionEvent.GetBookmarks -> getBookMarks()
-
-            else -> {}
         }
     }
 
-    fun getBookMarks() {
+    private fun redirectToShowDetails(actionEvent: BookmarksActionEvent.RedirectToShowDetails) {
         viewModelScope.launch {
-            val bookMark = ResultActionStateModel(
-                bookMarks = useCase.getAllBookmarks()
+            _navigationEvent.emit(
+                NavigationEvent(
+                    route = Constants.AppRoute.SHOW_DETAILS,
+                    any = actionEvent.entity.toShowModel()
+                )
             )
+        }
+    }
 
-            _resultState.value = resultState.value.copy(
-                isLoading = false,
-                error = null,
-                data = resultState.value.data?.copy(
-                    bookMarks = useCase.getAllBookmarks()
-                ) ?: bookMark,
-            )
+    private fun getBookMarks() {
+        viewModelScope.launch {
+            val bookMarks = BookmarksStateModel(useCase.getAllBookmarks())
+            _resultState.value = UiState(data = bookMarks)
         }
     }
 

@@ -10,12 +10,8 @@ object Constants {
         const val NAME: String = "LLOYD_SAMPLE_APPLICATION_DB"
     }
 
-    object Route {
-        const val Show_Details = "showDetails/{serializedShow}/{type}"
-    }
-
     enum class AppRoute {
-        SHOW_DETAILS,
+        SHOW_DETAILS
     }
 
     object Errors {

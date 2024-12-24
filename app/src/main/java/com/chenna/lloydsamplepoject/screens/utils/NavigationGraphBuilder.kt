@@ -11,16 +11,12 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.chenna.domain.entities.ShowEntity
 import com.chenna.domain.model.ShowModel
-import com.chenna.domain.model.toShowModel
 import com.chenna.lloydsamplepoject.screens.BookmarkScreen
 import com.chenna.lloydsamplepoject.screens.DashboardNavComp
 import com.chenna.lloydsamplepoject.screens.ShowDetailsScreen
 import com.chenna.lloydsamplepoject.screens.ShowsScreen
-import com.chenna.lloydsamplepoject.util.Constants
 import com.chenna.lloydsamplepoject.util.NavigationEvent
-import com.google.gson.Gson
 
 /**
  * Created by Chenna Rao on 23/12/24.
@@ -55,16 +51,12 @@ object NavigationGraphBuilder {
                 updateElevation(0.dp)
                 updateTitle(DashboardNavComp.Bookmark.title)
                 BookmarkScreen() {
-                    goto(it)
+                  goto(it)
                 }
                 updateBottomNavVisibility(true)
             }
-
-            composable("${Constants.Route.Show_Details}/{showEntity}") { backStackEntry ->
-                val serializedShowEntity = backStackEntry.arguments?.getString("showEntity")
-                val showModel =
-                    serializedShowEntity?.let { Gson().fromJson(it, ShowModel::class.java) }
-
+            composable(DashboardNavComp.ShowDetails.route) {
+                val showModel = navHostController.previousBackStackEntry?.savedStateHandle?.get<ShowModel>("showModel")
                 showModel?.let {
                     ShowDetailsScreen(showModel = it)
                 }

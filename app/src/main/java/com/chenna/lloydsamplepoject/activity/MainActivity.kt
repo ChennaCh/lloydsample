@@ -1,7 +1,6 @@
 package com.chenna.lloydsamplepoject.activity
 
 import android.annotation.SuppressLint
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -42,13 +41,11 @@ import androidx.core.view.WindowCompat
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.chenna.domain.model.ShowModel
 import com.chenna.lloydsamplepoject.R
 import com.chenna.lloydsamplepoject.screens.DashboardNavComp
 import com.chenna.lloydsamplepoject.screens.utils.NavigationGraphBuilder.DashboardGraph
 import com.chenna.lloydsamplepoject.ui.theme.LLoydSamplePojectTheme
 import com.chenna.lloydsamplepoject.util.Constants
-import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -187,9 +184,11 @@ fun BottomNavGraph(
     ) { navigationEvent ->
         when (navigationEvent.route) {
             Constants.AppRoute.SHOW_DETAILS -> {
-                val showModel = navigationEvent.any as? ShowModel ?: return@DashboardGraph
-                val serializedShow = Uri.encode(Gson().toJson(showModel))
-                navHostController.navigate("${Constants.Route.Show_Details}/$serializedShow")
+                navHostController.currentBackStackEntry?.savedStateHandle?.set(
+                    "showModel",
+                    navigationEvent.any
+                )
+                navHostController.navigate(DashboardNavComp.ShowDetails.route)
             }
         }
     }

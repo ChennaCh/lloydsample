@@ -14,19 +14,12 @@ object UiUtils {
 
     fun buildUIMessage(context: Context, it: Message) {
         when (it.messageType) {
-            MessageType.TOAST -> {
-                buildToast(context.applicationContext, it.message)
-            }
-
-            else -> {
-
-            }
+            MessageType.TOAST -> buildToast(context.applicationContext, it.message)
         }
     }
 
-    fun buildToast(context: Context, message: String, duration: Int = Toast.LENGTH_SHORT) {
+    private fun buildToast(context: Context, message: String, duration: Int = Toast.LENGTH_SHORT) {
         Toast.makeText(context, message, duration).show()
     }
-
 
 }

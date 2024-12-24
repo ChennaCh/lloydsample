@@ -1,4 +1,4 @@
-package com.chenna.lloydsamplepoject
+package com.chenna.lloydsamplepoject.viewmodels
 
 import androidx.lifecycle.viewModelScope
 import com.chenna.domain.utils.Message

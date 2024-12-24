@@ -17,7 +17,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class TvShowDetailsViewModel @Inject constructor(
-    private val useCase: ShowsUseCase,
+    private val useCase: ShowsUseCase
 ) : BaseViewModel() {
 
     private val _isBookmarked = MutableStateFlow(false)
@@ -25,25 +25,31 @@ class TvShowDetailsViewModel @Inject constructor(
 
     fun onActionEvent(actionEvent: TVShowDetailsActionEvent) {
         when (actionEvent) {
+            is TVShowDetailsActionEvent.SaveBookMark -> saveBookmark(actionEvent)
+            is TVShowDetailsActionEvent.RemoveBookMark -> removeBookmark(actionEvent)
+            is TVShowDetailsActionEvent.IsShowBookmarked -> isShowBookmarked(actionEvent)
+        }
+    }
 
-            is TVShowDetailsActionEvent.SaveBookMark -> viewModelScope.launch {
-                useCase.saveBookmark(
-                    actionEvent.entity
-                )
-            }
+    private fun saveBookmark(actionEvent: TVShowDetailsActionEvent.SaveBookMark) {
+        viewModelScope.launch {
+            useCase.saveBookmark(
+                actionEvent.entity
+            )
+        }
+    }
 
-            is TVShowDetailsActionEvent.RemoveBookMark -> viewModelScope.launch {
-                useCase.removeBookmark(
-                    actionEvent.id
-                )
-            }
+    private fun removeBookmark(actionEvent: TVShowDetailsActionEvent.RemoveBookMark) {
+        viewModelScope.launch {
+            useCase.removeBookmark(
+                actionEvent.id
+            )
+        }
+    }
 
-            is TVShowDetailsActionEvent.IsShowBookmarked ->
-                viewModelScope.launch {
-                    _isBookmarked.value = useCase.isShowBookmarked(actionEvent.showId)
-                }
-
-            else -> {}
+    private fun isShowBookmarked(actionEvent: TVShowDetailsActionEvent.IsShowBookmarked) {
+        viewModelScope.launch {
+            _isBookmarked.value = useCase.isShowBookmarked(actionEvent.showId)
         }
     }
 }
