@@ -10,7 +10,7 @@ import com.chenna.domain.utils.Error
 import com.chenna.domain.utils.Message
 import com.chenna.domain.utils.MessageType
 import com.chenna.domain.utils.Work
-import com.chenna.lloydsamplepoject.models.TVShowActionEvent
+import com.chenna.lloydsamplepoject.models.TvShowActionEvent
 import com.chenna.lloydsamplepoject.util.Constants
 import com.chenna.lloydsamplepoject.util.NavigationEvent
 import io.mockk.MockKAnnotations
@@ -69,7 +69,7 @@ class TVShowsViewModelTest {
         val tvShows = getShowList()
         coEvery { useCase.getListOfShows() } returns Work.Result(data = tvShows)
 
-        viewModel.onActionEvent(TVShowActionEvent.FetchTVShows)
+        viewModel.onActionEvent(TvShowActionEvent.FetchTvShows)
 
         testDispatcher.scheduler.advanceUntilIdle()
 
@@ -89,7 +89,7 @@ class TVShowsViewModelTest {
         // Arrange
         coEvery { useCase.getListOfShows() } returns Work.Result(data = emptyList())
 
-        viewModel.onActionEvent(TVShowActionEvent.FetchTVShows)
+        viewModel.onActionEvent(TvShowActionEvent.FetchTvShows)
 
         testDispatcher.scheduler.advanceUntilIdle()
 
@@ -111,7 +111,7 @@ class TVShowsViewModelTest {
         )
         coEvery { useCase.getListOfShows() } returns Work.Stop(errorMessage)
 
-        viewModel.onActionEvent(TVShowActionEvent.FetchTVShows)
+        viewModel.onActionEvent(TvShowActionEvent.FetchTvShows)
 
         testDispatcher.scheduler.advanceUntilIdle()
 
@@ -134,7 +134,7 @@ class TVShowsViewModelTest {
 
         coEvery { useCase.getListOfShows() } returns Work.backfire(RuntimeException())
 
-        viewModel.onActionEvent(TVShowActionEvent.FetchTVShows)
+        viewModel.onActionEvent(TvShowActionEvent.FetchTvShows)
 
         testDispatcher.scheduler.advanceUntilIdle()
 
@@ -148,7 +148,7 @@ class TVShowsViewModelTest {
 
     @Test
     fun `WHEN click on show THEN redirect to show details`() = runTest {
-        val actionEvent = TVShowActionEvent.RedirectToShowDetails(showModel)
+        val actionEvent = TvShowActionEvent.RedirectToShowDetails(showModel)
         val navigationEvent = NavigationEvent(
             route = Constants.AppRoute.SHOW_DETAILS,
             any = actionEvent.model

@@ -5,8 +5,8 @@ import com.chenna.domain.model.ShowModel
 import com.chenna.domain.usecase.ShowsUseCase
 import com.chenna.domain.utils.Error
 import com.chenna.domain.utils.Work
-import com.chenna.lloydsamplepoject.models.TVShowActionEvent
-import com.chenna.lloydsamplepoject.models.TVShowStateModel
+import com.chenna.lloydsamplepoject.models.TvShowActionEvent
+import com.chenna.lloydsamplepoject.models.TvShowStateModel
 import com.chenna.lloydsamplepoject.models.UiState
 import com.chenna.lloydsamplepoject.util.Constants
 import com.chenna.lloydsamplepoject.util.NavigationEvent
@@ -25,17 +25,17 @@ import javax.inject.Inject
 @HiltViewModel
 class TVShowsViewModel @Inject constructor(private val useCase: ShowsUseCase) : BaseViewModel() {
 
-    private val _resultState = MutableStateFlow(UiState<TVShowStateModel>(isLoading = true))
-    val resultState: StateFlow<UiState<TVShowStateModel>> = _resultState
+    private val _resultState = MutableStateFlow(UiState<TvShowStateModel>(isLoading = true))
+    val resultState: StateFlow<UiState<TvShowStateModel>> = _resultState
 
-    fun onActionEvent(actionEvent: TVShowActionEvent) {
+    fun onActionEvent(actionEvent: TvShowActionEvent) {
         when (actionEvent) {
-            TVShowActionEvent.FetchTVShows -> fetchTVShows()
-            is TVShowActionEvent.RedirectToShowDetails -> redirectToTVShowDetails(actionEvent)
+            TvShowActionEvent.FetchTvShows -> fetchTVShows()
+            is TvShowActionEvent.RedirectToShowDetails -> redirectToTVShowDetails(actionEvent)
         }
     }
 
-    private fun redirectToTVShowDetails(actionEvent: TVShowActionEvent.RedirectToShowDetails) {
+    private fun redirectToTVShowDetails(actionEvent: TvShowActionEvent.RedirectToShowDetails) {
         viewModelScope.launch {
             _navigationEvent.emit(
                 NavigationEvent(
@@ -61,9 +61,9 @@ class TVShowsViewModel @Inject constructor(private val useCase: ShowsUseCase) : 
         }
     }
 
-    private fun handleResult(work: Work.Result<List<ShowModel>>): UiState<TVShowStateModel> {
+    private fun handleResult(work: Work.Result<List<ShowModel>>): UiState<TvShowStateModel> {
         return if (work.data.isNotEmpty()) {
-            UiState(data = TVShowStateModel(work.data))
+            UiState(data = TvShowStateModel(work.data))
         } else {
             UiState(
                 error = Error(
@@ -74,7 +74,7 @@ class TVShowsViewModel @Inject constructor(private val useCase: ShowsUseCase) : 
         }
     }
 
-    private fun handleStop(work: Work.Stop): UiState<TVShowStateModel> {
+    private fun handleStop(work: Work.Stop): UiState<TvShowStateModel> {
         pushMessage(work.message)
         return UiState(
             error = Error(
@@ -84,7 +84,7 @@ class TVShowsViewModel @Inject constructor(private val useCase: ShowsUseCase) : 
         )
     }
 
-    private fun handleConnectionError(): UiState<TVShowStateModel> = UiState(
+    private fun handleConnectionError(): UiState<TvShowStateModel> = UiState(
         error = Error(
             title = Constants.Errors.CONNECTION_ERROR,
             description = Constants.Errors.TV_SHOWS

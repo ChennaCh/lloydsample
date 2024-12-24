@@ -6,7 +6,7 @@ import com.chenna.domain.entities.ShowEntity
 import com.chenna.domain.entities.ShowImageEntity
 import com.chenna.domain.entities.ShowRatingEntity
 import com.chenna.domain.usecase.ShowsUseCase
-import com.chenna.lloydsamplepoject.models.TVShowDetailsActionEvent
+import com.chenna.lloydsamplepoject.models.TvShowDetailsActionEvent
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -48,7 +48,7 @@ class TvShowDetailsViewModelTest {
 
     @Test
     fun `WHEN saveBookMark called THEN VERIFY useCase saveBookmark call`() = runTest {
-        viewModel.onActionEvent(TVShowDetailsActionEvent.SaveBookMark(showEntity))
+        viewModel.onActionEvent(TvShowDetailsActionEvent.SaveBookMark(showEntity))
         testDispatcher.scheduler.advanceUntilIdle()
 
         coVerify { useCase.saveBookmark(showEntity) }
@@ -57,7 +57,7 @@ class TvShowDetailsViewModelTest {
     @Test
     fun `WHEN removeBookmark called THEN VERIFY useCase removeBookmark call`() = runTest {
         val tvShowId = 1
-        viewModel.onActionEvent(TVShowDetailsActionEvent.RemoveBookMark(tvShowId))
+        viewModel.onActionEvent(TvShowDetailsActionEvent.RemoveBookMark(tvShowId))
         testDispatcher.scheduler.advanceUntilIdle()
 
         coVerify { useCase.removeBookmark(tvShowId) }
@@ -70,7 +70,7 @@ class TvShowDetailsViewModelTest {
         val isBookmark = true
         coEvery { useCase.isShowBookmarked(tvShowId) } returns isBookmark
 
-        viewModel.onActionEvent(TVShowDetailsActionEvent.IsShowBookmarked(tvShowId))
+        viewModel.onActionEvent(TvShowDetailsActionEvent.IsShowBookmarked(tvShowId))
         testDispatcher.scheduler.advanceUntilIdle()
 
         // Assert

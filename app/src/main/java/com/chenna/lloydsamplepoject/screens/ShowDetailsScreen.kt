@@ -50,7 +50,7 @@ import coil.request.ImageRequest
 import coil.size.Size
 import com.chenna.domain.model.ShowModel
 import com.chenna.domain.model.toShowEntity
-import com.chenna.lloydsamplepoject.models.TVShowDetailsActionEvent
+import com.chenna.lloydsamplepoject.models.TvShowDetailsActionEvent
 import com.chenna.lloydsamplepoject.viewmodels.TvShowDetailsViewModel
 
 /**
@@ -69,7 +69,7 @@ fun ShowDetailsScreen(
 
     LaunchedEffect(Unit) {
         showModel.let {
-            viewModel.onActionEvent(TVShowDetailsActionEvent.IsShowBookmarked(showId = it.id))
+            viewModel.onActionEvent(TvShowDetailsActionEvent.IsShowBookmarked(showId = it.id))
         }
     }
 
@@ -142,14 +142,14 @@ fun ShowDetailsScreen(
                     if (isBookmarked.value) {
                         showModelObject?.let {
                             viewModel.onActionEvent(
-                                TVShowDetailsActionEvent.RemoveBookMark(
+                                TvShowDetailsActionEvent.RemoveBookMark(
                                     it.id
                                 )
                             )
                         }
                     } else {
                         showModelObject?.let {
-                            viewModel.onActionEvent(TVShowDetailsActionEvent.SaveBookMark(it)) // Remove bookmark
+                            viewModel.onActionEvent(TvShowDetailsActionEvent.SaveBookMark(it)) // Remove bookmark
                         }
                     }
                     isBookmarked.value = !isBookmarked.value // Toggle bookmark state

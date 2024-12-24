@@ -31,8 +31,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.chenna.domain.model.ShowModel
 import com.chenna.lloydsamplepoject.R
-import com.chenna.lloydsamplepoject.models.TVShowStateModel
-import com.chenna.lloydsamplepoject.models.TVShowActionEvent
+import com.chenna.lloydsamplepoject.models.TvShowStateModel
+import com.chenna.lloydsamplepoject.models.TvShowActionEvent
 import com.chenna.lloydsamplepoject.models.UiState
 import com.chenna.lloydsamplepoject.util.NavigationEvent
 import com.chenna.lloydsamplepoject.util.ProgressBarCompose
@@ -51,7 +51,7 @@ fun ShowsScreen(
     navigate: (NavigationEvent) -> Unit,
 ) {
 
-    val uiState = remember { mutableStateOf(UiState<TVShowStateModel>()) }
+    val uiState = remember { mutableStateOf(UiState<TvShowStateModel>()) }
     val context = LocalContext.current
 
 
@@ -68,7 +68,7 @@ fun ShowsScreen(
     }
 
     LaunchedEffect(Unit) {
-        viewModel.onActionEvent(TVShowActionEvent.FetchTVShows)
+        viewModel.onActionEvent(TvShowActionEvent.FetchTvShows)
     }
 
     LaunchedEffect(viewModel) {
@@ -78,13 +78,13 @@ fun ShowsScreen(
     }
 
     TvShowsListContent(uiState.value) { show ->
-        viewModel.onActionEvent(actionEvent = TVShowActionEvent.RedirectToShowDetails(show))
+        viewModel.onActionEvent(actionEvent = TvShowActionEvent.RedirectToShowDetails(show))
     }
 }
 
 @Composable
 fun TvShowsListContent(
-    uiState: UiState<TVShowStateModel>,
+    uiState: UiState<TvShowStateModel>,
     onShowClick: (ShowModel) -> Unit,
 ) {
 

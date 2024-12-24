@@ -2,7 +2,7 @@ package com.chenna.lloydsamplepoject.viewmodels
 
 import androidx.lifecycle.viewModelScope
 import com.chenna.domain.usecase.ShowsUseCase
-import com.chenna.lloydsamplepoject.models.TVShowDetailsActionEvent
+import com.chenna.lloydsamplepoject.models.TvShowDetailsActionEvent
 import com.chenna.lloydsamplepoject.viewmodels.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,15 +23,15 @@ class TvShowDetailsViewModel @Inject constructor(
     private val _isBookmarked = MutableStateFlow(false)
     val isBookmarked: StateFlow<Boolean> = _isBookmarked
 
-    fun onActionEvent(actionEvent: TVShowDetailsActionEvent) {
+    fun onActionEvent(actionEvent: TvShowDetailsActionEvent) {
         when (actionEvent) {
-            is TVShowDetailsActionEvent.SaveBookMark -> saveBookmark(actionEvent)
-            is TVShowDetailsActionEvent.RemoveBookMark -> removeBookmark(actionEvent)
-            is TVShowDetailsActionEvent.IsShowBookmarked -> isShowBookmarked(actionEvent)
+            is TvShowDetailsActionEvent.SaveBookMark -> saveBookmark(actionEvent)
+            is TvShowDetailsActionEvent.RemoveBookMark -> removeBookmark(actionEvent)
+            is TvShowDetailsActionEvent.IsShowBookmarked -> isShowBookmarked(actionEvent)
         }
     }
 
-    private fun saveBookmark(actionEvent: TVShowDetailsActionEvent.SaveBookMark) {
+    private fun saveBookmark(actionEvent: TvShowDetailsActionEvent.SaveBookMark) {
         viewModelScope.launch {
             useCase.saveBookmark(
                 actionEvent.entity
@@ -39,7 +39,7 @@ class TvShowDetailsViewModel @Inject constructor(
         }
     }
 
-    private fun removeBookmark(actionEvent: TVShowDetailsActionEvent.RemoveBookMark) {
+    private fun removeBookmark(actionEvent: TvShowDetailsActionEvent.RemoveBookMark) {
         viewModelScope.launch {
             useCase.removeBookmark(
                 actionEvent.id
@@ -47,7 +47,7 @@ class TvShowDetailsViewModel @Inject constructor(
         }
     }
 
-    private fun isShowBookmarked(actionEvent: TVShowDetailsActionEvent.IsShowBookmarked) {
+    private fun isShowBookmarked(actionEvent: TvShowDetailsActionEvent.IsShowBookmarked) {
         viewModelScope.launch {
             _isBookmarked.value = useCase.isShowBookmarked(actionEvent.showId)
         }
