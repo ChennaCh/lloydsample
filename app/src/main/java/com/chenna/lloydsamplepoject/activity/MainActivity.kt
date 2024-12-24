@@ -1,7 +1,9 @@
-package com.chenna.lloydsamplepoject.screens
+package com.chenna.lloydsamplepoject.activity
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -37,15 +39,15 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
-import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.chenna.domain.entities.ShowEntity
-import com.chenna.domain.utils.Constants
+import com.chenna.domain.model.ShowModel
 import com.chenna.lloydsamplepoject.R
+import com.chenna.lloydsamplepoject.screens.DashboardNavComp
+import com.chenna.lloydsamplepoject.screens.utils.NavigationGraphBuilder.DashboardGraph
 import com.chenna.lloydsamplepoject.ui.theme.LLoydSamplePojectTheme
+import com.chenna.lloydsamplepoject.util.Constants
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -70,11 +72,11 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
+    var appBarTitle by remember { mutableStateOf(DashboardNavComp.Shows.title) }
     var elevation: Dp by remember { mutableStateOf(3.dp) }
-    var appBarTitle by remember { mutableStateOf("") }
     var isBottomNavVisible by remember { mutableStateOf(true) }
 
-    androidx.compose.material.MaterialTheme {
+    MaterialTheme {
         Scaffold(
             topBar = {
                 if (appBarTitle.isNotEmpty()) {
@@ -133,9 +135,9 @@ fun MainScreen() {
                                 },
                                 selected = currentRoute == navItem.route,
                                 onClick = {
+                                    Log.d("NavigationDebug", "Navigating to: ${navItem.route}")
                                     navController.navigate(navItem.route) {
-                                        // Avoid multiple copies of the same destination
-                                        popUpTo(navController.graph.findStartDestination().id) {
+                                        popUpTo(navController.graph.startDestinationId) {
                                             saveState = true
                                         }
                                         launchSingleTop = true
@@ -156,43 +158,38 @@ fun MainScreen() {
                     }
                 }
             }
-        ) { paddingValues ->
-            NavHost(
-                navController = navController,
-                startDestination = "shows",
-                Modifier.padding(paddingValues)
-            ) {
-                composable("shows") {
-                    ShowsScreen { navigationEvent ->
-                        if (navigationEvent.route == Constants.AppRoute.SHOW_DETAILS) {
-                            val showEntity =
-                                navigationEvent.any as? ShowEntity ?: return@ShowsScreen
-                            val serializedEntity = Uri.encode(Gson().toJson(showEntity))
-                            navController.navigate("showDetails/$serializedEntity")
-                        }
-                    }
-                    appBarTitle = "TVShows"
-                    isBottomNavVisible = true
-                }
-                composable("bookmark") {
-                    BookmarkScreen() { navigationEvent ->
-                        if (navigationEvent.route == Constants.AppRoute.SHOW_DETAILS) {
-                            val showEntity =
-                                navigationEvent.any as? ShowEntity ?: return@BookmarkScreen
-                            val serializedEntity = Uri.encode(Gson().toJson(showEntity))
-                            navController.navigate("showDetails/$serializedEntity")
-                        }
-                    }
-                    appBarTitle = "Bookmarks"
-                    isBottomNavVisible = true
-                }
-                composable("showDetails/{showEntity}") { backStackEntry ->
-                    val serializedEntity = backStackEntry.arguments?.getString("showEntity")
-                    val showEntity = Gson().fromJson(serializedEntity, ShowEntity::class.java)
-                    ShowDetailsScreen(showEntity)
-                    appBarTitle = ""
-                    isBottomNavVisible = false
-                }
+        ) {
+            BottomNavGraph(navHostController = navController,
+                modifier = Modifier.padding(it),
+                updateTitle = { appBarTitle = it },
+                updateElevation = { elevation = it },
+                updateBottomNavVisibility = { isBottomNavVisible = it }
+            )
+        }
+    }
+}
+
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "RestrictedApi")
+@Composable
+fun BottomNavGraph(
+    navHostController: NavHostController,
+    modifier: Modifier = Modifier,
+    updateTitle: (title: String) -> Unit,
+    updateElevation: (elevation: Dp) -> Unit,
+    updateBottomNavVisibility: (Boolean) -> Unit,
+) {
+    DashboardGraph(
+        navHostController = navHostController,
+        modifier = modifier,
+        updateTitle = updateTitle,
+        updateElevation = updateElevation,
+        updateBottomNavVisibility = updateBottomNavVisibility // Pass the function directly
+    ) { navigationEvent ->
+        when (navigationEvent.route) {
+            Constants.AppRoute.SHOW_DETAILS -> {
+                val showModel = navigationEvent.any as? ShowModel ?: return@DashboardGraph
+                val serializedShow = Uri.encode(Gson().toJson(showModel))
+                navHostController.navigate("${Constants.Route.Show_Details}/$serializedShow")
             }
         }
     }
@@ -206,8 +203,8 @@ data class BottomNavItem(
 
 // Define bottom navigation items
 val bottomNavItems = listOf(
-    BottomNavItem("Shows", R.drawable.ic_tvshow, "shows"),
-    BottomNavItem("Bookmark", R.drawable.ic_watchlist, "bookmark")
+    BottomNavItem("Shows", R.drawable.ic_tvshow, DashboardNavComp.Shows.route),
+    BottomNavItem("Bookmarks", R.drawable.ic_watchlist, DashboardNavComp.Bookmark.route)
 )
 
 @Preview(showBackground = true)

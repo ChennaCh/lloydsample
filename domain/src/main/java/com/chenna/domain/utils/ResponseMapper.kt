@@ -8,7 +8,7 @@ import okhttp3.ResponseBody
  * <p>
  * Frost Interactive
  */
-object ResponseUtils {
+object ResponseMapper {
 
     fun <T> parseNetworkResults(
         networkResult: NetworkResult<List<T>?, FailedResponse, Exception>,
@@ -52,50 +52,8 @@ object ResponseUtils {
         }
     }
 
-    fun <T> parseNetworkResult(
-        networkResult: NetworkResult<T?, FailedResponse, Exception>,
-        backfireMessage: String = Constants.SOMETHING_WENT_WRONG,
-        messageType: MessageType = MessageType.TOAST,
-    ): Work<T> {
-        return when (networkResult) {
-            is NetworkResult.Success -> {
-                networkResult.data?.let { data ->
-                    return Work.result(
-                        data = data, message = Message(
-                            message = "Success"
-                        )
-                    )
-                }
-                Work.backfire(exception = RuntimeException(backfireMessage))
-            }
 
-            is NetworkResult.Failed -> {
-                val error = parseErrorResponseBody(networkResult.errorResponse.errorResponse)
-                Work.stop(
-                    Message(
-                        message = error,
-                        messageType = messageType
-                    )
-                )
-            }
-
-            is NetworkResult.Error -> {
-                Work.backfire(exception = networkResult.exception)
-            }
-
-            NetworkResult.NetworkConnection -> {
-                Work.Stop(
-                    message = Message(
-                        message = Constants.CONNECTION_ERROR,
-                        messageType = messageType
-                    )
-                )
-            }
-        }
-    }
-
-
-    fun parseErrorResponseBody(body: ResponseBody?): String {
+    private fun parseErrorResponseBody(body: ResponseBody?): String {
         return body?.string()?.let {
             try {
                 JsonParser.parseString(it).asJsonObject.get("message").asString

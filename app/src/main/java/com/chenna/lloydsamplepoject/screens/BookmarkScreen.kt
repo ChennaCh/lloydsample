@@ -40,11 +40,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.chenna.domain.entities.ShowEntity
 import com.chenna.domain.utils.Constants
-import com.chenna.domain.utils.NavigationEvent
 import com.chenna.lloydsamplepoject.R
-import com.chenna.lloydsamplepoject.components.ResultActionEvent
-import com.chenna.lloydsamplepoject.components.UiState
-import com.chenna.lloydsamplepoject.viewmodels.TVShowsViewModel
+import com.chenna.lloydsamplepoject.models.BookmarksActionEvent
+import com.chenna.lloydsamplepoject.models.ResultActionStateModel
+import com.chenna.lloydsamplepoject.models.UiState
+import com.chenna.lloydsamplepoject.util.NavigationEvent
+import com.chenna.lloydsamplepoject.viewmodels.BookmarksViewModel
 import kotlinx.coroutines.flow.collectLatest
 
 /**
@@ -54,11 +55,11 @@ import kotlinx.coroutines.flow.collectLatest
  */
 @Composable
 fun BookmarkScreen(
-    viewModel: TVShowsViewModel = hiltViewModel(),
+    viewModel: BookmarksViewModel = hiltViewModel(),
     navigate: (NavigationEvent) -> Unit,
 ) {
 
-    val uiState = remember { mutableStateOf(UiState<ResultActionEvent.ResultActionState>()) }
+    val uiState = remember { mutableStateOf(UiState<ResultActionStateModel>()) }
 
     LaunchedEffect(Unit) {
         viewModel.navigationEvent.collectLatest {
@@ -73,19 +74,19 @@ fun BookmarkScreen(
     }
 
     LaunchedEffect(Unit) {
-        viewModel.onActionEvent(ResultActionEvent.GetBookmarks)
+        viewModel.onActionEvent(BookmarksActionEvent.GetBookmarks)
     }
 
     BookmarkTVShowListContent(
         uiState.value
     ) { show ->
-        viewModel.onActionEvent(actionEvent = ResultActionEvent.RedirectToShowDetails(show))
+        viewModel.onActionEvent(actionEvent = BookmarksActionEvent.RedirectToShowDetails(show))
     }
 }
 
 @Composable
 fun BookmarkTVShowListContent(
-    uiState: UiState<ResultActionEvent.ResultActionState>,
+    uiState: UiState<ResultActionStateModel>,
     onShowClick: (ShowEntity) -> Unit,
 ) {
     Column(

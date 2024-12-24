@@ -29,11 +29,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.chenna.domain.entities.ShowEntity
-import com.chenna.domain.utils.NavigationEvent
+import com.chenna.domain.model.ShowModel
 import com.chenna.lloydsamplepoject.R
-import com.chenna.lloydsamplepoject.components.ResultActionEvent
-import com.chenna.lloydsamplepoject.components.UiState
+import com.chenna.lloydsamplepoject.models.ResultActionStateModel
+import com.chenna.lloydsamplepoject.models.TVShowActionEvent
+import com.chenna.lloydsamplepoject.models.UiState
+import com.chenna.lloydsamplepoject.util.NavigationEvent
 import com.chenna.lloydsamplepoject.util.ProgressBarCompose
 import com.chenna.lloydsamplepoject.util.UiUtils
 import com.chenna.lloydsamplepoject.viewmodels.TVShowsViewModel
@@ -50,7 +51,7 @@ fun ShowsScreen(
     navigate: (NavigationEvent) -> Unit,
 ) {
 
-    val uiState = remember { mutableStateOf(UiState<ResultActionEvent.ResultActionState>()) }
+    val uiState = remember { mutableStateOf(UiState<ResultActionStateModel>()) }
     val context = LocalContext.current
 
 
@@ -66,12 +67,6 @@ fun ShowsScreen(
         }
     }
 
-    LaunchedEffect(Unit) {
-        if (uiState.value.data?.list.isNullOrEmpty()) {
-            viewModel.onActionEvent(ResultActionEvent.FetchTVShows)
-        }
-    }
-
     LaunchedEffect(viewModel) {
         viewModel.resultState.collectLatest {
             uiState.value = it
@@ -81,14 +76,14 @@ fun ShowsScreen(
     TvShowsListContent(
         uiState.value
     ) { show ->
-        viewModel.onActionEvent(actionEvent = ResultActionEvent.RedirectToShowDetails(show))
+        viewModel.onActionEvent(actionEvent = TVShowActionEvent.RedirectToShowDetails(show))
     }
 }
 
 @Composable
 fun TvShowsListContent(
-    uiState: UiState<ResultActionEvent.ResultActionState>,
-    onShowClick: (ShowEntity) -> Unit,
+    uiState: UiState<ResultActionStateModel>,
+    onShowClick: (ShowModel) -> Unit,
 ) {
 
     Column(
@@ -117,7 +112,7 @@ fun TvShowsListContent(
 
 @Composable
 fun TvShowCard(
-    model: ShowEntity,
+    model: ShowModel,
     onClick: () -> Unit,
 ) {
 

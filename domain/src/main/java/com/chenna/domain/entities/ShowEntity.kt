@@ -8,35 +8,35 @@ import androidx.room.PrimaryKey
  * <p>
  * Frost Interactive
  */
-@Entity(tableName = "tvshow")
+@Entity(tableName = "show")
 data class ShowEntity(
     @PrimaryKey val id: Int,
-    val name: String?,
-    val type: String?,
-    val language: String?,
-    val genres: List<String>?,
-    val status: String?,
-    val runtime: Int?,
-    val rating: ShowRatingModel?,
-    val network: NetWorkModel?,
+    val name: String,
+    val type: String,
+    val language: String,
+    val genres: List<String>,
+    val status: String,
+    val runtime: Int,
+    val rating: ShowRatingEntity,
+    val network: NetworkEntity,
     val weight: Int,
-    val image: ShowImageModel?,
+    val image: ShowImageEntity,
     val summary: String,
 )
 
-data class NetWorkModel(
-    val country: CountryModel,
+data class NetworkEntity(
+    val country: CountryEntity,
 )
 
-data class CountryModel(
+data class CountryEntity(
     val name: String?,
 )
 
-data class ShowRatingModel(
+data class ShowRatingEntity(
     val average: Float,
 )
 
-data class ShowImageModel(
+data class ShowImageEntity(
     val medium: String,
     val original: String,
 )

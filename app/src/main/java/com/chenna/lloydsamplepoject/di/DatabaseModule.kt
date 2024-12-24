@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.chenna.data.db.AppDatabase
 import com.chenna.data.db.dao.TVShowDao
+import com.chenna.lloydsamplepoject.util.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,7 +27,7 @@ class DatabaseModule {
         return Room.databaseBuilder(
             context,
             AppDatabase::class.java,
-            "tv_show_database"
+            Constants.DB.NAME
         ).build()
     }
 

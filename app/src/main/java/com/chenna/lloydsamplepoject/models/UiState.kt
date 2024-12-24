@@ -1,4 +1,4 @@
-package com.chenna.lloydsamplepoject.components
+package com.chenna.lloydsamplepoject.models
 
 import com.chenna.domain.utils.Error
 
@@ -11,5 +11,4 @@ data class UiState<T>(
     val data: T? = null,
     val isLoading: Boolean = false,
     val error: Error? = null,
-    val balance: Double? = 0.0,
 )

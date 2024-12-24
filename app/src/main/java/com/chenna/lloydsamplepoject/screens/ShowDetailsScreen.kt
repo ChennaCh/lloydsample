@@ -41,7 +41,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.text.HtmlCompat
@@ -49,37 +48,35 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
-import com.chenna.domain.entities.CountryModel
-import com.chenna.domain.entities.NetWorkModel
-import com.chenna.domain.entities.ShowEntity
-import com.chenna.domain.entities.ShowImageModel
-import com.chenna.domain.entities.ShowRatingModel
-import com.chenna.lloydsamplepoject.components.ResultActionEvent
-import com.chenna.lloydsamplepoject.viewmodels.TVShowsViewModel
+import com.chenna.domain.model.ShowModel
+import com.chenna.domain.model.toShowEntity
+import com.chenna.lloydsamplepoject.models.TVShowDetailsActionEvent
+import com.chenna.lloydsamplepoject.viewmodels.TvShowDetailsViewModel
 
 /**
  * Created by Chenna Rao on 18/12/24.
  * <p>
  * Frost Interactive
  */
-
 @Composable
 fun ShowDetailsScreen(
-    showEntity: ShowEntity,
-    viewModel: TVShowsViewModel = hiltViewModel(),
+    showModel: ShowModel?,
+    viewModel: TvShowDetailsViewModel = hiltViewModel(),
 ) {
     val scrollState = rememberScrollState()
     var isOriginLoaded by remember { mutableStateOf(false) }
     var isBookmarked = remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        viewModel.onActionEvent(ResultActionEvent.IsShowBookmarked(showId = showEntity.id))
+        showModel?.let {
+            viewModel.onActionEvent(TVShowDetailsActionEvent.IsShowBookmarked(showId = it.id))
+        }
     }
 
     LaunchedEffect(viewModel) {
-        viewModel.isBookmarked.collect({
+        viewModel.isBookmarked.collect {
             isBookmarked.value = it
-        })
+        }
     }
 
     Column(
@@ -96,8 +93,8 @@ fun ShowDetailsScreen(
         ) {
             // Display medium image initially
             AsyncImage(
-                model = showEntity.image?.medium,
-                contentDescription = showEntity.name,
+                model = showModel?.image?.medium,
+                contentDescription = showModel?.name,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -108,14 +105,14 @@ fun ShowDetailsScreen(
             )
 
             // Load original image after the medium image
-            if (isOriginLoaded && showEntity.image?.original != null) {
+            if (isOriginLoaded && showModel?.image?.original != null) {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data(showEntity.image?.original)
+                        .data(showModel.image?.original)
                         .size(Size.ORIGINAL) // Load full resolution
                         .crossfade(true)
                         .build(),
-                    contentDescription = showEntity.name,
+                    contentDescription = showModel.name,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -141,10 +138,19 @@ fun ShowDetailsScreen(
 
             IconButton(
                 onClick = {
+                    val showModelObject = showModel?.toShowEntity()
                     if (isBookmarked.value) {
-                        viewModel.onActionEvent(ResultActionEvent.SaveBookMark(showEntity)) // Remove bookmark
+                        showModelObject?.let {
+                            viewModel.onActionEvent(
+                                TVShowDetailsActionEvent.RemoveBookMark(
+                                    it.id
+                                )
+                            )
+                        }
                     } else {
-                        viewModel.onActionEvent(ResultActionEvent.RemoveBookMark(showEntity)) // Remove bookmark
+                        showModelObject?.let {
+                            viewModel.onActionEvent(TVShowDetailsActionEvent.SaveBookMark(it)) // Remove bookmark
+                        }
                     }
                     isBookmarked.value = !isBookmarked.value // Toggle bookmark state
                 },
@@ -165,7 +171,7 @@ fun ShowDetailsScreen(
 
         // Title Section
         Text(
-            text = showEntity.name.orEmpty(),
+            text = showModel?.name.orEmpty(),
             style = MaterialTheme.typography.h4,
             fontFamily = FontFamily.Default,
             fontSize = 24.sp,
@@ -182,7 +188,7 @@ fun ShowDetailsScreen(
             modifier = Modifier.align(Alignment.CenterHorizontally)
         ) {
             Text(
-                text = " ${showEntity.runtime ?: "N/A"} mins",
+                text = " ${showModel?.runtime ?: "N/A"} mins",
                 style = MaterialTheme.typography.body1,
                 modifier = Modifier
                     .padding(horizontal = 2.dp),
@@ -202,7 +208,7 @@ fun ShowDetailsScreen(
             )
 
             Text(
-                text = " ${showEntity.language}",
+                text = " ${showModel?.language}",
                 style = MaterialTheme.typography.body1,
                 modifier = Modifier
                     .padding(horizontal = 2.dp),
@@ -222,7 +228,7 @@ fun ShowDetailsScreen(
             )
 
             Text(
-                text = " ${showEntity.type}",
+                text = " ${showModel?.type}",
                 style = MaterialTheme.typography.body1,
                 modifier = Modifier
                     .padding(horizontal = 2.dp),
@@ -242,7 +248,7 @@ fun ShowDetailsScreen(
             )
 
             Text(
-                text = " ${showEntity.network?.country?.name}",
+                text = " ${showModel?.network?.country?.name}",
                 style = MaterialTheme.typography.body1,
                 modifier = Modifier
                     .padding(horizontal = 2.dp),
@@ -255,20 +261,20 @@ fun ShowDetailsScreen(
         Row(
             modifier = Modifier.align(Alignment.CenterHorizontally)
         ) {
-            showEntity.genres?.let { GenresList(genres = it) }
+            showModel?.genres?.let { GenresList(genres = it) }
         }
 
         Row(
             modifier = Modifier.align(Alignment.CenterHorizontally),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            showEntity.rating?.average?.let {
+            showModel?.rating?.average?.let {
                 StarRatingBar(
                     maxStars = 5,
                 )
             }
             Text(
-                text = " ${showEntity.rating?.average}",
+                text = " ${showModel?.rating?.average}",
                 style = MaterialTheme.typography.body1,
                 modifier = Modifier
                     .padding(horizontal = 2.dp),
@@ -287,17 +293,21 @@ fun ShowDetailsScreen(
 
             // Summary Section with HTML Parsing
             val parsedSummary =
-                HtmlCompat.fromHtml(showEntity.summary, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
-            Text(
-                text = "$parsedSummary",
-                style = MaterialTheme.typography.body1,
-                color = Color.Gray.copy(alpha = 0.9f),
-                fontFamily = FontFamily.Default,
-                fontSize = 12.sp,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-            )
+                showModel?.summary?.let {
+                    HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
+                }
+            if (parsedSummary != null) {
+                Text(
+                    text = parsedSummary,
+                    style = MaterialTheme.typography.body1,
+                    color = Color.Gray.copy(alpha = 0.9f),
+                    fontFamily = FontFamily.Default,
+                    fontSize = 12.sp,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                )
+            }
 
         }
     }
@@ -308,7 +318,6 @@ fun StarRatingBar(
     maxStars: Int = 5,
 ) {
     val density = LocalDensity.current.density
-    val starSize = (12f * density).dp
     val starSpacing = (0.5f * density).dp
 
     Row(
@@ -362,30 +371,6 @@ fun GenreChip(genre: String) {
             fontWeight = FontWeight.Light
         )
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewShowDetailsScreen() {
-    ShowDetailsScreen(
-        ShowEntity(
-            id = 1,
-            name = "Under the Dome",
-            genres = listOf("Drama", "Science-Fiction", "Thriller"),
-            status = "Ended",
-            runtime = 60,
-            rating = ShowRatingModel(average = 6f),
-            weight = 98,
-            language = "English",
-            type = "Scripted",
-            network = NetWorkModel(country = CountryModel(name = "United States")),
-            image = ShowImageModel(
-                medium = "https://static.tvmaze.com/uploads/images/medium_portrait/81/202627.jpg",
-                original = "https://static.tvmaze.com/uploads/images/original_untouched/81/202627.jpg"
-            ),
-            summary = "Under the Dome is the story of a small town sealed off by an enormous dome."
-        )
-    )
 }
 
 

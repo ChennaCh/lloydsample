@@ -2,12 +2,13 @@ package com.chenna.lloydsamplepoject.viewmodels
 
 import androidx.lifecycle.viewModelScope
 import com.chenna.domain.usecase.ShowsUseCase
-import com.chenna.domain.utils.Constants
 import com.chenna.domain.utils.Error
-import com.chenna.domain.utils.NavigationEvent
 import com.chenna.domain.utils.Work
-import com.chenna.lloydsamplepoject.components.ResultActionEvent
-import com.chenna.lloydsamplepoject.components.UiState
+import com.chenna.lloydsamplepoject.models.ResultActionStateModel
+import com.chenna.lloydsamplepoject.models.TVShowActionEvent
+import com.chenna.lloydsamplepoject.models.UiState
+import com.chenna.lloydsamplepoject.util.Constants
+import com.chenna.lloydsamplepoject.util.NavigationEvent
 import com.chenna.lloydsamplepoject.viewmodels.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,74 +21,32 @@ import javax.inject.Inject
  * <p>
  * Frost Interactive
  */
-
 @HiltViewModel
 class TVShowsViewModel @Inject constructor(
     private val useCase: ShowsUseCase,
 ) : BaseViewModel() {
 
     private val _resultState =
-        MutableStateFlow(UiState<ResultActionEvent.ResultActionState>(isLoading = true))
-    val resultState: StateFlow<UiState<ResultActionEvent.ResultActionState>> = _resultState
+        MutableStateFlow(UiState<ResultActionStateModel>(isLoading = true))
+    val resultState: StateFlow<UiState<ResultActionStateModel>> = _resultState
 
-    private val _isBookmarked = MutableStateFlow(false)
-    val isBookmarked: StateFlow<Boolean> = _isBookmarked
+    init {
+        fetchTvShows()
+    }
 
-    fun onActionEvent(actionEvent: ResultActionEvent) {
+    fun onActionEvent(actionEvent: TVShowActionEvent) {
         when (actionEvent) {
-
-            is ResultActionEvent.RedirectToShowDetails -> {
-
+            is TVShowActionEvent.RedirectToShowDetails -> {
                 viewModelScope.launch {
                     _navigationEvent.emit(
                         NavigationEvent(
                             route = Constants.AppRoute.SHOW_DETAILS,
-                            any = actionEvent.entity
+                            any = actionEvent.model
                         )
                     )
                 }
             }
-
-            ResultActionEvent.GetBookmarks -> getBookMarks()
-            is ResultActionEvent.RemoveBookMark -> viewModelScope.launch {
-                useCase.saveBookmark(
-                    actionEvent.entity
-                )
-            }
-
-            is ResultActionEvent.SaveBookMark -> viewModelScope.launch {
-                useCase.removeBookmark(
-                    actionEvent.entity
-                )
-            }
-
-            is ResultActionEvent.IsShowBookmarked ->
-                viewModelScope.launch {
-                    _isBookmarked.value = useCase.isShowBookmarked(actionEvent.showId)
-                }
-
-            ResultActionEvent.FetchTVShows -> fetchTvShows()
         }
-    }
-
-    fun getBookMarks() {
-
-        viewModelScope.launch {
-            val bookMark = ResultActionEvent.ResultActionState(
-                list = resultState.value.data?.list ?: listOf(),
-                bookMarks = useCase.getAllBookmarks()
-            )
-
-            _resultState.value = resultState.value.copy(
-                isLoading = false,
-                error = null,
-                data = resultState.value.data?.copy(
-                    list = resultState.value.data?.list ?: listOf(),
-                    bookMarks = useCase.getAllBookmarks()
-                ) ?: bookMark,
-            )
-        }
-
     }
 
     fun fetchTvShows() {
@@ -97,7 +56,7 @@ class TVShowsViewModel @Inject constructor(
                 is Work.Result -> {
 
                     if (work.data.isNotEmpty()) {
-                        val list = ResultActionEvent.ResultActionState(
+                        val list = ResultActionStateModel(
                             list = work.data
                         )
 
@@ -123,7 +82,7 @@ class TVShowsViewModel @Inject constructor(
                     _resultState.value = resultState.value.copy(
                         isLoading = false,
                         error = Error(
-                            title = "Error",
+                            title = Constants.Errors.ERROR,
                             description = work.message.message
                         )
                     )
@@ -134,7 +93,7 @@ class TVShowsViewModel @Inject constructor(
                     _resultState.value = resultState.value.copy(
                         isLoading = false,
                         error = Error(
-                            title = "Connection Error",
+                            title = Constants.Errors.CONNECTION_ERROR,
                             description = Constants.Errors.TV_SHOWS
                         )
                     )
