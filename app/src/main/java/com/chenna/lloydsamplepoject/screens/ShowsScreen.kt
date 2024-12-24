@@ -31,8 +31,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.chenna.domain.model.ShowModel
 import com.chenna.lloydsamplepoject.R
-import com.chenna.lloydsamplepoject.models.TvShowStateModel
 import com.chenna.lloydsamplepoject.models.TvShowActionEvent
+import com.chenna.lloydsamplepoject.models.TvShowStateModel
 import com.chenna.lloydsamplepoject.models.UiState
 import com.chenna.lloydsamplepoject.util.NavigationEvent
 import com.chenna.lloydsamplepoject.util.ProgressBarCompose

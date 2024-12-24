@@ -293,8 +293,8 @@ fun ShowDetailsScreen(
 
             // Summary Section with HTML Parsing
             val parsedSummary = showModel.summary.let {
-                    HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
-                }
+                HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
+            }
             Text(
                 text = parsedSummary,
                 style = MaterialTheme.typography.body1,

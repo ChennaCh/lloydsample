@@ -51,7 +51,7 @@ object NavigationGraphBuilder {
                 updateElevation(0.dp)
                 updateTitle(DashboardNavComp.Bookmark.title)
                 BookmarkScreen() {
-                  goto(it)
+                    goto(it)
                 }
                 updateBottomNavVisibility(true)
             }

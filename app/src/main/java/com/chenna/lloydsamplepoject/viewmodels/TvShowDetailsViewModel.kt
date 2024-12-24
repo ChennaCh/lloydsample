@@ -17,7 +17,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class TvShowDetailsViewModel @Inject constructor(
-    private val useCase: ShowsUseCase
+    private val useCase: ShowsUseCase,
 ) : BaseViewModel() {
 
     private val _isBookmarked = MutableStateFlow(false)
