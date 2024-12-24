@@ -5,11 +5,11 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.chenna.data.db.AppDatabase
 import com.chenna.data.db.dao.TVShowDao
-import com.chenna.domain.entities.CountryModel
-import com.chenna.domain.entities.NetWorkModel
+import com.chenna.domain.entities.CountryEntity
+import com.chenna.domain.entities.NetworkEntity
 import com.chenna.domain.entities.ShowEntity
-import com.chenna.domain.entities.ShowImageModel
-import com.chenna.domain.entities.ShowRatingModel
+import com.chenna.domain.entities.ShowImageEntity
+import com.chenna.domain.entities.ShowRatingEntity
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -107,7 +107,7 @@ class TVShowDaoTest {
         }
 
         // Mock removeBookmark behavior
-        coEvery { tvShowDao.removeBookmark(show) } answers {
+        coEvery { tvShowDao.removeBookmark(show.id) } answers {
             bookmarkedShows.remove(show)
         }
 
@@ -118,7 +118,7 @@ class TVShowDaoTest {
 
         // Act
         tvShowDao.saveBookmark(show) // Save the show
-        tvShowDao.removeBookmark(show) // Remove the show
+        tvShowDao.removeBookmark(show.id) // Remove the show
         val result = tvShowDao.getSavedBookMarks().find { it.id == show.id }
 
         // Assert
@@ -152,11 +152,11 @@ fun getShowList(): List<ShowEntity> {
             genres = listOf("Drama", "Science-Fiction", "Thriller"),
             status = "Ended",
             runtime = 60,
-            rating = ShowRatingModel(average = 6.5f),
+            rating = ShowRatingEntity(average = 6.5f),
             weight = 98,
             type = "Scripted",
-            network = NetWorkModel(country = CountryModel(name = "United States")),
-            image = ShowImageModel(
+            network = NetworkEntity(country = CountryEntity(name = "United States")),
+            image = ShowImageEntity(
                 medium = "https://static.tvmaze.com/uploads/images/medium_portrait/81/202627.jpg",
                 original = "https://static.tvmaze.com/uploads/images/original_untouched/81/202627.jpg"
             ),
@@ -170,10 +170,10 @@ fun getShowList(): List<ShowEntity> {
             status = "Ended",
             runtime = 47,
             type = "Scripted",
-            network = NetWorkModel(country = CountryModel(name = "United States")),
-            rating = ShowRatingModel(average = 9.5f),
+            network = NetworkEntity(country = CountryEntity(name = "United States")),
+            rating = ShowRatingEntity(average = 9.5f),
             weight = 100,
-            image = ShowImageModel(
+            image = ShowImageEntity(
                 medium = "https://static.tvmaze.com/uploads/images/medium_portrait/0/2400.jpg",
                 original = "https://static.tvmaze.com/uploads/images/original_untouched/0/2400.jpg"
             ),
@@ -190,11 +190,11 @@ fun getShowItem(): ShowEntity {
         genres = listOf("Drama", "Science-Fiction", "Thriller"),
         status = "Ended",
         runtime = 60,
-        rating = ShowRatingModel(average = 6.5f),
+        rating = ShowRatingEntity(average = 6.5f),
         weight = 98,
         type = "Scripted",
-        network = NetWorkModel(country = CountryModel(name = "United States")),
-        image = ShowImageModel(
+        network = NetworkEntity(country = CountryEntity(name = "United States")),
+        image = ShowImageEntity(
             medium = "https://static.tvmaze.com/uploads/images/medium_portrait/81/202627.jpg",
             original = "https://static.tvmaze.com/uploads/images/original_untouched/81/202627.jpg"
         ),
