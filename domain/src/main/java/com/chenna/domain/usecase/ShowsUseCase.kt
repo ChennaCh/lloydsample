@@ -1,6 +1,7 @@
 package com.chenna.domain.usecase
 
 import com.chenna.domain.entities.ShowEntity
+import com.chenna.domain.model.ShowModel
 import com.chenna.domain.utils.Work
 
 /**
@@ -9,9 +10,9 @@ import com.chenna.domain.utils.Work
  * Frost Interactive
  */
 interface ShowsUseCase {
-    suspend fun getListOfShows(): Work<List<ShowEntity>>?
+    suspend fun getListOfShows(): Work<List<ShowModel>>
     suspend fun saveBookmark(showEntity: ShowEntity)
-    suspend fun removeBookmark(showEntity: ShowEntity)
+    suspend fun removeBookmark(id: Int)
     suspend fun getAllBookmarks(): List<ShowEntity>
     suspend fun isShowBookmarked(id: Int): Boolean
 

@@ -1,8 +1,7 @@
 package com.chenna.data.datasource
 
 import com.chenna.data.service.ITvShowService
-import com.chenna.domain.entities.ShowEntity
-import com.chenna.domain.utils.BaseApiResponse
+import com.chenna.domain.model.ShowModel
 import com.chenna.domain.utils.FailedResponse
 import com.chenna.domain.utils.NetworkResult
 import retrofit2.Retrofit
@@ -17,7 +16,7 @@ class TVShowRemoteDataSource @Inject constructor(private val retrofit: Retrofit)
     BaseRemoteDataSource() {
 
     private val requestService: ITvShowService by lazy { retrofit.create(ITvShowService::class.java) }
-    suspend fun getTvShows(): NetworkResult<List<ShowEntity>?, FailedResponse, Exception> {
+    suspend fun getTvShows(): NetworkResult<List<ShowModel>?, FailedResponse, Exception> {
         return performSafeApiRequestCall {
             requestService.getTvShows()
         }

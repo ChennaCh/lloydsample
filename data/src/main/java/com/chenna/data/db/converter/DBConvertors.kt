@@ -1,9 +1,9 @@
 package com.chenna.data.db.converter
 
 import androidx.room.TypeConverter
-import com.chenna.domain.entities.NetWorkModel
-import com.chenna.domain.entities.ShowImageModel
-import com.chenna.domain.entities.ShowRatingModel
+import com.chenna.domain.entities.NetworkEntity
+import com.chenna.domain.entities.ShowImageEntity
+import com.chenna.domain.entities.ShowRatingEntity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -18,31 +18,31 @@ object DateConverter {
 
     @TypeConverter
     @JvmStatic
-    fun toNetwork(networkString: String?): NetWorkModel? {
+    fun toNetwork(networkString: String?): NetworkEntity? {
         return if (networkString.isNullOrEmpty()) {
             null
         } else {
-            gson.fromJson(networkString, NetWorkModel::class.java)
+            gson.fromJson(networkString, NetworkEntity::class.java)
         }
     }
 
     @TypeConverter
     @JvmStatic
-    fun toRating(ratingString: String?): ShowRatingModel? {
+    fun toRating(ratingString: String?): ShowRatingEntity? {
         return if (ratingString.isNullOrEmpty()) {
             null
         } else {
-            gson.fromJson(ratingString, ShowRatingModel::class.java)
+            gson.fromJson(ratingString, ShowRatingEntity::class.java)
         }
     }
 
     @TypeConverter
     @JvmStatic
-    fun toImage(imageString: String?): ShowImageModel? {
+    fun toImage(imageString: String?): ShowImageEntity? {
         return if (imageString.isNullOrEmpty()) {
             null
         } else {
-            gson.fromJson(imageString, ShowImageModel::class.java)
+            gson.fromJson(imageString, ShowImageEntity::class.java)
         }
     }
 
@@ -65,19 +65,19 @@ object DateConverter {
 
     @TypeConverter
     @JvmStatic
-    fun fromRating(rating: ShowRatingModel?): String {
+    fun fromRating(rating: ShowRatingEntity?): String {
         return gson.toJson(rating)
     }
 
     @TypeConverter
     @JvmStatic
-    fun fromNetwork(network: NetWorkModel?): String {
+    fun fromNetwork(network: NetworkEntity?): String {
         return gson.toJson(network)
     }
 
     @TypeConverter
     @JvmStatic
-    fun fromImage(image: ShowImageModel?): String {
+    fun fromImage(image: ShowImageEntity?): String {
         return gson.toJson(image)
     }
 }

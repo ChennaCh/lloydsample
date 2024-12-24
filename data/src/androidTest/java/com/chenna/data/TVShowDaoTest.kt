@@ -143,7 +143,6 @@ class TVShowDaoTest {
 
 }
 
-
 fun getShowList(): List<ShowEntity> {
     return listOf(
         ShowEntity(

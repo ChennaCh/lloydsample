@@ -18,8 +18,8 @@ class TVShowLocalDataSource @Inject constructor(private val tvShowDao: TVShowDao
         tvShowDao.saveBookmark(showEntity)
     }
 
-    suspend fun deleteBookMark(showEntity: ShowEntity) {
-        tvShowDao.removeBookmark(showEntity)
+    suspend fun deleteBookMark(id: Int) {
+        tvShowDao.removeBookmark(showId = id)
     }
 
     suspend fun isShowBookmarked(id: Int): Boolean {

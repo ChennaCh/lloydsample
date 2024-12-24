@@ -1,6 +1,6 @@
 package com.chenna.data.service
 
-import com.chenna.domain.entities.ShowEntity
+import com.chenna.domain.model.ShowModel
 import com.chenna.domain.utils.Constants
 import retrofit2.Response
 import retrofit2.http.GET
@@ -13,6 +13,6 @@ import retrofit2.http.GET
 interface ITvShowService {
 
     @GET(Constants.Apis.GET_TV_SHOWS)
-    suspend fun getTvShows(): Response<List<ShowEntity>>
+    suspend fun getTvShows(): Response<List<ShowModel>>
 
 }

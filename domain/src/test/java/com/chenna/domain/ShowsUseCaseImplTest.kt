@@ -1,10 +1,15 @@
 package com.chenna.domain
 
-import com.chenna.domain.entities.CountryModel
-import com.chenna.domain.entities.NetWorkModel
+import com.chenna.domain.entities.CountryEntity
+import com.chenna.domain.entities.NetworkEntity
 import com.chenna.domain.entities.ShowEntity
-import com.chenna.domain.entities.ShowImageModel
-import com.chenna.domain.entities.ShowRatingModel
+import com.chenna.domain.entities.ShowImageEntity
+import com.chenna.domain.entities.ShowRatingEntity
+import com.chenna.domain.model.CountryModel
+import com.chenna.domain.model.NetWorkModel
+import com.chenna.domain.model.ShowImageModel
+import com.chenna.domain.model.ShowModel
+import com.chenna.domain.model.ShowRatingModel
 import com.chenna.domain.repository.TvShowRepository
 import com.chenna.domain.usecase.impl.ShowsUseCaseImpl
 import com.chenna.domain.utils.NetworkResult
@@ -40,7 +45,7 @@ class ShowsUseCaseImplTest {
         // Arrange
         val mockShows =
             listOf(
-                ShowEntity(
+                ShowModel(
                     id = 1,
                     name = "Under the Dome",
                     language = "English",
@@ -56,7 +61,7 @@ class ShowsUseCaseImplTest {
                         original = "https://static.tvmaze.com/uploads/images/original_untouched/81/202627.jpg"
                     ),
                     summary = "Under the Dome is the story of a small town sealed off by an enormous dome."
-                ), ShowEntity(
+                ), ShowModel(
                     id = 2,
                     name = "Breaking Bad",
                     language = "English",
@@ -97,11 +102,11 @@ class ShowsUseCaseImplTest {
             genres = listOf("Drama", "Science-Fiction", "Thriller"),
             status = "Ended",
             runtime = 60,
-            rating = ShowRatingModel(average = 6.5f),
+            rating = ShowRatingEntity(average = 6.5f),
             weight = 98,
             type = "Scripted",
-            network = NetWorkModel(country = CountryModel(name = "United States")),
-            image = ShowImageModel(
+            network = NetworkEntity(country = CountryEntity(name = "United States")),
+            image = ShowImageEntity(
                 medium = "https://static.tvmaze.com/uploads/images/medium_portrait/81/202627.jpg",
                 original = "https://static.tvmaze.com/uploads/images/original_untouched/81/202627.jpg"
             ),
@@ -126,23 +131,23 @@ class ShowsUseCaseImplTest {
             genres = listOf("Drama", "Science-Fiction", "Thriller"),
             status = "Ended",
             runtime = 60,
-            rating = ShowRatingModel(average = 6.5f),
+            rating = ShowRatingEntity(average = 6.5f),
             weight = 98,
             type = "Scripted",
-            network = NetWorkModel(country = CountryModel(name = "United States")),
-            image = ShowImageModel(
+            network = NetworkEntity(country = CountryEntity(name = "United States")),
+            image = ShowImageEntity(
                 medium = "https://static.tvmaze.com/uploads/images/medium_portrait/81/202627.jpg",
                 original = "https://static.tvmaze.com/uploads/images/original_untouched/81/202627.jpg"
             ),
             summary = "Under the Dome is the story of a small town sealed off by an enormous dome."
         )
-        coEvery { repository.removeBookmark(mockShow) } returns Unit
+        coEvery { repository.removeBookmark(mockShow.id) } returns Unit
 
         // Act
-        showsUseCaseImpl.removeBookmark(mockShow)
+        showsUseCaseImpl.removeBookmark(mockShow.id)
 
         // Assert
-        coVerify { repository.removeBookmark(mockShow) }
+        coVerify { repository.removeBookmark(mockShow.id) }
     }
 
     @Test
@@ -156,11 +161,11 @@ class ShowsUseCaseImplTest {
                 genres = listOf("Drama", "Science-Fiction", "Thriller"),
                 status = "Ended",
                 runtime = 60,
-                rating = ShowRatingModel(average = 6.5f),
+                rating = ShowRatingEntity(average = 6.5f),
                 weight = 98,
                 type = "Scripted",
-                network = NetWorkModel(country = CountryModel(name = "United States")),
-                image = ShowImageModel(
+                network = NetworkEntity(country = CountryEntity(name = "United States")),
+                image = ShowImageEntity(
                     medium = "https://static.tvmaze.com/uploads/images/medium_portrait/81/202627.jpg",
                     original = "https://static.tvmaze.com/uploads/images/original_untouched/81/202627.jpg"
                 ),

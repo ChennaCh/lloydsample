@@ -18,12 +18,12 @@ interface TVShowDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveBookmark(show: ShowEntity)
 
-    @Query("SELECT COUNT(*) FROM tvshow WHERE id = :showId")
+    @Query("SELECT COUNT(*) FROM show WHERE id = :showId")
     suspend fun isShowBookmarked(showId: Int): Boolean
 
-    @Delete
-    suspend fun removeBookmark(show: ShowEntity)
+    @Query("DELETE FROM show WHERE id = :showId")
+    suspend fun removeBookmark(showId: Int)
 
-    @Query("SELECT * FROM tvshow")
+    @Query("SELECT * FROM show")
     suspend fun getSavedBookMarks(): List<ShowEntity>
 }

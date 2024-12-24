@@ -2,11 +2,11 @@ package com.chenna.data
 
 import com.chenna.data.datasource.TVShowLocalDataSource
 import com.chenna.data.db.dao.TVShowDao
-import com.chenna.domain.entities.CountryModel
-import com.chenna.domain.entities.NetWorkModel
+import com.chenna.domain.entities.CountryEntity
+import com.chenna.domain.entities.NetworkEntity
 import com.chenna.domain.entities.ShowEntity
-import com.chenna.domain.entities.ShowImageModel
-import com.chenna.domain.entities.ShowRatingModel
+import com.chenna.domain.entities.ShowImageEntity
+import com.chenna.domain.entities.ShowRatingEntity
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -36,11 +36,11 @@ class TVShowLocalDataSourceTest {
                 genres = listOf("Drama", "Science-Fiction", "Thriller"),
                 status = "Ended",
                 runtime = 60,
-                rating = ShowRatingModel(average = 6.5f),
+                rating = ShowRatingEntity(average = 6.5f),
                 weight = 98,
                 type = "Scripted",
-                network = NetWorkModel(country = CountryModel(name = "United States")),
-                image = ShowImageModel(
+                network = NetworkEntity(country = CountryEntity(name = "United States")),
+                image = ShowImageEntity(
                     medium = "https://static.tvmaze.com/uploads/images/medium_portrait/81/202627.jpg",
                     original = "https://static.tvmaze.com/uploads/images/original_untouched/81/202627.jpg"
                 ),
@@ -66,11 +66,11 @@ class TVShowLocalDataSourceTest {
             genres = listOf("Drama", "Science-Fiction", "Thriller"),
             status = "Ended",
             runtime = 60,
-            rating = ShowRatingModel(average = 6.5f),
+            rating = ShowRatingEntity(average = 6.5f),
             weight = 98,
             type = "Scripted",
-            network = NetWorkModel(country = CountryModel(name = "United States")),
-            image = ShowImageModel(
+            network = NetworkEntity(country = CountryEntity(name = "United States")),
+            image = ShowImageEntity(
                 medium = "https://static.tvmaze.com/uploads/images/medium_portrait/81/202627.jpg",
                 original = "https://static.tvmaze.com/uploads/images/original_untouched/81/202627.jpg"
             ),
@@ -94,11 +94,11 @@ class TVShowLocalDataSourceTest {
             genres = listOf("Drama", "Science-Fiction", "Thriller"),
             status = "Ended",
             runtime = 60,
-            rating = ShowRatingModel(average = 6.5f),
+            rating = ShowRatingEntity(average = 6.5f),
             weight = 98,
             type = "Scripted",
-            network = NetWorkModel(country = CountryModel(name = "United States")),
-            image = ShowImageModel(
+            network = NetworkEntity(country = CountryEntity(name = "United States")),
+            image = ShowImageEntity(
                 medium = "https://static.tvmaze.com/uploads/images/medium_portrait/81/202627.jpg",
                 original = "https://static.tvmaze.com/uploads/images/original_untouched/81/202627.jpg"
             ),
@@ -106,10 +106,10 @@ class TVShowLocalDataSourceTest {
         )
 
         // Act
-        localDataSource.deleteBookMark(mockShow)
+        localDataSource.deleteBookMark(mockShow.id)
 
         // Assert
-        coVerify { mockDao.removeBookmark(mockShow) }
+        coVerify { mockDao.removeBookmark(mockShow.id) }
     }
 
     @Test

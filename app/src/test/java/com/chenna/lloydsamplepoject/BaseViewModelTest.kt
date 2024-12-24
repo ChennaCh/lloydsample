@@ -1,11 +1,11 @@
 package com.chenna.lloydsamplepoject
 
 import androidx.lifecycle.viewModelScope
-import com.chenna.domain.utils.Constants
 import com.chenna.domain.utils.Message
 import com.chenna.domain.utils.MessageStatus
 import com.chenna.domain.utils.MessageType
-import com.chenna.domain.utils.NavigationEvent
+import com.chenna.lloydsamplepoject.util.Constants
+import com.chenna.lloydsamplepoject.util.NavigationEvent
 import com.chenna.lloydsamplepoject.viewmodels.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

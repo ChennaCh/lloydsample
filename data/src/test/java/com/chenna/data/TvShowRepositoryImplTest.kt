@@ -3,11 +3,17 @@ package com.chenna.data
 import com.chenna.data.datasource.TVShowLocalDataSource
 import com.chenna.data.datasource.TVShowRemoteDataSource
 import com.chenna.data.repository.TvShowRepositoryImpl
-import com.chenna.domain.entities.CountryModel
-import com.chenna.domain.entities.NetWorkModel
+import com.chenna.domain.entities.CountryEntity
+import com.chenna.domain.entities.NetworkEntity
 import com.chenna.domain.entities.ShowEntity
-import com.chenna.domain.entities.ShowImageModel
-import com.chenna.domain.entities.ShowRatingModel
+import com.chenna.domain.entities.ShowImageEntity
+import com.chenna.domain.entities.ShowRatingEntity
+import com.chenna.domain.model.CountryModel
+import com.chenna.domain.model.NetWorkModel
+import com.chenna.domain.model.ShowImageModel
+import com.chenna.domain.model.ShowModel
+import com.chenna.domain.model.ShowRatingModel
+import com.chenna.domain.model.toShowEntity
 import com.chenna.domain.utils.NetworkResult
 import io.mockk.Runs
 import io.mockk.clearAllMocks
@@ -76,16 +82,16 @@ class TvShowRepositoryImplTest {
     fun `test removeBookmark`() = runBlocking {
         val mockShow = getShowItem()
 
-        coEvery { localDataSource.deleteBookMark(mockShow) } just Runs
+        coEvery { localDataSource.deleteBookMark(mockShow.id) } just Runs
 
-        repository.removeBookmark(mockShow)
+        repository.removeBookmark(mockShow.id)
 
-        coVerify { localDataSource.deleteBookMark(mockShow) }
+        coVerify { localDataSource.deleteBookMark(mockShow.id) }
     }
 
     @Test
     fun `test getAllBookmarks`() = runBlocking {
-        val mockBookmarks = getShowList()
+        val mockBookmarks = getShowList().map { it.toShowEntity() }
 
         coEvery { localDataSource.getBookmarkedTvShows() } returns mockBookmarks
 
@@ -120,9 +126,9 @@ class TvShowRepositoryImplTest {
     }
 }
 
-fun getShowList(): List<ShowEntity> {
+fun getShowList(): List<ShowModel> {
     return listOf(
-        ShowEntity(
+        ShowModel(
             id = 1,
             name = "Under the Dome",
             language = "English",
@@ -139,7 +145,7 @@ fun getShowList(): List<ShowEntity> {
             ),
             summary = "Under the Dome is the story of a small town sealed off by an enormous dome."
         ),
-        ShowEntity(
+        ShowModel(
             id = 2,
             name = "Breaking Bad",
             language = "English",
@@ -167,11 +173,11 @@ fun getShowItem(): ShowEntity {
         genres = listOf("Drama", "Science-Fiction", "Thriller"),
         status = "Ended",
         runtime = 60,
-        rating = ShowRatingModel(average = 6.5f),
+        rating = ShowRatingEntity(average = 6.5f),
         weight = 98,
         type = "Scripted",
-        network = NetWorkModel(country = CountryModel(name = "United States")),
-        image = ShowImageModel(
+        network = NetworkEntity(country = CountryEntity(name = "United States")),
+        image = ShowImageEntity(
             medium = "https://static.tvmaze.com/uploads/images/medium_portrait/81/202627.jpg",
             original = "https://static.tvmaze.com/uploads/images/original_untouched/81/202627.jpg"
         ),
