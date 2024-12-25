@@ -8,8 +8,12 @@ import com.chenna.domain.entities.NetworkEntity
 import com.chenna.domain.entities.ShowEntity
 import com.chenna.domain.entities.ShowImageEntity
 import com.chenna.domain.entities.ShowRatingEntity
+import com.chenna.domain.model.CastModel
 import com.chenna.domain.model.CountryModel
 import com.chenna.domain.model.NetWorkModel
+import com.chenna.domain.model.PersonCountryModel
+import com.chenna.domain.model.PersonImageModel
+import com.chenna.domain.model.PersonModel
 import com.chenna.domain.model.ShowImageModel
 import com.chenna.domain.model.ShowModel
 import com.chenna.domain.model.ShowRatingModel
@@ -65,6 +69,20 @@ class TvShowRepositoryImplTest {
         assertTrue(result is NetworkResult.Success)
         assertEquals(mockShows, (result as NetworkResult.Success).data)
         coVerify { remoteDataSource.getTvShows() }
+    }
+
+    @Test
+    fun `test getTvShowCastAndCrews returns success`() = runBlocking {
+        val mockShows = getShowCasts()
+        val mockResult = NetworkResult.Success(mockShows)
+
+        coEvery { remoteDataSource.fetchCasts() } returns mockResult
+
+        val result = repository.fetchCasts()
+
+        assertTrue(result is NetworkResult.Success)
+        assertEquals(mockShows, (result as NetworkResult.Success).data)
+        coVerify { remoteDataSource.fetchCasts() }
     }
 
     @Test
@@ -161,6 +179,41 @@ fun getShowList(): List<ShowModel> {
                 original = "https://static.tvmaze.com/uploads/images/original_untouched/0/2400.jpg"
             ),
             summary = "A high school chemistry teacher turned methamphetamine producer."
+        )
+    )
+}
+
+fun getShowCasts(): List<CastModel> {
+    return listOf(
+        CastModel(
+            person = PersonModel(
+                id = "1",
+                name = "Mike Vogel",
+                birthday = "1979-07-17",
+                country = PersonCountryModel(
+                    name = "United States"
+                ),
+                gender = "Male",
+                image = PersonImageModel(
+                    medium = "https://static.tvmaze.com/uploads/images/medium_portrait/0/3.jpg",
+                    original = "https://static.tvmaze.com/uploads/images/original_untouched/0/3.jpg"
+                )
+            )
+        ),
+        CastModel(
+            person = PersonModel(
+                id = "1",
+                name = "Rachelle Lefevre",
+                birthday = "1979-02-01",
+                country = PersonCountryModel(
+                    name = "Canada"
+                ),
+                gender = "Female",
+                image = PersonImageModel(
+                    medium = "https://static.tvmaze.com/uploads/images/medium_portrait/82/207417.jpg",
+                    original = "https://static.tvmaze.com/uploads/images/original_untouched/82/207417.jpg"
+                )
+            )
         )
     )
 }

@@ -203,6 +203,7 @@ data class BottomNavItem(
 // Define bottom navigation items
 val bottomNavItems = listOf(
     BottomNavItem("Shows", R.drawable.ic_tvshow, DashboardNavComp.Shows.route),
+    BottomNavItem("Cast", R.drawable.ic_cast_crew_icon, DashboardNavComp.Cast.route),
     BottomNavItem("Bookmarks", R.drawable.ic_watchlist, DashboardNavComp.Bookmark.route)
 )
 
