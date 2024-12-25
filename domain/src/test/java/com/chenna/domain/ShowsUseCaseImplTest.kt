@@ -5,11 +5,16 @@ import com.chenna.domain.entities.NetworkEntity
 import com.chenna.domain.entities.ShowEntity
 import com.chenna.domain.entities.ShowImageEntity
 import com.chenna.domain.entities.ShowRatingEntity
+import com.chenna.domain.model.CastModel
 import com.chenna.domain.model.CountryModel
 import com.chenna.domain.model.NetWorkModel
+import com.chenna.domain.model.PersonCountryModel
+import com.chenna.domain.model.PersonImageModel
+import com.chenna.domain.model.PersonModel
 import com.chenna.domain.model.ShowImageModel
 import com.chenna.domain.model.ShowModel
 import com.chenna.domain.model.ShowRatingModel
+import com.chenna.domain.model.toShowEntity
 import com.chenna.domain.repository.TvShowRepository
 import com.chenna.domain.usecase.impl.ShowsUseCaseImpl
 import com.chenna.domain.utils.NetworkResult
@@ -17,7 +22,6 @@ import com.chenna.domain.utils.Work
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -41,42 +45,7 @@ class ShowsUseCaseImplTest {
     @Test
     fun `getListOfShows should return parsed network results`() = runTest {
         // Arrange
-        val mockShows =
-            listOf(
-                ShowModel(
-                    id = 1,
-                    name = "Under the Dome",
-                    language = "English",
-                    genres = listOf("Drama", "Science-Fiction", "Thriller"),
-                    status = "Ended",
-                    runtime = 60,
-                    rating = ShowRatingModel(average = 6.5f),
-                    weight = 98,
-                    type = "Scripted",
-                    network = NetWorkModel(country = CountryModel(name = "United States")),
-                    image = ShowImageModel(
-                        medium = "https://static.tvmaze.com/uploads/images/medium_portrait/81/202627.jpg",
-                        original = "https://static.tvmaze.com/uploads/images/original_untouched/81/202627.jpg"
-                    ),
-                    summary = "Under the Dome is the story of a small town sealed off by an enormous dome."
-                ), ShowModel(
-                    id = 2,
-                    name = "Breaking Bad",
-                    language = "English",
-                    genres = listOf("Crime", "Drama", "Thriller"),
-                    status = "Ended",
-                    runtime = 47,
-                    type = "Scripted",
-                    network = NetWorkModel(country = CountryModel(name = "United States")),
-                    rating = ShowRatingModel(average = 9.5f),
-                    weight = 100,
-                    image = ShowImageModel(
-                        medium = "https://static.tvmaze.com/uploads/images/medium_portrait/0/2400.jpg",
-                        original = "https://static.tvmaze.com/uploads/images/original_untouched/0/2400.jpg"
-                    ),
-                    summary = "A high school chemistry teacher turned methamphetamine producer."
-                )
-            )
+        val mockShows = getShowList()
         val mockNetworkResult = NetworkResult.Success(mockShows)
 
         // Mock the repository behavior
@@ -93,23 +62,7 @@ class ShowsUseCaseImplTest {
     @Test
     fun `saveBookmark should call repository with the correct data`() = runTest {
         // Arrange
-        val mockShow = ShowEntity(
-            id = 1,
-            name = "Under the Dome",
-            language = "English",
-            genres = listOf("Drama", "Science-Fiction", "Thriller"),
-            status = "Ended",
-            runtime = 60,
-            rating = ShowRatingEntity(average = 6.5f),
-            weight = 98,
-            type = "Scripted",
-            network = NetworkEntity(country = CountryEntity(name = "United States")),
-            image = ShowImageEntity(
-                medium = "https://static.tvmaze.com/uploads/images/medium_portrait/81/202627.jpg",
-                original = "https://static.tvmaze.com/uploads/images/original_untouched/81/202627.jpg"
-            ),
-            summary = "Under the Dome is the story of a small town sealed off by an enormous dome."
-        )
+        val mockShow = getShowItem()
         coEvery { repository.saveBookmark(mockShow) } returns Unit
 
         // Act
@@ -122,23 +75,7 @@ class ShowsUseCaseImplTest {
     @Test
     fun `removeBookmark should call repository with the correct data`() = runTest {
         // Arrange
-        val mockShow = ShowEntity(
-            id = 1,
-            name = "Under the Dome",
-            language = "English",
-            genres = listOf("Drama", "Science-Fiction", "Thriller"),
-            status = "Ended",
-            runtime = 60,
-            rating = ShowRatingEntity(average = 6.5f),
-            weight = 98,
-            type = "Scripted",
-            network = NetworkEntity(country = CountryEntity(name = "United States")),
-            image = ShowImageEntity(
-                medium = "https://static.tvmaze.com/uploads/images/medium_portrait/81/202627.jpg",
-                original = "https://static.tvmaze.com/uploads/images/original_untouched/81/202627.jpg"
-            ),
-            summary = "Under the Dome is the story of a small town sealed off by an enormous dome."
-        )
+        val mockShow = getShowItem()
         coEvery { repository.removeBookmark(mockShow.id) } returns Unit
 
         // Act
@@ -151,25 +88,7 @@ class ShowsUseCaseImplTest {
     @Test
     fun `getAllBookmarks should return the list of bookmarked shows`() = runTest {
         // Arrange
-        val mockBookmarks = listOf(
-            ShowEntity(
-                id = 1,
-                name = "Under the Dome",
-                language = "English",
-                genres = listOf("Drama", "Science-Fiction", "Thriller"),
-                status = "Ended",
-                runtime = 60,
-                rating = ShowRatingEntity(average = 6.5f),
-                weight = 98,
-                type = "Scripted",
-                network = NetworkEntity(country = CountryEntity(name = "United States")),
-                image = ShowImageEntity(
-                    medium = "https://static.tvmaze.com/uploads/images/medium_portrait/81/202627.jpg",
-                    original = "https://static.tvmaze.com/uploads/images/original_untouched/81/202627.jpg"
-                ),
-                summary = "Under the Dome is the story of a small town sealed off by an enormous dome."
-            )
-        )
+        val mockBookmarks = getShowList().map { it.toShowEntity() }
         coEvery { repository.getAllBookmarks() } returns mockBookmarks
 
         // Act
@@ -193,4 +112,115 @@ class ShowsUseCaseImplTest {
         assertEquals(true, result)
         coVerify { repository.isShowBookmarked(mockId) }
     }
+
+    @Test
+    fun `getTvShowCastAndCrews should return parsed network results`() = runTest {
+        // Arrange
+        val mockShows = getShowCasts()
+        val mockNetworkResult = NetworkResult.Success(mockShows)
+
+        // Mock the repository behavior
+        coEvery { repository.fetchCasts() } returns mockNetworkResult
+
+        // Act: Call the use case method
+        val result = showsUseCaseImpl.fetchCasts()
+
+        // Assert: Verify the result is as expected
+        assert(result is Work.Result)
+        assertEquals(mockShows, (result as Work.Result).data)
+    }
+}
+
+fun getShowList(): List<ShowModel> {
+    return listOf(
+        ShowModel(
+            id = 1,
+            name = "Under the Dome",
+            language = "English",
+            genres = listOf("Drama", "Science-Fiction", "Thriller"),
+            status = "Ended",
+            runtime = 60,
+            rating = ShowRatingModel(average = 6.5f),
+            weight = 98,
+            type = "Scripted",
+            network = NetWorkModel(country = CountryModel(name = "United States")),
+            image = ShowImageModel(
+                medium = "https://static.tvmaze.com/uploads/images/medium_portrait/81/202627.jpg",
+                original = "https://static.tvmaze.com/uploads/images/original_untouched/81/202627.jpg"
+            ),
+            summary = "Under the Dome is the story of a small town sealed off by an enormous dome."
+        ),
+        ShowModel(
+            id = 2,
+            name = "Breaking Bad",
+            language = "English",
+            genres = listOf("Crime", "Drama", "Thriller"),
+            status = "Ended",
+            runtime = 47,
+            type = "Scripted",
+            network = NetWorkModel(country = CountryModel(name = "United States")),
+            rating = ShowRatingModel(average = 9.5f),
+            weight = 100,
+            image = ShowImageModel(
+                medium = "https://static.tvmaze.com/uploads/images/medium_portrait/0/2400.jpg",
+                original = "https://static.tvmaze.com/uploads/images/original_untouched/0/2400.jpg"
+            ),
+            summary = "A high school chemistry teacher turned methamphetamine producer."
+        )
+    )
+}
+
+fun getShowCasts(): List<CastModel> {
+    return listOf(
+        CastModel(
+            person = PersonModel(
+                id = "1",
+                name = "Mike Vogel",
+                birthday = "1979-07-17",
+                country = PersonCountryModel(
+                    name = "United States"
+                ),
+                gender = "Male",
+                image = PersonImageModel(
+                    medium = "https://static.tvmaze.com/uploads/images/medium_portrait/0/3.jpg",
+                    original = "https://static.tvmaze.com/uploads/images/original_untouched/0/3.jpg"
+                )
+            )
+        ),
+        CastModel(
+            person = PersonModel(
+                id = "1",
+                name = "Rachelle Lefevre",
+                birthday = "1979-02-01",
+                country = PersonCountryModel(
+                    name = "Canada"
+                ),
+                gender = "Female",
+                image = PersonImageModel(
+                    medium = "https://static.tvmaze.com/uploads/images/medium_portrait/82/207417.jpg",
+                    original = "https://static.tvmaze.com/uploads/images/original_untouched/82/207417.jpg"
+                )
+            )
+        )
+    )
+}
+
+fun getShowItem(): ShowEntity {
+    return ShowEntity(
+        id = 1,
+        name = "Under the Dome",
+        language = "English",
+        genres = listOf("Drama", "Science-Fiction", "Thriller"),
+        status = "Ended",
+        runtime = 60,
+        rating = ShowRatingEntity(average = 6.5f),
+        weight = 98,
+        type = "Scripted",
+        network = NetworkEntity(country = CountryEntity(name = "United States")),
+        image = ShowImageEntity(
+            medium = "https://static.tvmaze.com/uploads/images/medium_portrait/81/202627.jpg",
+            original = "https://static.tvmaze.com/uploads/images/original_untouched/81/202627.jpg"
+        ),
+        summary = "Under the Dome is the story of a small town sealed off by an enormous dome."
+    )
 }

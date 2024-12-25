@@ -1,6 +1,7 @@
 package com.chenna.domain.repository
 
 import com.chenna.domain.entities.ShowEntity
+import com.chenna.domain.model.CastModel
 import com.chenna.domain.model.ShowModel
 import com.chenna.domain.utils.FailedResponse
 import com.chenna.domain.utils.NetworkResult
@@ -12,6 +13,7 @@ import com.chenna.domain.utils.NetworkResult
  */
 interface TvShowRepository {
     suspend fun getListOfShows(): NetworkResult<List<ShowModel>?, FailedResponse, Exception>
+    suspend fun fetchCasts(): NetworkResult<List<CastModel>?, FailedResponse, Exception>
 
     suspend fun saveBookmark(
         showEntity: ShowEntity,

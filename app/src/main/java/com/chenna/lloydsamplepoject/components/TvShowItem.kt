@@ -59,6 +59,5 @@ fun TvShowCard(
 @Preview(showBackground = true)
 @Composable
 fun TvShowPreviewCard() {
-
     TvShowCard(model = Utility.getTvShowDummyData()) {}
 }

@@ -1,5 +1,3 @@
-@file:Suppress("IMPLICIT_CAST_TO_ANY")
-
 package com.chenna.lloydsamplepoject.screens.utils
 
 import androidx.compose.animation.EnterTransition
@@ -13,6 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.chenna.domain.model.ShowModel
 import com.chenna.lloydsamplepoject.screens.BookmarkScreen
+import com.chenna.lloydsamplepoject.screens.CastScreen
 import com.chenna.lloydsamplepoject.screens.DashboardNavComp
 import com.chenna.lloydsamplepoject.screens.ShowDetailsScreen
 import com.chenna.lloydsamplepoject.screens.ShowsScreen
@@ -43,6 +42,14 @@ object NavigationGraphBuilder {
                 updateElevation(3.dp)
                 updateTitle(DashboardNavComp.Shows.title)
                 ShowsScreen() {
+                    goto(it)
+                }
+                updateBottomNavVisibility(true)
+            }
+            composable(DashboardNavComp.Cast.route) {
+                updateElevation(3.dp)
+                updateTitle(DashboardNavComp.Cast.title)
+                CastScreen() {
                     goto(it)
                 }
                 updateBottomNavVisibility(true)

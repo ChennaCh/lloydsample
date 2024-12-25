@@ -3,6 +3,7 @@ package com.chenna.data.repository
 import com.chenna.data.datasource.TVShowLocalDataSource
 import com.chenna.data.datasource.TVShowRemoteDataSource
 import com.chenna.domain.entities.ShowEntity
+import com.chenna.domain.model.CastModel
 import com.chenna.domain.model.ShowModel
 import com.chenna.domain.repository.TvShowRepository
 import com.chenna.domain.utils.FailedResponse
@@ -21,6 +22,10 @@ class TvShowRepositoryImpl @Inject constructor(
 
     override suspend fun getListOfShows(): NetworkResult<List<ShowModel>?, FailedResponse, Exception> {
         return remoteDataSource.getTvShows()
+    }
+
+    override suspend fun fetchCasts(): NetworkResult<List<CastModel>?, FailedResponse, Exception> {
+        return remoteDataSource.fetchCasts()
     }
 
     override suspend fun saveBookmark(showEntity: ShowEntity) {

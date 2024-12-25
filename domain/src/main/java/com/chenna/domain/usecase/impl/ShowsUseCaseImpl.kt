@@ -1,6 +1,7 @@
 package com.chenna.domain.usecase.impl
 
 import com.chenna.domain.entities.ShowEntity
+import com.chenna.domain.model.CastModel
 import com.chenna.domain.model.ShowModel
 import com.chenna.domain.repository.TvShowRepository
 import com.chenna.domain.usecase.ShowsUseCase
@@ -22,6 +23,13 @@ class ShowsUseCaseImpl @Inject constructor(
     override suspend fun getListOfShows(): Work<List<ShowModel>> {
         val result = withContext(Dispatchers.IO) {
             repository.getListOfShows()
+        }
+
+        return ResponseMapper.parseNetworkResults(result)
+    }
+    override suspend fun fetchCasts(): Work<List<CastModel>> {
+        val result = withContext(Dispatchers.IO) {
+            repository.fetchCasts()
         }
 
         return ResponseMapper.parseNetworkResults(result)

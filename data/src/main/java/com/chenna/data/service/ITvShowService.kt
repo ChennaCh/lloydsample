@@ -1,5 +1,6 @@
 package com.chenna.data.service
 
+import com.chenna.domain.model.CastModel
 import com.chenna.domain.model.ShowModel
 import com.chenna.domain.utils.Constants
 import retrofit2.Response
@@ -14,5 +15,8 @@ interface ITvShowService {
 
     @GET(Constants.Apis.GET_TV_SHOWS)
     suspend fun getTvShows(): Response<List<ShowModel>>
+
+    @GET(Constants.Apis.GET_CASTS)
+    suspend fun fetchCasts(): Response<List<CastModel>>
 
 }
