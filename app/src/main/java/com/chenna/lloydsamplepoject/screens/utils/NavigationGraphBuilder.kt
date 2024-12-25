@@ -56,7 +56,8 @@ object NavigationGraphBuilder {
                 updateBottomNavVisibility(true)
             }
             composable(DashboardNavComp.ShowDetails.route) {
-                val showModel = navHostController.previousBackStackEntry?.savedStateHandle?.get<ShowModel>("showModel")
+                val showModel =
+                    navHostController.previousBackStackEntry?.savedStateHandle?.get<ShowModel>("showModel")
                 showModel?.let {
                     ShowDetailsScreen(showModel = it)
                 }
