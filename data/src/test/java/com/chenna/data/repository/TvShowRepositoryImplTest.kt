@@ -1,8 +1,7 @@
-package com.chenna.data
+package com.chenna.data.repository
 
 import com.chenna.data.datasource.TVShowLocalDataSource
 import com.chenna.data.datasource.TVShowRemoteDataSource
-import com.chenna.data.repository.TvShowRepositoryImpl
 import com.chenna.domain.entities.CountryEntity
 import com.chenna.domain.entities.NetworkEntity
 import com.chenna.domain.entities.ShowEntity
@@ -72,20 +71,6 @@ class TvShowRepositoryImplTest {
     }
 
     @Test
-    fun `test getTvShowCastAndCrews returns success`() = runBlocking {
-        val mockShows = getShowCasts()
-        val mockResult = NetworkResult.Success(mockShows)
-
-        coEvery { remoteDataSource.fetchCasts() } returns mockResult
-
-        val result = repository.fetchCasts()
-
-        assertTrue(result is NetworkResult.Success)
-        assertEquals(mockShows, (result as NetworkResult.Success).data)
-        coVerify { remoteDataSource.fetchCasts() }
-    }
-
-    @Test
     fun `test saveBookmark`() = runBlocking {
         val mockShow = getShowItem()
 
@@ -141,6 +126,20 @@ class TvShowRepositoryImplTest {
 
         assertFalse(result)
         coVerify { localDataSource.isShowBookmarked(mockId) }
+    }
+
+    @Test
+    fun `test getTvShowCastAndCrews returns success`() = runBlocking {
+        val mockShows = getShowCasts()
+        val mockResult = NetworkResult.Success(mockShows)
+
+        coEvery { remoteDataSource.fetchCasts() } returns mockResult
+
+        val result = repository.fetchCasts()
+
+        assertTrue(result is NetworkResult.Success)
+        assertEquals(mockShows, (result as NetworkResult.Success).data)
+        coVerify { remoteDataSource.fetchCasts() }
     }
 }
 

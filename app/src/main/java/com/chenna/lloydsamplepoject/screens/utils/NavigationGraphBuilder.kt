@@ -1,5 +1,3 @@
-@file:Suppress("IMPLICIT_CAST_TO_ANY")
-
 package com.chenna.lloydsamplepoject.screens.utils
 
 import androidx.compose.animation.EnterTransition

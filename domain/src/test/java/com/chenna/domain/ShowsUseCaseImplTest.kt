@@ -59,24 +59,6 @@ class ShowsUseCaseImplTest {
         assertEquals(mockShows, (result as Work.Result).data)
     }
 
-
-    @Test
-    fun `getTvShowCastAndCrews should return parsed network results`() = runTest {
-        // Arrange
-        val mockShows = getShowCasts()
-        val mockNetworkResult = NetworkResult.Success(mockShows)
-
-        // Mock the repository behavior
-        coEvery { repository.fetchCasts() } returns mockNetworkResult
-
-        // Act: Call the use case method
-        val result = showsUseCaseImpl.fetchCasts()
-
-        // Assert: Verify the result is as expected
-        assert(result is Work.Result)
-        assertEquals(mockShows, (result as Work.Result).data)
-    }
-
     @Test
     fun `saveBookmark should call repository with the correct data`() = runTest {
         // Arrange
@@ -129,6 +111,23 @@ class ShowsUseCaseImplTest {
         // Assert
         assertEquals(true, result)
         coVerify { repository.isShowBookmarked(mockId) }
+    }
+
+    @Test
+    fun `getTvShowCastAndCrews should return parsed network results`() = runTest {
+        // Arrange
+        val mockShows = getShowCasts()
+        val mockNetworkResult = NetworkResult.Success(mockShows)
+
+        // Mock the repository behavior
+        coEvery { repository.fetchCasts() } returns mockNetworkResult
+
+        // Act: Call the use case method
+        val result = showsUseCaseImpl.fetchCasts()
+
+        // Assert: Verify the result is as expected
+        assert(result is Work.Result)
+        assertEquals(mockShows, (result as Work.Result).data)
     }
 }
 
