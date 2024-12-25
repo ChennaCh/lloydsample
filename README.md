@@ -75,9 +75,7 @@ The modules are as follow:
     	<td align="center">
 			<img src="assets/cast.jpeg" alt="Casts" width="250"/>
     	</td>
-    </tr>
-    <tr>
-    	<td align="center">
+        <td align="center">
 			<img src="assets/cast_details.jpeg" alt="Cast details" width="250"/>
     	</td>
     </tr>
