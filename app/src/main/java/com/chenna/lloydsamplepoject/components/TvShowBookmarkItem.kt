@@ -65,6 +65,7 @@ fun TvShowBookmarkItem(
                         .width(90.dp)
                         .height(120.dp)
                         .clip(RoundedCornerShape(4.dp))
+                        .background(color = Color.Gray.copy(alpha = 0.1f))
                 )
                 Spacer(modifier = Modifier.width(16.dp))
             }

@@ -99,7 +99,7 @@ class CastViewModelTest {
     fun `fetchCasts updates resultState with error from Work Stop`() = runTest {
         // Arrange
         val errorMessage = Message(
-            message = "Failed to fetch shows",
+            message = "Failed to fetch casts",
             messageType = MessageType.TOAST
         )
         coEvery { useCase.fetchCasts() } returns Work.Stop(errorMessage)
@@ -112,7 +112,7 @@ class CastViewModelTest {
         val resultState = viewModel.resultState.value
         assertFalse("Loading state should be false", resultState.isLoading)
         assertNotNull("Error should not be null", resultState.error)
-        assertEquals("Error", resultState.error?.title)
+        assertEquals("Failed to fetch casts", resultState.error?.title)
         assertEquals(errorMessage.message, resultState.error?.description)
         coVerify(exactly = 1) { useCase.fetchCasts() }
     }
@@ -139,6 +139,61 @@ class CastViewModelTest {
         coVerify(exactly = 1) { useCase.fetchCasts() }
     }
 
+    @Test
+    fun `Retry action sets isRefreshing to true and fetches casts`() = runTest {
+        val tvShows = getShowCasts()
+        coEvery { useCase.fetchCasts() } returns Work.Result(data = tvShows)
+
+        viewModel.onActionEvent(CastActionEvent.Retry)
+
+        testDispatcher.scheduler.advanceUntilIdle()
+
+        val resultState = viewModel.resultState.value
+        assertFalse(resultState.isLoading)
+        assertNull(resultState.error)
+        assertNotNull(resultState.data)
+        assertEquals(tvShows, resultState.data?.list)
+        assertFalse(viewModel.isRefreshing.value) // Ensures _isRefreshing is false after completion
+        coVerify(exactly = 1) { useCase.fetchCasts() }
+
+        // Optional: Print log to verify
+        println("Retry action invoked and casts fetched successfully.")
+    }
+
+    @Test
+    fun `fetchCasts sets isRefreshing to false when list is not empty`() = runTest {
+        val tvShows = getShowCasts()
+        coEvery { useCase.fetchCasts() } returns Work.Result(data = tvShows)
+
+        viewModel.onActionEvent(CastActionEvent.FetchCasts)
+
+        testDispatcher.scheduler.advanceUntilIdle()
+
+        val resultState = viewModel.resultState.value
+        assertFalse(viewModel.isRefreshing.value) // Ensures _isRefreshing is false
+        assertFalse(resultState.isLoading)
+        assertNull(resultState.error)
+        assertNotNull(resultState.data)
+        assertEquals(tvShows, resultState.data?.list)
+    }
+
+    @Test
+    fun `fetchCasts sets isRefreshing to false when list is empty`() = runTest {
+        coEvery { useCase.fetchCasts() } returns Work.Result(data = emptyList())
+
+        viewModel.onActionEvent(CastActionEvent.FetchCasts)
+
+        testDispatcher.scheduler.advanceUntilIdle()
+
+        val resultState = viewModel.resultState.value
+        assertFalse(viewModel.isRefreshing.value) // Ensures _isRefreshing is false
+        assertFalse(resultState.isLoading)
+        assertNotNull(resultState.error)
+        assertEquals("No casts", resultState.error?.title)
+        assertEquals(Constants.Errors.TV_SHOW_CASTS, resultState.error?.description)
+    }
+
+
     // Sample data generator
     private fun getShowCasts(): List<CastModel> {
         return listOf(
@@ -151,6 +206,7 @@ class CastViewModelTest {
                         name = "United States"
                     ),
                     gender = "Male",
+                    url = "https://www.tvmaze.com/people/1/mike-vogel",
                     image = PersonImageModel(
                         medium = "https://static.tvmaze.com/uploads/images/medium_portrait/0/3.jpg",
                         original = "https://static.tvmaze.com/uploads/images/original_untouched/0/3.jpg"
@@ -166,6 +222,7 @@ class CastViewModelTest {
                         name = "Canada"
                     ),
                     gender = "Female",
+                    url = "https://www.tvmaze.com/people/1/mike-vogel",
                     image = PersonImageModel(
                         medium = "https://static.tvmaze.com/uploads/images/medium_portrait/82/207417.jpg",
                         original = "https://static.tvmaze.com/uploads/images/original_untouched/82/207417.jpg"

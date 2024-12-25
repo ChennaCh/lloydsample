@@ -7,6 +7,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -24,7 +27,9 @@ import com.chenna.lloydsamplepoject.components.TvShowCard
 import com.chenna.lloydsamplepoject.models.TvShowActionEvent
 import com.chenna.lloydsamplepoject.models.TvShowStateModel
 import com.chenna.lloydsamplepoject.models.UiState
+import com.chenna.lloydsamplepoject.util.Constants
 import com.chenna.lloydsamplepoject.util.NavigationEvent
+import com.chenna.lloydsamplepoject.util.NoInternetContent
 import com.chenna.lloydsamplepoject.util.ProgressBarCompose
 import com.chenna.lloydsamplepoject.util.UiUtils
 import com.chenna.lloydsamplepoject.viewmodels.TVShowsViewModel
@@ -35,6 +40,7 @@ import kotlinx.coroutines.flow.collectLatest
  * <p>
  * Frost Interactive
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ShowsScreen(
     viewModel: TVShowsViewModel = hiltViewModel(),
@@ -43,11 +49,14 @@ fun ShowsScreen(
 
     val uiState = remember { mutableStateOf(UiState<TvShowStateModel>()) }
     val context = LocalContext.current
+    val refreshState = remember { mutableStateOf(false) }
+    val pullToRefreshState = rememberPullToRefreshState()
 
 
     LaunchedEffect(Unit) {
         viewModel.messageEvent.collectLatest {
-            UiUtils.buildUIMessage(context = context, it = it)
+            if (it.message != Constants.CONNECTION_ERROR)
+                UiUtils.buildUIMessage(context = context, it = it)
         }
     }
 
@@ -67,8 +76,23 @@ fun ShowsScreen(
         }
     }
 
-    TvShowsListContent(uiState.value) { show ->
-        viewModel.onActionEvent(actionEvent = TvShowActionEvent.RedirectToShowDetails(show))
+    LaunchedEffect(viewModel) {
+        viewModel.isRefreshing.collectLatest {
+            refreshState.value = it
+            if (!it) {
+                pullToRefreshState.animateToHidden()
+            }
+        }
+    }
+
+    PullToRefreshBox(
+        isRefreshing = refreshState.value,
+        state = pullToRefreshState,
+        onRefresh = { viewModel.onActionEvent(TvShowActionEvent.Retry) },
+    ) {
+        TvShowsListContent(uiState.value) { show ->
+            viewModel.onActionEvent(actionEvent = TvShowActionEvent.RedirectToShowDetails(show))
+        }
     }
 }
 
@@ -86,6 +110,10 @@ fun TvShowsListContent(
 
         if (uiState.isLoading) {
             ProgressBarCompose(color = colorResource(id = R.color.purple_700))
+        }
+
+        if (uiState.error?.title == Constants.CONNECTION_ERROR) {
+            NoInternetContent()
         }
 
         uiState.data?.list?.let {

@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -50,6 +51,7 @@ fun TvShowCard(
                 modifier = Modifier
                     .aspectRatio(0.75f)
                     .clip(RoundedCornerShape(8.dp))
+                    .background(color = Color.Gray.copy(alpha = 0.1f))
             )
             Spacer(modifier = Modifier.height(2.dp))
         }

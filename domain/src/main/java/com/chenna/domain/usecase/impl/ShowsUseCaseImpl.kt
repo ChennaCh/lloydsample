@@ -25,14 +25,15 @@ class ShowsUseCaseImpl @Inject constructor(
             repository.getListOfShows()
         }
 
-        return ResponseMapper.parseNetworkResults(result)
+        return ResponseMapper.map(result)
     }
+
     override suspend fun fetchCasts(): Work<List<CastModel>> {
         val result = withContext(Dispatchers.IO) {
             repository.fetchCasts()
         }
 
-        return ResponseMapper.parseNetworkResults(result)
+        return ResponseMapper.map(result)
     }
 
     override suspend fun saveBookmark(showEntity: ShowEntity) {

@@ -1,5 +1,6 @@
 package com.chenna.lloydsamplepoject.screens
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -7,6 +8,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -22,7 +26,9 @@ import com.chenna.lloydsamplepoject.components.CastItem
 import com.chenna.lloydsamplepoject.models.CastActionEvent
 import com.chenna.lloydsamplepoject.models.CastStateModel
 import com.chenna.lloydsamplepoject.models.UiState
+import com.chenna.lloydsamplepoject.util.Constants
 import com.chenna.lloydsamplepoject.util.NavigationEvent
+import com.chenna.lloydsamplepoject.util.NoInternetContent
 import com.chenna.lloydsamplepoject.util.ProgressBarCompose
 import com.chenna.lloydsamplepoject.util.UiUtils
 import com.chenna.lloydsamplepoject.viewmodels.CastViewModel
@@ -34,6 +40,7 @@ import kotlinx.coroutines.flow.collectLatest
  * Frost Interactive
  */
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CastScreen(
     viewModel: CastViewModel = hiltViewModel(),
@@ -42,11 +49,14 @@ fun CastScreen(
 
     val uiState = remember { mutableStateOf(UiState<CastStateModel>()) }
     val context = LocalContext.current
+    val refreshState = remember { mutableStateOf(false) }
+    val pullToRefreshState = rememberPullToRefreshState()
 
 
     LaunchedEffect(Unit) {
         viewModel.messageEvent.collectLatest {
-            UiUtils.buildUIMessage(context = context, it = it)
+            if (it.message != Constants.CONNECTION_ERROR)
+                UiUtils.buildUIMessage(context = context, it = it)
         }
     }
 
@@ -66,13 +76,32 @@ fun CastScreen(
         }
     }
 
-    CastsListContent(uiState.value)
+    LaunchedEffect(viewModel) {
+        viewModel.isRefreshing.collectLatest {
+            refreshState.value = it
+            if (!it) {
+                pullToRefreshState.animateToHidden()
+            }
+        }
+    }
+
+    PullToRefreshBox(
+        isRefreshing = refreshState.value,
+        state = pullToRefreshState,
+        onRefresh = { viewModel.onActionEvent(CastActionEvent.Retry) },
+    ) {
+        CastsListContent(uiState.value, context) {
+            viewModel.onActionEvent(it)
+        }
+    }
 
 }
 
 @Composable
 fun CastsListContent(
     uiState: UiState<CastStateModel>,
+    context: Context,
+    action: (CastActionEvent) -> Unit,
 ) {
 
     Column(
@@ -83,6 +112,10 @@ fun CastsListContent(
 
         if (uiState.isLoading) {
             ProgressBarCompose(color = colorResource(id = R.color.purple_700))
+        }
+
+        if (uiState.error?.title == Constants.CONNECTION_ERROR) {
+            NoInternetContent()
         }
 
         uiState.data?.list?.let {
@@ -98,7 +131,16 @@ fun CastsListContent(
                         Spacer(modifier = Modifier.height(6.dp))
                     }
 
-                    CastItem(cast)
+                    CastItem(
+                        cast,
+                        onClick = {
+                            action(
+                                CastActionEvent.RedirectToWeb(
+                                    url = it,
+                                    context = context
+                                )
+                            )
+                        })
 
                     // Add extra bottom padding if the item is the last one
                     if (index == it.size - 1) {

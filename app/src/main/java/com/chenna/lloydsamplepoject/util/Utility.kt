@@ -1,5 +1,11 @@
 package com.chenna.lloydsamplepoject.util
 
+import android.content.Context
+import android.net.Uri
+import androidx.annotation.ColorInt
+import androidx.browser.customtabs.CustomTabColorSchemeParams
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.content.ContextCompat
 import com.chenna.domain.model.CastModel
 import com.chenna.domain.model.CountryModel
 import com.chenna.domain.model.NetWorkModel
@@ -9,6 +15,7 @@ import com.chenna.domain.model.PersonModel
 import com.chenna.domain.model.ShowImageModel
 import com.chenna.domain.model.ShowModel
 import com.chenna.domain.model.ShowRatingModel
+import com.chenna.lloydsamplepoject.R
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -50,6 +57,7 @@ object Utility {
                     name = "United States"
                 ),
                 gender = "Male",
+                url = "https://www.tvmaze.com/people/1/mike-vogel",
                 image = PersonImageModel(
                     medium = "https://static.tvmaze.com/uploads/images/medium_portrait/0/3.jpg",
                     original = "https://static.tvmaze.com/uploads/images/original_untouched/0/3.jpg"
@@ -80,5 +88,20 @@ object Utility {
         } catch (e: Exception) {
             dateString // Fallback to the original string if there's an error
         }
+    }
+
+    fun navigateToWebUrl(context: Context, url: String) {
+        val builder = CustomTabsIntent.Builder()
+        builder.setShowTitle(true)
+        @ColorInt val colorPrimaryLight = ContextCompat.getColor(context, R.color.white)
+        val customTabsIntent = builder
+            .setShareState(CustomTabsIntent.SHARE_STATE_OFF)
+            .setUrlBarHidingEnabled(true)
+            .setDefaultColorSchemeParams(
+                CustomTabColorSchemeParams.Builder()
+                    .setToolbarColor(colorPrimaryLight)
+                    .build()
+            ).build()
+        customTabsIntent.launchUrl(context, Uri.parse(url))
     }
 }

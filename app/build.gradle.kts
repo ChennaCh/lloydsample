@@ -73,6 +73,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.androidx.material)
 
+    //browser
+    implementation(libs.androidx.browser)
+
     // Kotlin Coroutines
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.core)

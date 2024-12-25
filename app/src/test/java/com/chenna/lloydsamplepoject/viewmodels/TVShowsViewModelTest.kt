@@ -119,7 +119,7 @@ class TVShowsViewModelTest {
         val resultState = viewModel.resultState.value
         assertFalse("Loading state should be false", resultState.isLoading)
         assertNotNull("Error should not be null", resultState.error)
-        assertEquals("Error", resultState.error?.title)
+        assertEquals("Failed to fetch shows", resultState.error?.title)
         assertEquals(errorMessage.message, resultState.error?.description)
         coVerify(exactly = 1) { useCase.getListOfShows() }
     }
@@ -161,6 +161,61 @@ class TVShowsViewModelTest {
         job.cancel()
         assertEquals(navigationEvent, navigationEvents.last())
     }
+
+    @Test
+    fun `Retry action sets isRefreshing to true and fetches shows`() = runTest {
+        val tvShows = getShowList()
+        coEvery { useCase.getListOfShows() } returns Work.Result(data = tvShows)
+
+        viewModel.onActionEvent(TvShowActionEvent.Retry)
+
+        testDispatcher.scheduler.advanceUntilIdle()
+
+        val resultState = viewModel.resultState.value
+        assertFalse(resultState.isLoading)
+        assertNull(resultState.error)
+        assertNotNull(resultState.data)
+        assertEquals(tvShows, resultState.data?.list)
+        assertFalse(viewModel.isRefreshing.value) // Ensures _isRefreshing is false after completion
+        coVerify(exactly = 1) { useCase.getListOfShows() }
+
+        // Optional: Print log to verify
+        println("Retry action invoked and shows fetched successfully.")
+    }
+
+    @Test
+    fun `fetchTvShows sets isRefreshing to false when list is not empty`() = runTest {
+        val tvShows = getShowList()
+        coEvery { useCase.getListOfShows() } returns Work.Result(data = tvShows)
+
+        viewModel.onActionEvent(TvShowActionEvent.FetchTvShows)
+
+        testDispatcher.scheduler.advanceUntilIdle()
+
+        val resultState = viewModel.resultState.value
+        assertFalse(viewModel.isRefreshing.value) // Ensures _isRefreshing is false
+        assertFalse(resultState.isLoading)
+        assertNull(resultState.error)
+        assertNotNull(resultState.data)
+        assertEquals(tvShows, resultState.data?.list)
+    }
+
+    @Test
+    fun `fetchTvShows sets isRefreshing to false when list is empty`() = runTest {
+        coEvery { useCase.getListOfShows() } returns Work.Result(data = emptyList())
+
+        viewModel.onActionEvent(TvShowActionEvent.FetchTvShows)
+
+        testDispatcher.scheduler.advanceUntilIdle()
+
+        val resultState = viewModel.resultState.value
+        assertFalse(viewModel.isRefreshing.value) // Ensures _isRefreshing is false
+        assertFalse(resultState.isLoading)
+        assertNotNull(resultState.error)
+        assertEquals("No shows", resultState.error?.title)
+        assertEquals(Constants.Errors.TV_SHOWS, resultState.error?.description)
+    }
+
 
     // Sample data generator
     private fun getShowList(): List<ShowModel> {
