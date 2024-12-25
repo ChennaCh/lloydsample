@@ -50,6 +50,7 @@ fun TvShowCard(
                 modifier = Modifier
                     .aspectRatio(0.75f)
                     .clip(RoundedCornerShape(8.dp))
+                    .background(color = Color.Gray.copy(alpha = 0.1f))
             )
             Spacer(modifier = Modifier.height(2.dp))
         }

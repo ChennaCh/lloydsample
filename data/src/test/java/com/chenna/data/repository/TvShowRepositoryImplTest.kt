@@ -193,6 +193,7 @@ fun getShowCasts(): List<CastModel> {
                     name = "United States"
                 ),
                 gender = "Male",
+                url = "https://www.tvmaze.com/people/1/mike-vogel",
                 image = PersonImageModel(
                     medium = "https://static.tvmaze.com/uploads/images/medium_portrait/0/3.jpg",
                     original = "https://static.tvmaze.com/uploads/images/original_untouched/0/3.jpg"
@@ -208,6 +209,7 @@ fun getShowCasts(): List<CastModel> {
                     name = "Canada"
                 ),
                 gender = "Female",
+                url = "https://www.tvmaze.com/people/1/mike-vogel",
                 image = PersonImageModel(
                     medium = "https://static.tvmaze.com/uploads/images/medium_portrait/82/207417.jpg",
                     original = "https://static.tvmaze.com/uploads/images/original_untouched/82/207417.jpg"

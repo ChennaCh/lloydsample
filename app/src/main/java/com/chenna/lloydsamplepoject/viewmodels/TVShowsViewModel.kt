@@ -12,6 +12,7 @@ import com.chenna.lloydsamplepoject.util.Constants
 import com.chenna.lloydsamplepoject.util.NavigationEvent
 import com.chenna.lloydsamplepoject.viewmodels.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -28,10 +29,16 @@ class TVShowsViewModel @Inject constructor(private val useCase: ShowsUseCase) : 
     private val _resultState = MutableStateFlow(UiState<TvShowStateModel>(isLoading = true))
     val resultState: StateFlow<UiState<TvShowStateModel>> = _resultState
 
+    val isRefreshing = MutableStateFlow(false)
+
     fun onActionEvent(actionEvent: TvShowActionEvent) {
         when (actionEvent) {
-            TvShowActionEvent.FetchTvShows -> fetchTVShows()
+            is TvShowActionEvent.FetchTvShows -> fetchTVShows()
             is TvShowActionEvent.RedirectToShowDetails -> redirectToTVShowDetails(actionEvent)
+            is TvShowActionEvent.Retry -> {
+                fetchTVShows()
+                isRefreshing.value = true
+            }
         }
     }
 
@@ -48,6 +55,10 @@ class TVShowsViewModel @Inject constructor(private val useCase: ShowsUseCase) : 
 
     private fun fetchTVShows() {
         if (resultState.value.data?.list?.isNotEmpty() == true) {
+            viewModelScope.launch {
+                delay(100)
+                isRefreshing.value = false
+            }
             return
         }
 
@@ -56,8 +67,11 @@ class TVShowsViewModel @Inject constructor(private val useCase: ShowsUseCase) : 
             _resultState.value = when (val work = useCase.getListOfShows()) {
                 is Work.Result -> handleResult(work)
                 is Work.Stop -> handleStop(work)
-                else -> handleConnectionError()
+                else -> {
+                    handleConnectionError()
+                }
             }
+            isRefreshing.value = false
         }
     }
 
@@ -78,16 +92,18 @@ class TVShowsViewModel @Inject constructor(private val useCase: ShowsUseCase) : 
         pushMessage(work.message)
         return UiState(
             error = Error(
-                title = Constants.Errors.ERROR,
+                title = work.message.message,
                 description = work.message.message
             )
         )
     }
 
-    private fun handleConnectionError(): UiState<TvShowStateModel> = UiState(
-        error = Error(
-            title = Constants.Errors.CONNECTION_ERROR,
-            description = Constants.Errors.TV_SHOWS
+    private fun handleConnectionError(): UiState<TvShowStateModel> {
+        return UiState(
+            error = Error(
+                title = Constants.Errors.CONNECTION_ERROR,
+                description = Constants.Errors.TV_SHOWS
+            )
         )
-    )
+    }
 }

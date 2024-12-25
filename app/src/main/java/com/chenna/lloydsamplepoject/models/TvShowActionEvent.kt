@@ -10,4 +10,5 @@ import com.chenna.domain.model.ShowModel
 sealed class TvShowActionEvent {
     data object FetchTvShows : TvShowActionEvent()
     data class RedirectToShowDetails(val model: ShowModel) : TvShowActionEvent()
+    data object Retry : TvShowActionEvent()
 }

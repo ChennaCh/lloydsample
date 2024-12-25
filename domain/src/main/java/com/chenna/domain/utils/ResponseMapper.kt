@@ -10,46 +10,58 @@ import okhttp3.ResponseBody
  */
 object ResponseMapper {
 
-    fun <T> parseNetworkResults(
-        networkResult: NetworkResult<List<T>?, FailedResponse, Exception>,
+    fun <T> map(
+        networkResult: NetworkResult<T?, FailedResponse, Exception>,
         backfireMessage: String = Constants.SOMETHING_WENT_WRONG,
         messageType: MessageType = MessageType.TOAST,
-    ): Work<List<T>> {
+    ): Work<T> {
         return when (networkResult) {
-            is NetworkResult.Success -> {
-                networkResult.data?.let { data ->
-                    return Work.result(
-                        data = data, message = Message(
-                            message = "Success"
-                        )
-                    )
-                }
-                Work.backfire(exception = RuntimeException(backfireMessage))
-            }
-
-            is NetworkResult.Failed -> {
-                val error = parseErrorResponseBody(networkResult.errorResponse.errorResponse)
-                Work.stop(
-                    Message(
-                        message = error,
-                        messageType = messageType
-                    )
-                )
-            }
-
-            is NetworkResult.Error -> {
-                Work.backfire(exception = networkResult.exception)
-            }
-
-            NetworkResult.NetworkConnection -> {
-                Work.Stop(
-                    message = Message(
-                        message = Constants.CONNECTION_ERROR,
-                        messageType = messageType
-                    )
-                )
-            }
+            is NetworkResult.Success -> handleSuccess(networkResult, backfireMessage)
+            is NetworkResult.Failed -> handleFailed(networkResult, messageType)
+            is NetworkResult.Error -> handleError(networkResult.exception)
+            NetworkResult.NetworkConnection -> handleNetworkConnection(messageType)
         }
+    }
+
+    private fun <T> handleSuccess(
+        networkResult: NetworkResult.Success<T?>,
+        backfireMessage: String,
+    ): Work<T> {
+        networkResult.data?.let { data ->
+            return Work.result(
+                data = data, message = Message(
+                    message = "Success"
+                )
+            )
+        }
+        return Work.backfire(exception = RuntimeException(backfireMessage))
+    }
+
+    private fun <T> handleFailed(
+        networkResult: NetworkResult.Failed<FailedResponse>,
+        messageType: MessageType,
+    ): Work<T> {
+        val error = parseErrorResponseBody(networkResult.errorResponse.errorResponse)
+        return Work.stop(
+            Message(
+                message = error,
+                messageType = messageType
+            )
+        )
+    }
+
+    private fun <T> handleNetworkConnection(messageType: MessageType): Work<T> {
+        return Work.stop(
+            message = Message(
+                message = Constants.CONNECTION_ERROR,
+                messageType = messageType
+            )
+        )
+    }
+
+
+    private fun <T> handleError(exception: Exception): Work<T> {
+        return Work.backfire(exception = exception)
     }
 
 

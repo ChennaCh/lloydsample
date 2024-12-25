@@ -11,8 +11,9 @@ data class CastModel(
 
 data class PersonModel(
     val id: String,
+    val url: String?,
     val name: String,
-    val birthday: String,
+    val birthday: String?,
     val country: PersonCountryModel,
     val gender: String,
     val image: PersonImageModel,

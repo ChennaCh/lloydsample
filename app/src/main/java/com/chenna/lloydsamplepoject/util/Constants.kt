@@ -6,6 +6,9 @@ package com.chenna.lloydsamplepoject.util
  * Frost Interactive
  */
 object Constants {
+
+    const val CONNECTION_ERROR: String = "Please check the internet connection"
+
     object DB {
         const val NAME: String = "LLOYD_SAMPLE_APPLICATION_DB"
     }
