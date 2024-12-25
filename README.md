@@ -55,56 +55,61 @@ The modules are as follow:
 
 ## Screenshots
 
-1. Connection Error and Drag to refresh
+1. TvShows Screen
 
 <table style="padding:10px">
     <tr>
     	<td align="center">
-			<img src="assets/no_internet.jpeg" alt="No internet" width="300"/>
+			<img src="assets/home.jpeg" alt="Tv Shows" width="250"/>
     	</td>
         <td align="center">
-			<img src="assets/drag_to_refresh.jpeg" alt="Drag to refresh" width="300"/>
+			<img src="assets/details.jpeg" alt="Show Details" width="250"/>
     	</td>
     </tr>
 </table>
 
-2. TvShows Screen
+2. Casts Screen
 
 <table style="padding:10px">
     <tr>
     	<td align="center">
-			<img src="assets/home.jpeg" alt="Tv Shows" width="300"/>
-    	</td>
-        <td align="center">
-			<img src="assets/details.jpeg" alt="Show Details" width="300"/>
+			<img src="assets/cast.jpeg" alt="Casts" width="250"/>
     	</td>
     </tr>
-</table>
-
-3. Casts Screen
-
-<table style="padding:10px">
     <tr>
     	<td align="center">
-			<img src="assets/cast.jpeg" alt="Casts" width="300"/>
+			<img src="assets/cast_details.jpeg" alt="Cast details" width="250"/>
     	</td>
     </tr>
 </table>
 
-4. Bookmarks Screen
+3. Bookmarks Screen
 
 <table style="padding:10px">
 	<tr>
 		<td align="center">
-			<img src="assets/no_bookmarks.jpeg" alt="No Bookmarks" width="300"/>
+			<img src="assets/no_bookmarks.jpeg" alt="No Bookmarks" width="250"/>
     	</td>
         <td align="center">
-			<img src="assets/details_bookmark.jpeg" alt="Show Details" width="300"/>
+			<img src="assets/details_bookmark.jpeg" alt="Show Details" width="250"/>
     	</td>
         <td align="center">
-			<img src="assets/bookmarks.jpeg" alt="Bookmarks" width="300"/>
+			<img src="assets/bookmarks.jpeg" alt="Bookmarks" width="250"/>
     	</td>
   	</tr>
+</table>
+
+4. Connection Error and Drag to refresh
+
+<table style="padding:10px">
+    <tr>
+    	<td align="center">
+			<img src="assets/no_internet.jpeg" alt="No internet" width="250"/>
+    	</td>
+        <td align="center">
+			<img src="assets/drag_to_refresh.jpeg" alt="Drag to refresh" width="250"/>
+    	</td>
+    </tr>
 </table>
 
 ## Video
