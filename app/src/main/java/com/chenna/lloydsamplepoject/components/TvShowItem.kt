@@ -17,7 +17,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.chenna.domain.model.ShowModel
+import com.chenna.domain.models.ShowModel
 import com.chenna.lloydsamplepoject.util.Utility
 
 /**

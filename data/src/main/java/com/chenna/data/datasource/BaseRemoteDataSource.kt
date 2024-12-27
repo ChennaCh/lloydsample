@@ -1,8 +1,8 @@
 package com.chenna.data.datasource
 
 import android.content.Context
-import com.chenna.domain.utils.FailedResponse
-import com.chenna.domain.utils.NetworkResult
+import com.chenna.domain.models.FailedResponse
+import com.chenna.domain.models.NetworkResult
 import com.chenna.domain.utils.NetworkUtils
 import dagger.hilt.android.qualifiers.ApplicationContext
 import retrofit2.Response

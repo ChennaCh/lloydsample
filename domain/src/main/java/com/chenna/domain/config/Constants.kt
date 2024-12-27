@@ -1,4 +1,4 @@
-package com.chenna.domain.utils
+package com.chenna.domain.config
 
 /**
  * Created by Chenna Rao on 17/12/24.

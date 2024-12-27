@@ -1,6 +1,6 @@
 package com.chenna.lloydsamplepoject.models
 
-import com.chenna.domain.utils.Error
+import com.chenna.domain.models.Error
 
 /**
  * Created by Chenna Rao on 17/12/24.

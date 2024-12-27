@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.chenna.domain.entities.ShowEntity
-import com.chenna.domain.utils.Constants
+import com.chenna.domain.config.Constants
 import com.chenna.lloydsamplepoject.R
 import com.chenna.lloydsamplepoject.components.TvShowBookmarkItem
 import com.chenna.lloydsamplepoject.models.BookmarksActionEvent

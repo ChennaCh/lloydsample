@@ -9,11 +9,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.IconButton
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Close
-import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -49,7 +45,7 @@ import com.chenna.lloydsamplepoject.R
 import com.chenna.lloydsamplepoject.screens.DashboardNavComp
 import com.chenna.lloydsamplepoject.screens.utils.NavigationGraphBuilder.DashboardGraph
 import com.chenna.lloydsamplepoject.ui.theme.LLoydSamplePojectTheme
-import com.chenna.lloydsamplepoject.util.Constants
+import com.chenna.lloydsamplepoject.config.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

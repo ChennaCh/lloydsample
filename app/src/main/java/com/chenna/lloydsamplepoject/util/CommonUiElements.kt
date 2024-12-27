@@ -23,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.chenna.lloydsamplepoject.R
+import com.chenna.lloydsamplepoject.config.Constants
 
 /**
  * Created by Chenna Rao on 18/12/24.

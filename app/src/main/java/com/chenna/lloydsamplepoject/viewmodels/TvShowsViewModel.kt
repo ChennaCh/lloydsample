@@ -1,14 +1,14 @@
 package com.chenna.lloydsamplepoject.viewmodels
 
 import androidx.lifecycle.viewModelScope
-import com.chenna.domain.model.ShowModel
+import com.chenna.domain.models.ShowModel
 import com.chenna.domain.usecase.ShowsUseCase
-import com.chenna.domain.utils.Error
-import com.chenna.domain.utils.Work
+import com.chenna.domain.models.Error
+import com.chenna.domain.models.Work
 import com.chenna.lloydsamplepoject.models.TvShowActionEvent
 import com.chenna.lloydsamplepoject.models.TvShowStateModel
 import com.chenna.lloydsamplepoject.models.UiState
-import com.chenna.lloydsamplepoject.util.Constants
+import com.chenna.lloydsamplepoject.config.Constants
 import com.chenna.lloydsamplepoject.util.NavigationEvent
 import com.chenna.lloydsamplepoject.viewmodels.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

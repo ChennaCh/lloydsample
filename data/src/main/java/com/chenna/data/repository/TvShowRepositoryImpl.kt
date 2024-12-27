@@ -3,11 +3,11 @@ package com.chenna.data.repository
 import com.chenna.data.datasource.TvShowLocalDataSource
 import com.chenna.data.datasource.TvShowRemoteDataSource
 import com.chenna.domain.entities.ShowEntity
-import com.chenna.domain.model.CastModel
-import com.chenna.domain.model.ShowModel
+import com.chenna.domain.models.CastModel
+import com.chenna.domain.models.ShowModel
 import com.chenna.domain.repository.TvShowRepository
-import com.chenna.domain.utils.FailedResponse
-import com.chenna.domain.utils.NetworkResult
+import com.chenna.domain.models.FailedResponse
+import com.chenna.domain.models.NetworkResult
 import javax.inject.Inject
 
 /**

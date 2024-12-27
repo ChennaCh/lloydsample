@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.chenna.domain.model.ShowModel
+import com.chenna.domain.models.ShowModel
 import com.chenna.lloydsamplepoject.screens.BookmarkScreen
 import com.chenna.lloydsamplepoject.screens.CastScreen
 import com.chenna.lloydsamplepoject.screens.DashboardNavComp

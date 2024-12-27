@@ -2,8 +2,8 @@ package com.chenna.lloydsamplepoject.util
 
 import android.content.Context
 import android.widget.Toast
-import com.chenna.domain.utils.Message
-import com.chenna.domain.utils.MessageType
+import com.chenna.domain.models.Message
+import com.chenna.domain.models.MessageType
 
 /**
  * Created by Chenna Rao on 17/12/24.

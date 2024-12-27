@@ -1,16 +1,16 @@
 package com.chenna.lloydsamplepoject.viewmodels
 
-import com.chenna.domain.model.CastModel
-import com.chenna.domain.model.PersonCountryModel
-import com.chenna.domain.model.PersonImageModel
-import com.chenna.domain.model.PersonModel
+import com.chenna.domain.models.CastModel
+import com.chenna.domain.models.PersonCountryModel
+import com.chenna.domain.models.PersonImageModel
+import com.chenna.domain.models.PersonModel
 import com.chenna.domain.usecase.ShowsUseCase
-import com.chenna.domain.utils.Error
-import com.chenna.domain.utils.Message
-import com.chenna.domain.utils.MessageType
-import com.chenna.domain.utils.Work
+import com.chenna.domain.models.Error
+import com.chenna.domain.models.Message
+import com.chenna.domain.models.MessageType
+import com.chenna.domain.models.Work
 import com.chenna.lloydsamplepoject.models.CastActionEvent
-import com.chenna.lloydsamplepoject.util.Constants
+import com.chenna.lloydsamplepoject.config.Constants
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify

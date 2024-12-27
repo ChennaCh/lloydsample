@@ -2,8 +2,8 @@ package com.chenna.lloydsamplepoject.viewmodels.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chenna.domain.utils.Message
-import com.chenna.domain.utils.MessageType
+import com.chenna.domain.models.Message
+import com.chenna.domain.models.MessageType
 import com.chenna.lloydsamplepoject.util.NavigationEvent
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow

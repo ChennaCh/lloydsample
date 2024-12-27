@@ -1,12 +1,12 @@
 package com.chenna.lloydsamplepoject.viewmodels
 
 import androidx.lifecycle.viewModelScope
-import com.chenna.domain.model.toShowModel
+import com.chenna.domain.models.toShowModel
 import com.chenna.domain.usecase.ShowsUseCase
 import com.chenna.lloydsamplepoject.models.BookmarksActionEvent
 import com.chenna.lloydsamplepoject.models.BookmarksStateModel
 import com.chenna.lloydsamplepoject.models.UiState
-import com.chenna.lloydsamplepoject.util.Constants
+import com.chenna.lloydsamplepoject.config.Constants
 import com.chenna.lloydsamplepoject.util.NavigationEvent
 import com.chenna.lloydsamplepoject.viewmodels.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

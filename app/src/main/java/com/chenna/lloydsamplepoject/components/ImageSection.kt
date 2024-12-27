@@ -28,8 +28,8 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
-import com.chenna.domain.model.ShowModel
-import com.chenna.domain.model.toShowEntity
+import com.chenna.domain.models.ShowModel
+import com.chenna.domain.models.toShowEntity
 import com.chenna.lloydsamplepoject.models.TvShowDetailsActionEvent
 import com.chenna.lloydsamplepoject.util.Utility
 
