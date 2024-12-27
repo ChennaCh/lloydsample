@@ -9,7 +9,6 @@ import com.chenna.domain.entities.ShowImageEntity
 import com.chenna.domain.entities.ShowRatingEntity
 import com.chenna.domain.models.CastModel
 import com.chenna.domain.models.CountryModel
-import com.chenna.domain.models.FailedResponse
 import com.chenna.domain.models.NetWorkModel
 import com.chenna.domain.models.NetworkResult
 import com.chenna.domain.models.PersonCountryModel
@@ -27,7 +26,6 @@ import io.mockk.coVerify
 import io.mockk.just
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
-import okhttp3.ResponseBody
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse

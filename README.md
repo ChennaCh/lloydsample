@@ -7,19 +7,26 @@ exploring your favorite Tv shows and their cast members.
 
 1. Tv Shows Tab
 
-* Browse a list of popular Tv shows.
-* Tap on a Tv show to view detailed information about it.
-* Bookmark or unbookmark your favorite shows with ease.
+   * Browse Popular Tv Shows: Discover a curated list of popular TV shows, updated regularly.
+   * Detailed Information: Tap on a show to explore its synopsis, ratings, and more.
+   * Bookmark Your Favorites: Easily bookmark or unbookmark your preferred shows to keep track of them.
 
 2. Cast Tab
 
-* Explore the cast of all Tv shows in one place.
-* View cast members' names, profile photos, and their respective locations.
+   * Discover the Cast: Explore the cast members of various TV shows, all in one place.
+   * Cast Details: View detailed profiles, including names, profile photos, and their locations.
 
 3. Bookmarks Tab
 
-* Access all your bookmarked Tv shows in one convenient tab.
-* Easily revisit or manage your list of favorites.
+   * Your Favorites in One Place: Access all your bookmarked TV shows from a single tab.
+   * Revisit & Manage: Quickly revisit your favorites or update your bookmarked list with ease.
+
+4. Search Functionality
+
+   * Find Any TV Show: Use the search bar to find specific TV shows by title.
+   * Explore Details: View detailed information about the shows you're interested in.
+   * Bookmark Seamlessly: Add shows to your bookmarks directly from the search results.
+
 
 ## Project Structure
 

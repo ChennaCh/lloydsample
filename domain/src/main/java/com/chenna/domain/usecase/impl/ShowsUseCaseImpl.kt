@@ -4,10 +4,10 @@ import com.chenna.domain.entities.ShowEntity
 import com.chenna.domain.models.CastModel
 import com.chenna.domain.models.SearchShowModel
 import com.chenna.domain.models.ShowModel
+import com.chenna.domain.models.Work
 import com.chenna.domain.repository.TvShowRepository
 import com.chenna.domain.usecase.ShowsUseCase
 import com.chenna.domain.utils.ResponseMapper
-import com.chenna.domain.models.Work
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

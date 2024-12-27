@@ -13,8 +13,8 @@ import com.chenna.domain.models.ShowRatingModel
 import com.chenna.domain.models.toShowEntity
 import com.chenna.domain.models.toShowModel
 import com.chenna.domain.usecase.ShowsUseCase
-import com.chenna.lloydsamplepoject.models.BookmarksActionEvent
 import com.chenna.lloydsamplepoject.config.Constants
+import com.chenna.lloydsamplepoject.models.BookmarksActionEvent
 import com.chenna.lloydsamplepoject.util.NavigationEvent
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery

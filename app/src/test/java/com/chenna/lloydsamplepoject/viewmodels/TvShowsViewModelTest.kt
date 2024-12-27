@@ -10,8 +10,8 @@ import com.chenna.domain.models.ShowModel
 import com.chenna.domain.models.ShowRatingModel
 import com.chenna.domain.models.Work
 import com.chenna.domain.usecase.ShowsUseCase
-import com.chenna.lloydsamplepoject.models.TvShowActionEvent
 import com.chenna.lloydsamplepoject.config.Constants
+import com.chenna.lloydsamplepoject.models.TvShowActionEvent
 import com.chenna.lloydsamplepoject.util.NavigationEvent
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
