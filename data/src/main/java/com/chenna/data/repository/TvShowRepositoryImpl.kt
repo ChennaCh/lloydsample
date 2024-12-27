@@ -4,10 +4,11 @@ import com.chenna.data.datasource.TvShowLocalDataSource
 import com.chenna.data.datasource.TvShowRemoteDataSource
 import com.chenna.domain.entities.ShowEntity
 import com.chenna.domain.models.CastModel
-import com.chenna.domain.models.ShowModel
-import com.chenna.domain.repository.TvShowRepository
 import com.chenna.domain.models.FailedResponse
 import com.chenna.domain.models.NetworkResult
+import com.chenna.domain.models.SearchShowModel
+import com.chenna.domain.models.ShowModel
+import com.chenna.domain.repository.TvShowRepository
 import javax.inject.Inject
 
 /**
@@ -22,6 +23,10 @@ class TvShowRepositoryImpl @Inject constructor(
 
     override suspend fun getListOfShows(): NetworkResult<List<ShowModel>?, FailedResponse, Exception> {
         return remoteDataSource.getTvShows()
+    }
+
+    override suspend fun getSearchList(text: String): NetworkResult<List<SearchShowModel>?, FailedResponse, Exception> {
+        return remoteDataSource.getSearchList(text)
     }
 
     override suspend fun fetchCasts(): NetworkResult<List<CastModel>?, FailedResponse, Exception> {

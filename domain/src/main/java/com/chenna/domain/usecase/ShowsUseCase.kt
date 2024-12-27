@@ -2,6 +2,7 @@ package com.chenna.domain.usecase
 
 import com.chenna.domain.entities.ShowEntity
 import com.chenna.domain.models.CastModel
+import com.chenna.domain.models.SearchShowModel
 import com.chenna.domain.models.ShowModel
 import com.chenna.domain.models.Work
 
@@ -12,6 +13,7 @@ import com.chenna.domain.models.Work
  */
 interface ShowsUseCase {
     suspend fun getListOfShows(): Work<List<ShowModel>>
+    suspend fun getSearchList(text: String): Work<List<SearchShowModel>>
     suspend fun fetchCasts(): Work<List<CastModel>>
     suspend fun saveBookmark(showEntity: ShowEntity)
     suspend fun removeBookmark(id: Int)

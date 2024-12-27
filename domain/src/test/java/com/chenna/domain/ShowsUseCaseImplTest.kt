@@ -7,18 +7,20 @@ import com.chenna.domain.entities.ShowImageEntity
 import com.chenna.domain.entities.ShowRatingEntity
 import com.chenna.domain.models.CastModel
 import com.chenna.domain.models.CountryModel
+import com.chenna.domain.models.Message
 import com.chenna.domain.models.NetWorkModel
+import com.chenna.domain.models.NetworkResult
 import com.chenna.domain.models.PersonCountryModel
 import com.chenna.domain.models.PersonImageModel
 import com.chenna.domain.models.PersonModel
+import com.chenna.domain.models.SearchShowModel
 import com.chenna.domain.models.ShowImageModel
 import com.chenna.domain.models.ShowModel
 import com.chenna.domain.models.ShowRatingModel
+import com.chenna.domain.models.Work
 import com.chenna.domain.models.toShowEntity
 import com.chenna.domain.repository.TvShowRepository
 import com.chenna.domain.usecase.impl.ShowsUseCaseImpl
-import com.chenna.domain.models.NetworkResult
-import com.chenna.domain.models.Work
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -129,6 +131,68 @@ class ShowsUseCaseImplTest {
         assert(result is Work.Result)
         assertEquals(mockShows, (result as Work.Result).data)
     }
+
+    @Test
+    fun `getSearchList should return parsed network results successfully`() = runTest {
+        // Arrange
+        val query = "Breaking Bad"
+        val mockSearchResults = getSearchShowList()
+        val mockNetworkResult = NetworkResult.Success(mockSearchResults)
+
+        // Mock the repository behavior
+        coEvery { repository.getSearchList(query) } returns mockNetworkResult
+
+        // Act: Call the use case method
+        val result = showsUseCaseImpl.getSearchList(query)
+
+        // Assert: Verify the result is as expected
+        assert(result is Work.Result)
+        assertEquals(mockSearchResults, (result as Work.Result).data)
+    }
+}
+
+
+fun getSearchShowList(): List<SearchShowModel> {
+    return listOf(
+        SearchShowModel(
+            show = ShowModel(
+                id = 1,
+                name = "Under the Dome",
+                language = "English",
+                genres = listOf("Drama", "Science-Fiction", "Thriller"),
+                status = "Ended",
+                runtime = 60,
+                rating = ShowRatingModel(average = 6.5f),
+                weight = 98,
+                type = "Scripted",
+                network = NetWorkModel(country = CountryModel(name = "United States")),
+                image = ShowImageModel(
+                    medium = "https://static.tvmaze.com/uploads/images/medium_portrait/81/202627.jpg",
+                    original = "https://static.tvmaze.com/uploads/images/original_untouched/81/202627.jpg"
+                ),
+                summary = "Under the Dome is the story of a small town sealed off by an enormous dome."
+            )
+        ),
+        SearchShowModel(
+            show = ShowModel(
+                id = 2,
+                name = "Breaking Bad",
+                language = "English",
+                genres = listOf("Crime", "Drama", "Thriller"),
+                status = "Ended",
+                runtime = 47,
+                type = "Scripted",
+                network = NetWorkModel(country = CountryModel(name = "United States")),
+                rating = ShowRatingModel(average = 9.5f),
+                weight = 100,
+                image = ShowImageModel(
+                    medium = "https://static.tvmaze.com/uploads/images/medium_portrait/0/2400.jpg",
+                    original = "https://static.tvmaze.com/uploads/images/original_untouched/0/2400.jpg"
+                ),
+                summary = "A high school chemistry teacher turned methamphetamine producer."
+            )
+        )
+    )
 }
 
 fun getShowList(): List<ShowModel> {

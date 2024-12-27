@@ -10,4 +10,5 @@ sealed class DashboardNavComp(val route: String, val title: String) {
     data object Cast : DashboardNavComp("dashboard://cast", "Casts")
     data object Bookmark : DashboardNavComp("dashboard://bookmark", "Bookmarks")
     data object ShowDetails : DashboardNavComp("dashboard://show/details", "Show Details")
+    data object Search : DashboardNavComp("dashboard://show/search", "Search")
 }

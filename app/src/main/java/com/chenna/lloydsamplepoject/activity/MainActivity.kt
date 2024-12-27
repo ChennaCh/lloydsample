@@ -9,7 +9,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -42,10 +45,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.chenna.lloydsamplepoject.R
+import com.chenna.lloydsamplepoject.config.Constants
 import com.chenna.lloydsamplepoject.screens.DashboardNavComp
 import com.chenna.lloydsamplepoject.screens.utils.NavigationGraphBuilder.DashboardGraph
 import com.chenna.lloydsamplepoject.ui.theme.LLoydSamplePojectTheme
-import com.chenna.lloydsamplepoject.config.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -87,6 +90,20 @@ fun MainScreen() {
                                     fontSize = 20.sp,
                                     letterSpacing = TextUnit(1F, TextUnitType.Sp)
                                 )
+                            },
+                            actions = {
+                                if (navController.currentBackStackEntry?.destination?.route == DashboardNavComp.Shows.route || appBarTitle == "Shows") {
+                                    IconButton(
+                                        onClick = {
+                                            navController.navigate(DashboardNavComp.Search.route)
+                                        }
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Outlined.Search,
+                                            contentDescription = "Search"
+                                        )
+                                    }
+                                }
                             }, colors = TopAppBarColors(
                                 containerColor = Color.White,
                                 scrolledContainerColor = Color.Transparent,

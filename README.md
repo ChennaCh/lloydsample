@@ -60,10 +60,10 @@ The modules are as follow:
 <table style="padding:10px">
     <tr>
     	<td align="center">
-			<img src="assets/home.jpeg" alt="Tv Shows" width="250"/>
+			<img src="assets/home.jpeg" alt="Tv Shows" width="180"/>
     	</td>
         <td align="center">
-			<img src="assets/details.jpeg" alt="Show Details" width="250"/>
+			<img src="assets/details_bookmark.jpeg" alt="Show Details" width="180"/>
     	</td>
     </tr>
 </table>
@@ -73,10 +73,10 @@ The modules are as follow:
 <table style="padding:10px">
     <tr>
     	<td align="center">
-			<img src="assets/cast.jpeg" alt="Casts" width="250"/>
+			<img src="assets/cast.jpeg" alt="Casts" width="180"/>
     	</td>
         <td align="center">
-			<img src="assets/cast_details.jpeg" alt="Cast details" width="250"/>
+			<img src="assets/cast_details.jpeg" alt="Cast details" width="180"/>
     	</td>
     </tr>
 </table>
@@ -85,27 +85,46 @@ The modules are as follow:
 
 <table style="padding:10px">
 	<tr>
-		<td align="center">
-			<img src="assets/no_bookmarks.jpeg" alt="No Bookmarks" width="250"/>
+        <td align="center">
+			<img src="assets/bookmarks.jpeg" alt="Bookmarks" width="180"/>
     	</td>
         <td align="center">
-			<img src="assets/details_bookmark.jpeg" alt="Show Details" width="250"/>
-    	</td>
-        <td align="center">
-			<img src="assets/bookmarks.jpeg" alt="Bookmarks" width="250"/>
+			<img src="assets/details.jpeg" alt="Show Details" width="180"/>
     	</td>
   	</tr>
 </table>
 
-4. Connection Error and Drag to refresh
+4. Search Screen
+
+<table style="padding:10px">
+	<tr>
+        <td align="center">
+			<img src="assets/search_screen.jpeg" alt="Bookmarks" width="180"/>
+    	</td>
+        <td align="center">
+			<img src="assets/search_results.jpeg" alt="Show Details" width="180"/>
+    	</td>
+        <td align="center">
+			<img src="assets/search_result_item_details.jpeg" alt="Show Details" width="180"/>
+    	</td>
+  	</tr>
+</table>
+
+5. Connection Error and Drag to refresh
 
 <table style="padding:10px">
     <tr>
     	<td align="center">
-			<img src="assets/no_internet.jpeg" alt="No internet" width="250"/>
+			<img src="assets/no_internet.jpeg" alt="No internet" width="180"/>
     	</td>
         <td align="center">
-			<img src="assets/drag_to_refresh.jpeg" alt="Drag to refresh" width="250"/>
+			<img src="assets/drag_to_refresh.jpeg" alt="Drag to refresh" width="180"/>
+    	</td>
+        <td align="center">
+			<img src="assets/no_search_found.jpeg" alt="No Bookmarks" width="180"/>
+    	</td>
+        <td align="center">
+			<img src="assets/no_bookmarks.jpeg" alt="No Bookmarks" width="180"/>
     	</td>
     </tr>
 </table>
@@ -115,7 +134,7 @@ The modules are as follow:
 <table style="padding:10px">
 	<tr>
     	<td align="center">
-			<img src="assets/tvshow_app.gif" alt="Tv Shows" width="300"/>
+			<img src="assets/tvshow_app.gif" alt="Tv Shows" width="180"/>
     	</td>
   	</tr>
 </table>

@@ -9,15 +9,17 @@ import com.chenna.domain.entities.ShowImageEntity
 import com.chenna.domain.entities.ShowRatingEntity
 import com.chenna.domain.models.CastModel
 import com.chenna.domain.models.CountryModel
+import com.chenna.domain.models.FailedResponse
 import com.chenna.domain.models.NetWorkModel
+import com.chenna.domain.models.NetworkResult
 import com.chenna.domain.models.PersonCountryModel
 import com.chenna.domain.models.PersonImageModel
 import com.chenna.domain.models.PersonModel
+import com.chenna.domain.models.SearchShowModel
 import com.chenna.domain.models.ShowImageModel
 import com.chenna.domain.models.ShowModel
 import com.chenna.domain.models.ShowRatingModel
 import com.chenna.domain.models.toShowEntity
-import com.chenna.domain.models.NetworkResult
 import io.mockk.Runs
 import io.mockk.clearAllMocks
 import io.mockk.coEvery
@@ -25,6 +27,7 @@ import io.mockk.coVerify
 import io.mockk.just
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
+import okhttp3.ResponseBody
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -141,6 +144,21 @@ class TvShowRepositoryImplTest {
         assertEquals(mockShows, (result as NetworkResult.Success).data)
         coVerify { remoteDataSource.fetchCasts() }
     }
+
+    @Test
+    fun `test getSearchList returns success`() = runBlocking {
+        val mockSearchResults = getSearchShowList() // Reusing getShowList() for mock data
+        val mockResult = NetworkResult.Success(mockSearchResults)
+
+        coEvery { remoteDataSource.getSearchList("query") } returns mockResult
+
+        val result = repository.getSearchList("query")
+
+        assertTrue(result is NetworkResult.Success)
+        assertEquals(mockSearchResults, (result as NetworkResult.Success).data)
+        coVerify { remoteDataSource.getSearchList("query") }
+    }
+
 }
 
 fun getShowList(): List<ShowModel> {
@@ -178,6 +196,49 @@ fun getShowList(): List<ShowModel> {
                 original = "https://static.tvmaze.com/uploads/images/original_untouched/0/2400.jpg"
             ),
             summary = "A high school chemistry teacher turned methamphetamine producer."
+        )
+    )
+}
+
+fun getSearchShowList(): List<SearchShowModel> {
+    return listOf(
+        SearchShowModel(
+            show = ShowModel(
+                id = 1,
+                name = "Under the Dome",
+                language = "English",
+                genres = listOf("Drama", "Science-Fiction", "Thriller"),
+                status = "Ended",
+                runtime = 60,
+                rating = ShowRatingModel(average = 6.5f),
+                weight = 98,
+                type = "Scripted",
+                network = NetWorkModel(country = CountryModel(name = "United States")),
+                image = ShowImageModel(
+                    medium = "https://static.tvmaze.com/uploads/images/medium_portrait/81/202627.jpg",
+                    original = "https://static.tvmaze.com/uploads/images/original_untouched/81/202627.jpg"
+                ),
+                summary = "Under the Dome is the story of a small town sealed off by an enormous dome."
+            )
+        ),
+        SearchShowModel(
+            show = ShowModel(
+                id = 2,
+                name = "Breaking Bad",
+                language = "English",
+                genres = listOf("Crime", "Drama", "Thriller"),
+                status = "Ended",
+                runtime = 47,
+                type = "Scripted",
+                network = NetWorkModel(country = CountryModel(name = "United States")),
+                rating = ShowRatingModel(average = 9.5f),
+                weight = 100,
+                image = ShowImageModel(
+                    medium = "https://static.tvmaze.com/uploads/images/medium_portrait/0/2400.jpg",
+                    original = "https://static.tvmaze.com/uploads/images/original_untouched/0/2400.jpg"
+                ),
+                summary = "A high school chemistry teacher turned methamphetamine producer."
+            )
         )
     )
 }

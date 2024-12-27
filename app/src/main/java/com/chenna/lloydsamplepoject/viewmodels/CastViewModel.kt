@@ -10,6 +10,7 @@ import com.chenna.lloydsamplepoject.models.CastActionEvent
 import com.chenna.lloydsamplepoject.models.CastStateModel
 import com.chenna.lloydsamplepoject.models.UiState
 import com.chenna.lloydsamplepoject.config.Constants
+import com.chenna.lloydsamplepoject.models.SearchActionEvent
 import com.chenna.lloydsamplepoject.util.Utility
 import com.chenna.lloydsamplepoject.viewmodels.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

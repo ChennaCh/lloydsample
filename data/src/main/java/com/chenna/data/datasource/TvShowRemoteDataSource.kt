@@ -2,9 +2,10 @@ package com.chenna.data.datasource
 
 import com.chenna.data.service.ITvShowService
 import com.chenna.domain.models.CastModel
-import com.chenna.domain.models.ShowModel
 import com.chenna.domain.models.FailedResponse
 import com.chenna.domain.models.NetworkResult
+import com.chenna.domain.models.SearchShowModel
+import com.chenna.domain.models.ShowModel
 import retrofit2.Retrofit
 import javax.inject.Inject
 
@@ -26,6 +27,12 @@ class TvShowRemoteDataSource @Inject constructor(private val retrofit: Retrofit)
     suspend fun fetchCasts(): NetworkResult<List<CastModel>?, FailedResponse, Exception> {
         return performSafeApiRequestCall {
             requestService.fetchCasts()
+        }
+    }
+
+    suspend fun getSearchList(text: String): NetworkResult<List<SearchShowModel>?, FailedResponse, Exception> {
+        return performSafeApiRequestCall {
+            requestService.getSearchList(q = text)
         }
     }
 }
