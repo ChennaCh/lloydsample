@@ -10,5 +10,6 @@ import com.chenna.domain.models.Error
 data class UiState<T>(
     val data: T? = null,
     val isLoading: Boolean = false,
+    val showSearchMessage: Boolean = false,
     val error: Error? = null,
 )

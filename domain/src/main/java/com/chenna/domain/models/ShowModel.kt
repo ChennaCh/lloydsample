@@ -16,7 +16,6 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class ShowModel(
     val id: Int,
-    val name: String?,
     val type: String?,
     val language: String?,
     val genres: List<String>?,
@@ -27,6 +26,7 @@ data class ShowModel(
     val weight: Int,
     val image: ShowImageModel?,
     val summary: String,
+    val name: String?,
 ) : Parcelable
 
 @Parcelize

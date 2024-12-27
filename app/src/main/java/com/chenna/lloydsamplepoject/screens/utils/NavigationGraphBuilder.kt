@@ -13,6 +13,7 @@ import com.chenna.domain.models.ShowModel
 import com.chenna.lloydsamplepoject.screens.BookmarkScreen
 import com.chenna.lloydsamplepoject.screens.CastScreen
 import com.chenna.lloydsamplepoject.screens.DashboardNavComp
+import com.chenna.lloydsamplepoject.screens.SearchScreen
 import com.chenna.lloydsamplepoject.screens.ShowDetailsScreen
 import com.chenna.lloydsamplepoject.screens.ShowsScreen
 import com.chenna.lloydsamplepoject.util.NavigationEvent
@@ -61,6 +62,17 @@ object NavigationGraphBuilder {
                     goto(it)
                 }
                 updateBottomNavVisibility(true)
+            }
+            composable(DashboardNavComp.Search.route) {
+                if (navHostController.previousBackStackEntry?.destination?.route == DashboardNavComp.Shows.route) {
+                    updateTitle(DashboardNavComp.Search.title)
+                    SearchScreen(onBack = { navHostController.popBackStack() }) {
+                        goto(it)
+                    }
+                    updateTitle("")
+                    updateElevation(0.dp)
+                    updateBottomNavVisibility(false)
+                }
             }
             composable(DashboardNavComp.ShowDetails.route) {
                 val showModel =

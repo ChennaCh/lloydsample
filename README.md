@@ -7,19 +7,26 @@ exploring your favorite Tv shows and their cast members.
 
 1. Tv Shows Tab
 
-* Browse a list of popular Tv shows.
-* Tap on a Tv show to view detailed information about it.
-* Bookmark or unbookmark your favorite shows with ease.
+   * Browse Popular Tv Shows: Discover a curated list of popular TV shows, updated regularly.
+   * Detailed Information: Tap on a show to explore its synopsis, ratings, and more.
+   * Bookmark Your Favorites: Easily bookmark or unbookmark your preferred shows to keep track of them.
 
 2. Cast Tab
 
-* Explore the cast of all Tv shows in one place.
-* View cast members' names, profile photos, and their respective locations.
+   * Discover the Cast: Explore the cast members of various TV shows, all in one place.
+   * Cast Details: View detailed profiles, including names, profile photos, and their locations.
 
 3. Bookmarks Tab
 
-* Access all your bookmarked Tv shows in one convenient tab.
-* Easily revisit or manage your list of favorites.
+   * Your Favorites in One Place: Access all your bookmarked TV shows from a single tab.
+   * Revisit & Manage: Quickly revisit your favorites or update your bookmarked list with ease.
+
+4. Search Functionality
+
+   * Find Any TV Show: Use the search bar to find specific TV shows by title.
+   * Explore Details: View detailed information about the shows you're interested in.
+   * Bookmark Seamlessly: Add shows to your bookmarks directly from the search results.
+
 
 ## Project Structure
 
@@ -60,10 +67,10 @@ The modules are as follow:
 <table style="padding:10px">
     <tr>
     	<td align="center">
-			<img src="assets/home.jpeg" alt="Tv Shows" width="250"/>
+			<img src="assets/home.jpeg" alt="Tv Shows" width="180"/>
     	</td>
         <td align="center">
-			<img src="assets/details.jpeg" alt="Show Details" width="250"/>
+			<img src="assets/details_bookmark.jpeg" alt="Show Details" width="180"/>
     	</td>
     </tr>
 </table>
@@ -73,10 +80,10 @@ The modules are as follow:
 <table style="padding:10px">
     <tr>
     	<td align="center">
-			<img src="assets/cast.jpeg" alt="Casts" width="250"/>
+			<img src="assets/cast.jpeg" alt="Casts" width="180"/>
     	</td>
         <td align="center">
-			<img src="assets/cast_details.jpeg" alt="Cast details" width="250"/>
+			<img src="assets/cast_details.jpeg" alt="Cast details" width="180"/>
     	</td>
     </tr>
 </table>
@@ -85,27 +92,46 @@ The modules are as follow:
 
 <table style="padding:10px">
 	<tr>
-		<td align="center">
-			<img src="assets/no_bookmarks.jpeg" alt="No Bookmarks" width="250"/>
+        <td align="center">
+			<img src="assets/bookmarks.jpeg" alt="Bookmarks" width="180"/>
     	</td>
         <td align="center">
-			<img src="assets/details_bookmark.jpeg" alt="Show Details" width="250"/>
-    	</td>
-        <td align="center">
-			<img src="assets/bookmarks.jpeg" alt="Bookmarks" width="250"/>
+			<img src="assets/details.jpeg" alt="Show Details" width="180"/>
     	</td>
   	</tr>
 </table>
 
-4. Connection Error and Drag to refresh
+4. Search Screen
+
+<table style="padding:10px">
+	<tr>
+        <td align="center">
+			<img src="assets/search_screen.jpeg" alt="Bookmarks" width="180"/>
+    	</td>
+        <td align="center">
+			<img src="assets/search_results.jpeg" alt="Show Details" width="180"/>
+    	</td>
+        <td align="center">
+			<img src="assets/search_result_item_details.jpeg" alt="Show Details" width="180"/>
+    	</td>
+  	</tr>
+</table>
+
+5. Connection Error and Drag to refresh
 
 <table style="padding:10px">
     <tr>
     	<td align="center">
-			<img src="assets/no_internet.jpeg" alt="No internet" width="250"/>
+			<img src="assets/no_internet.jpeg" alt="No internet" width="180"/>
     	</td>
         <td align="center">
-			<img src="assets/drag_to_refresh.jpeg" alt="Drag to refresh" width="250"/>
+			<img src="assets/drag_to_refresh.jpeg" alt="Drag to refresh" width="180"/>
+    	</td>
+        <td align="center">
+			<img src="assets/no_search_found.jpeg" alt="No Bookmarks" width="180"/>
+    	</td>
+        <td align="center">
+			<img src="assets/no_bookmarks.jpeg" alt="No Bookmarks" width="180"/>
     	</td>
     </tr>
 </table>
@@ -115,7 +141,7 @@ The modules are as follow:
 <table style="padding:10px">
 	<tr>
     	<td align="center">
-			<img src="assets/tvshow_app.gif" alt="Tv Shows" width="300"/>
+			<img src="assets/tvshow_app.gif" alt="Tv Shows" width="180"/>
     	</td>
   	</tr>
 </table>

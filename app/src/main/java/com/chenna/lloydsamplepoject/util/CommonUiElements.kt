@@ -3,6 +3,7 @@ package com.chenna.lloydsamplepoject.util
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -39,33 +40,77 @@ fun ProgressBarCompose(color: Color = Color.Red) {
 }
 
 @Composable
-fun NoInternetContent() {
+fun NoInternetContent(
+    enableBottomPadding: Boolean = false,
+) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(
+                start = 16.dp,
+                end = 16.dp,
+                top = 16.dp,
+                bottom = if (enableBottomPadding) 100.dp else 16.dp
+            ),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
         item {
             Image(
-                painter = painterResource(id = R.drawable.ic_wifi_signal),
+                painter = painterResource(id = R.drawable.no_wifi_internet),
                 contentDescription = "No Internet",
-                modifier = Modifier.size(180.dp)
+                modifier = Modifier.size(250.dp)
             )
         }
-        item { Spacer(modifier = Modifier.height(16.dp)) }
+        item { Spacer(modifier = Modifier.height(32.dp)) }
         item {
             Text(
                 text = Constants.CONNECTION_ERROR,
                 color = Color.Black.copy(alpha = 0.6f),
                 fontFamily = FontFamily.Default,
-                fontSize = 18.sp,
+                fontSize = 16.sp,
                 fontWeight = FontWeight.W500,
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center
             )
         }
 
+    }
+}
+
+@Composable
+fun NoResultsView(
+    imageRes: Int,
+    contentDescription: String,
+    message: String,
+    enableBottomPadding: Boolean = false,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(
+                start = 16.dp,
+                end = 16.dp,
+                top = 16.dp,
+                bottom = if (enableBottomPadding) 100.dp else 16.dp
+            ),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Image(
+            painter = painterResource(id = imageRes),
+            contentDescription = contentDescription,
+            modifier = Modifier.size(200.dp)
+        )
+        Spacer(modifier = Modifier.height(32.dp))
+        Text(
+            text = message,
+            fontWeight = FontWeight.Medium,
+            fontFamily = FontFamily.Default,
+            fontSize = 16.sp,
+            color = Color.Gray,
+            textAlign = TextAlign.Center
+        )
     }
 }
