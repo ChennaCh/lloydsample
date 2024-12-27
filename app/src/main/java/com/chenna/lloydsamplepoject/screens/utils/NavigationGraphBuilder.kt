@@ -31,7 +31,6 @@ object NavigationGraphBuilder {
         updateTitle: (title: String) -> Unit,
         updateElevation: (elevation: Dp) -> Unit,
         updateBottomNavVisibility: (Boolean) -> Unit,
-        updateSearch: (Boolean) -> Unit,
         goto: (NavigationEvent) -> Unit,
     ) {
         NavHost(
@@ -46,7 +45,6 @@ object NavigationGraphBuilder {
                     goto(it)
                 }
                 updateBottomNavVisibility(true)
-                updateSearch(true)
             }
             composable(DashboardNavComp.Cast.route) {
                 updateElevation(3.dp)
@@ -55,7 +53,6 @@ object NavigationGraphBuilder {
                     goto(it)
                 }
                 updateBottomNavVisibility(true)
-                updateSearch(false)
             }
             composable(DashboardNavComp.Bookmark.route) {
                 updateElevation(0.dp)
@@ -64,7 +61,6 @@ object NavigationGraphBuilder {
                     goto(it)
                 }
                 updateBottomNavVisibility(true)
-                updateSearch(false)
             }
             composable(DashboardNavComp.ShowDetails.route) {
                 val showModel =
@@ -75,7 +71,6 @@ object NavigationGraphBuilder {
                 updateTitle("")
                 updateElevation(0.dp)
                 updateBottomNavVisibility(false)
-                updateSearch(false)
             }
         }
     }
