@@ -32,7 +32,7 @@ import com.chenna.lloydsamplepoject.util.NavigationEvent
 import com.chenna.lloydsamplepoject.util.NoInternetContent
 import com.chenna.lloydsamplepoject.util.ProgressBarCompose
 import com.chenna.lloydsamplepoject.util.UiUtils
-import com.chenna.lloydsamplepoject.viewmodels.TVShowsViewModel
+import com.chenna.lloydsamplepoject.viewmodels.TvShowsViewModel
 import kotlinx.coroutines.flow.collectLatest
 
 /**
@@ -43,7 +43,7 @@ import kotlinx.coroutines.flow.collectLatest
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ShowsScreen(
-    viewModel: TVShowsViewModel = hiltViewModel(),
+    viewModel: TvShowsViewModel = hiltViewModel(),
     navigate: (NavigationEvent) -> Unit,
 ) {
 

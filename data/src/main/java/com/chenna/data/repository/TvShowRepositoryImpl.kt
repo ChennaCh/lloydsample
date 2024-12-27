@@ -1,7 +1,7 @@
 package com.chenna.data.repository
 
-import com.chenna.data.datasource.TVShowLocalDataSource
-import com.chenna.data.datasource.TVShowRemoteDataSource
+import com.chenna.data.datasource.TvShowLocalDataSource
+import com.chenna.data.datasource.TvShowRemoteDataSource
 import com.chenna.domain.entities.ShowEntity
 import com.chenna.domain.model.CastModel
 import com.chenna.domain.model.ShowModel
@@ -16,8 +16,8 @@ import javax.inject.Inject
  * Frost Interactive
  */
 class TvShowRepositoryImpl @Inject constructor(
-    private val remoteDataSource: TVShowRemoteDataSource,
-    private val localDataSource: TVShowLocalDataSource,
+    private val remoteDataSource: TvShowRemoteDataSource,
+    private val localDataSource: TvShowLocalDataSource,
 ) : TvShowRepository {
 
     override suspend fun getListOfShows(): NetworkResult<List<ShowModel>?, FailedResponse, Exception> {

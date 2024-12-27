@@ -24,7 +24,7 @@ import javax.inject.Inject
  * Frost Interactive
  */
 @HiltViewModel
-class TVShowsViewModel @Inject constructor(private val useCase: ShowsUseCase) : BaseViewModel() {
+class TvShowsViewModel @Inject constructor(private val useCase: ShowsUseCase) : BaseViewModel() {
 
     private val _resultState = MutableStateFlow(UiState<TvShowStateModel>(isLoading = true))
     val resultState: StateFlow<UiState<TvShowStateModel>> = _resultState

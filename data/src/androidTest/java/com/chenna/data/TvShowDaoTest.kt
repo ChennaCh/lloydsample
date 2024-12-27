@@ -4,7 +4,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.chenna.data.db.AppDatabase
-import com.chenna.data.db.dao.TVShowDao
+import com.chenna.data.db.dao.TvShowDao
 import com.chenna.domain.entities.CountryEntity
 import com.chenna.domain.entities.NetworkEntity
 import com.chenna.domain.entities.ShowEntity
@@ -31,10 +31,10 @@ import org.junit.runner.RunWith
 
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
-class TVShowDaoTest {
+class TvShowDaoTest {
 
     private lateinit var database: AppDatabase
-    private lateinit var tvShowDao: TVShowDao
+    private lateinit var tvShowDao: TvShowDao
 
     @Before
     fun setup() {

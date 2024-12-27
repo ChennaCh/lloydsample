@@ -4,7 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.chenna.data.db.converter.DateConverter
-import com.chenna.data.db.dao.TVShowDao
+import com.chenna.data.db.dao.TvShowDao
 import com.chenna.domain.entities.ShowEntity
 
 /**
@@ -15,5 +15,5 @@ import com.chenna.domain.entities.ShowEntity
 @Database(entities = [ShowEntity::class], version = 1, exportSchema = false)
 @TypeConverters(DateConverter::class)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun showDao(): TVShowDao
+    abstract fun showDao(): TvShowDao
 }

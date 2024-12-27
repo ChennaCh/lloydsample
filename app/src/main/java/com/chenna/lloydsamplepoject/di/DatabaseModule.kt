@@ -3,7 +3,7 @@ package com.chenna.lloydsamplepoject.di
 import android.content.Context
 import androidx.room.Room
 import com.chenna.data.db.AppDatabase
-import com.chenna.data.db.dao.TVShowDao
+import com.chenna.data.db.dao.TvShowDao
 import com.chenna.lloydsamplepoject.util.Constants
 import dagger.Module
 import dagger.Provides
@@ -32,7 +32,7 @@ class DatabaseModule {
     }
 
     @Provides
-    fun provideShowDao(database: AppDatabase): TVShowDao {
+    fun provideShowDao(database: AppDatabase): TvShowDao {
         return database.showDao()
     }
 }
