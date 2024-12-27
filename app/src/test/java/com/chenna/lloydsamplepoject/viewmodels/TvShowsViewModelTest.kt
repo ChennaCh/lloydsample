@@ -37,25 +37,25 @@ import org.junit.Before
 import org.junit.Test
 
 /**
- * Test suite for [TVShowsViewModel].
- * Verifies fetching TV shows functionality.
+ * Test suite for [TvShowsViewModel].
+ * Verifies fetching Tv shows functionality.
  *
  * Created by Chenna Rao on 22/12/24.
  */
 
 @ExperimentalCoroutinesApi
-class TVShowsViewModelTest {
+class TvShowsViewModelTest {
 
     @MockK
     private lateinit var useCase: ShowsUseCase
 
-    private lateinit var viewModel: TVShowsViewModel
+    private lateinit var viewModel: TvShowsViewModel
     private val testDispatcher = StandardTestDispatcher()
 
     @Before
     fun setup() {
         MockKAnnotations.init(this)
-        viewModel = TVShowsViewModel(useCase)
+        viewModel = TvShowsViewModel(useCase)
         Dispatchers.setMain(testDispatcher)
     }
 

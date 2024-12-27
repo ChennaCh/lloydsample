@@ -13,7 +13,7 @@ import javax.inject.Inject
  * <p>
  * Frost Interactive
  */
-class TVShowRemoteDataSource @Inject constructor(private val retrofit: Retrofit) :
+class TvShowRemoteDataSource @Inject constructor(private val retrofit: Retrofit) :
     BaseRemoteDataSource() {
 
     private val requestService: ITvShowService by lazy { retrofit.create(ITvShowService::class.java) }

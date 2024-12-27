@@ -1,7 +1,7 @@
 package com.chenna.data.repository
 
-import com.chenna.data.datasource.TVShowLocalDataSource
-import com.chenna.data.datasource.TVShowRemoteDataSource
+import com.chenna.data.datasource.TvShowLocalDataSource
+import com.chenna.data.datasource.TvShowRemoteDataSource
 import com.chenna.domain.entities.CountryEntity
 import com.chenna.domain.entities.NetworkEntity
 import com.chenna.domain.entities.ShowEntity
@@ -40,8 +40,8 @@ import org.junit.Test
 
 class TvShowRepositoryImplTest {
 
-    private lateinit var remoteDataSource: TVShowRemoteDataSource
-    private lateinit var localDataSource: TVShowLocalDataSource
+    private lateinit var remoteDataSource: TvShowRemoteDataSource
+    private lateinit var localDataSource: TvShowLocalDataSource
     private lateinit var repository: TvShowRepositoryImpl
 
     @Before

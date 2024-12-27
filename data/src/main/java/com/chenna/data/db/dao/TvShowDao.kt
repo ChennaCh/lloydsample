@@ -13,7 +13,7 @@ import com.chenna.domain.entities.ShowEntity
  */
 
 @Dao
-interface TVShowDao {
+interface TvShowDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveBookmark(show: ShowEntity)
 

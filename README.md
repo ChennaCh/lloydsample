@@ -1,24 +1,24 @@
-## My TV Shows App
+## My Tv Shows App
 
-Welcome to My TV Shows App! 🎬📺 This app is your ultimate companion for discovering, bookmarking, and
-exploring your favorite TV shows and their cast members.
+Welcome to My Tv Shows App! 🎬📺 This app is your ultimate companion for discovering, bookmarking, and
+exploring your favorite Tv shows and their cast members.
 
 📱 Features
 
-1. TV Shows Tab
+1. Tv Shows Tab
 
-* Browse a list of popular TV shows.
-* Tap on a TV show to view detailed information about it.
+* Browse a list of popular Tv shows.
+* Tap on a Tv show to view detailed information about it.
 * Bookmark or unbookmark your favorite shows with ease.
 
 2. Cast Tab
 
-* Explore the cast of all TV shows in one place.
+* Explore the cast of all Tv shows in one place.
 * View cast members' names, profile photos, and their respective locations.
 
 3. Bookmarks Tab
 
-* Access all your bookmarked TV shows in one convenient tab.
+* Access all your bookmarked Tv shows in one convenient tab.
 * Easily revisit or manage your list of favorites.
 
 ## Project Structure

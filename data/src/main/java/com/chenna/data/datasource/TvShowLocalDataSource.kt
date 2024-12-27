@@ -1,6 +1,6 @@
 package com.chenna.data.datasource
 
-import com.chenna.data.db.dao.TVShowDao
+import com.chenna.data.db.dao.TvShowDao
 import com.chenna.domain.entities.ShowEntity
 import javax.inject.Inject
 
@@ -9,7 +9,7 @@ import javax.inject.Inject
  * <p>
  * Frost Interactive
  */
-class TVShowLocalDataSource @Inject constructor(private val tvShowDao: TVShowDao) {
+class TvShowLocalDataSource @Inject constructor(private val tvShowDao: TvShowDao) {
     suspend fun getBookmarkedTvShows(): List<ShowEntity> {
         return tvShowDao.getSavedBookMarks()
     }

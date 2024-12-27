@@ -1,7 +1,7 @@
 package com.chenna.data
 
-import com.chenna.data.datasource.TVShowLocalDataSource
-import com.chenna.data.db.dao.TVShowDao
+import com.chenna.data.datasource.TvShowLocalDataSource
+import com.chenna.data.db.dao.TvShowDao
 import com.chenna.domain.entities.CountryEntity
 import com.chenna.domain.entities.NetworkEntity
 import com.chenna.domain.entities.ShowEntity
@@ -20,10 +20,10 @@ import org.junit.Test
  * Frost Interactive
  */
 
-class TVShowLocalDataSourceTest {
+class TvShowLocalDataSourceTest {
 
-    private val mockDao: TVShowDao = mockk(relaxed = true)
-    private val localDataSource = TVShowLocalDataSource(mockDao)
+    private val mockDao: TvShowDao = mockk(relaxed = true)
+    private val localDataSource = TvShowLocalDataSource(mockDao)
 
     @Test
     fun `test getBookmarkedTvShows`() = runBlocking {
