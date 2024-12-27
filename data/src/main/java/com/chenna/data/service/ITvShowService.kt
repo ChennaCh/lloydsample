@@ -1,8 +1,8 @@
 package com.chenna.data.service
 
-import com.chenna.domain.model.CastModel
-import com.chenna.domain.model.ShowModel
-import com.chenna.domain.utils.Constants
+import com.chenna.domain.models.CastModel
+import com.chenna.domain.models.ShowModel
+import com.chenna.domain.config.Constants
 import retrofit2.Response
 import retrofit2.http.GET
 

@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.chenna.domain.model.ShowModel
+import com.chenna.domain.models.ShowModel
 import com.chenna.lloydsamplepoject.components.DetailsRow
 import com.chenna.lloydsamplepoject.components.GenresSection
 import com.chenna.lloydsamplepoject.components.ImageSection

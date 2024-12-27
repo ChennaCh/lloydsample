@@ -1,6 +1,6 @@
 package com.chenna.lloydsamplepoject.di
 
-import com.chenna.domain.utils.Constants.BASE_URL
+import com.chenna.domain.config.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

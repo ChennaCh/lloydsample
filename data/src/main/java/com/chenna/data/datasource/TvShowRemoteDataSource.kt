@@ -1,10 +1,10 @@
 package com.chenna.data.datasource
 
 import com.chenna.data.service.ITvShowService
-import com.chenna.domain.model.CastModel
-import com.chenna.domain.model.ShowModel
-import com.chenna.domain.utils.FailedResponse
-import com.chenna.domain.utils.NetworkResult
+import com.chenna.domain.models.CastModel
+import com.chenna.domain.models.ShowModel
+import com.chenna.domain.models.FailedResponse
+import com.chenna.domain.models.NetworkResult
 import retrofit2.Retrofit
 import javax.inject.Inject
 

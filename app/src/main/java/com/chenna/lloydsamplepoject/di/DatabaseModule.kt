@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.chenna.data.db.AppDatabase
 import com.chenna.data.db.dao.TvShowDao
-import com.chenna.lloydsamplepoject.util.Constants
+import com.chenna.lloydsamplepoject.config.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

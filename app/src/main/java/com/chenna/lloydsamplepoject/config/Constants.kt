@@ -1,4 +1,4 @@
-package com.chenna.lloydsamplepoject.util
+package com.chenna.lloydsamplepoject.config
 
 /**
  * Created by Chenna Rao on 23/12/24.
@@ -20,7 +20,6 @@ object Constants {
     object Errors {
         const val TV_SHOWS = "Tv show details cannot be retrieved"
         const val TV_SHOW_CASTS = "No casts found for the shows"
-        const val ERROR = "Error"
         const val CONNECTION_ERROR = "Connection Error"
     }
 }

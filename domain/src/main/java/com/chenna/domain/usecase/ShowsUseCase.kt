@@ -1,9 +1,9 @@
 package com.chenna.domain.usecase
 
 import com.chenna.domain.entities.ShowEntity
-import com.chenna.domain.model.CastModel
-import com.chenna.domain.model.ShowModel
-import com.chenna.domain.utils.Work
+import com.chenna.domain.models.CastModel
+import com.chenna.domain.models.ShowModel
+import com.chenna.domain.models.Work
 
 /**
  * Created by Chenna Rao on 17/12/24.

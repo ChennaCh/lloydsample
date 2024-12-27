@@ -1,4 +1,4 @@
-package com.chenna.domain.model
+package com.chenna.domain.models
 
 /**
  * Created by Chenna Rao on 25/12/24.

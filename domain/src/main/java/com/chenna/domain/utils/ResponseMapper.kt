@@ -1,5 +1,11 @@
 package com.chenna.domain.utils
 
+import com.chenna.domain.config.Constants
+import com.chenna.domain.models.FailedResponse
+import com.chenna.domain.models.Message
+import com.chenna.domain.models.MessageType
+import com.chenna.domain.models.NetworkResult
+import com.chenna.domain.models.Work
 import com.google.gson.JsonParser
 import okhttp3.ResponseBody
 

@@ -1,4 +1,4 @@
-package com.chenna.domain.model
+package com.chenna.domain.models
 
 import android.os.Parcelable
 import com.chenna.domain.entities.CountryEntity

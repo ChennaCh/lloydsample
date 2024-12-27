@@ -1,17 +1,17 @@
 package com.chenna.lloydsamplepoject.viewmodels
 
-import com.chenna.domain.model.CountryModel
-import com.chenna.domain.model.NetWorkModel
-import com.chenna.domain.model.ShowImageModel
-import com.chenna.domain.model.ShowModel
-import com.chenna.domain.model.ShowRatingModel
+import com.chenna.domain.models.CountryModel
+import com.chenna.domain.models.Error
+import com.chenna.domain.models.Message
+import com.chenna.domain.models.MessageType
+import com.chenna.domain.models.NetWorkModel
+import com.chenna.domain.models.ShowImageModel
+import com.chenna.domain.models.ShowModel
+import com.chenna.domain.models.ShowRatingModel
+import com.chenna.domain.models.Work
 import com.chenna.domain.usecase.ShowsUseCase
-import com.chenna.domain.utils.Error
-import com.chenna.domain.utils.Message
-import com.chenna.domain.utils.MessageType
-import com.chenna.domain.utils.Work
 import com.chenna.lloydsamplepoject.models.TvShowActionEvent
-import com.chenna.lloydsamplepoject.util.Constants
+import com.chenna.lloydsamplepoject.config.Constants
 import com.chenna.lloydsamplepoject.util.NavigationEvent
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery

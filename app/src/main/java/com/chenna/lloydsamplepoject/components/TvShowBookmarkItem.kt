@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.chenna.domain.entities.ShowEntity
-import com.chenna.domain.model.toShowEntity
+import com.chenna.domain.models.toShowEntity
 import com.chenna.lloydsamplepoject.util.Utility
 
 /**

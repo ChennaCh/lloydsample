@@ -1,6 +1,6 @@
 package com.chenna.lloydsamplepoject.models
 
-import com.chenna.domain.model.ShowModel
+import com.chenna.domain.models.ShowModel
 
 /**
  * Created by Chenna Rao on 17/12/24.
