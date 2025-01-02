@@ -10,8 +10,6 @@ import com.chenna.domain.entities.NetworkEntity
 import com.chenna.domain.entities.ShowEntity
 import com.chenna.domain.entities.ShowImageEntity
 import com.chenna.domain.entities.ShowRatingEntity
-import io.mockk.coEvery
-import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -43,9 +41,8 @@ class TvShowDaoTest {
             ApplicationProvider.getApplicationContext(),
             AppDatabase::class.java
         ).allowMainThreadQueries().build()
-        tvShowDao = mockk()  // Mocking the DAO
+        tvShowDao = database.showDao()
     }
-
 
     @After
     fun tearDown() {
@@ -58,15 +55,10 @@ class TvShowDaoTest {
         // Arrange
         val show = getShowItem()
 
-        // Mock the saveBookmark behavior
-        coEvery { tvShowDao.saveBookmark(show) } returns Unit  // Specify that this returns Unit
-
-        // Mock the getSavedBookMarks behavior
-        coEvery { tvShowDao.getSavedBookMarks() } returns listOf(show)
-
         // Act
         tvShowDao.saveBookmark(show)
-        val result = tvShowDao.getSavedBookMarks().find { it.id == 1 }
+        val result =
+            tvShowDao.getSavedBookMarks().find { it.id == show.id }
 
         // Assert
         assertNotNull(result)
@@ -78,16 +70,10 @@ class TvShowDaoTest {
     fun isShowBookmarkedReturnsCorrectValueWhenShowIsBookmarked() = runTest {
         // Arrange
         val show = getShowItem()
-
-        // Mock saveBookmark behavior
-        coEvery { tvShowDao.saveBookmark(show) } returns Unit
-
-        // Mock isShowBookmarked behavior
-        coEvery { tvShowDao.isShowBookmarked(1) } returns true
+        tvShowDao.saveBookmark(show)
 
         // Act
-        tvShowDao.saveBookmark(show)
-        val isBookmarked = tvShowDao.isShowBookmarked(1)
+        val isBookmarked = tvShowDao.isShowBookmarked(show.id)
 
         // Assert
         assertTrue(isBookmarked)
@@ -97,49 +83,34 @@ class TvShowDaoTest {
     fun removeBookmarkRemovesTheShowCorrectly() = runTest {
         // Arrange
         val show = getShowItem()
-        val bookmarkedShows = mutableListOf<ShowEntity>() // Start with an empty list
-
-        // Mock saveBookmark behavior
-        coEvery { tvShowDao.saveBookmark(show) } answers {
-            if (!bookmarkedShows.contains(show)) {
-                bookmarkedShows.add(show)
-            }
-        }
-
-        // Mock removeBookmark behavior
-        coEvery { tvShowDao.removeBookmark(show.id) } answers {
-            bookmarkedShows.remove(show)
-        }
-
-        // Mock getSavedBookMarks behavior
-        coEvery { tvShowDao.getSavedBookMarks() } answers {
-            bookmarkedShows.toList()
-        }
+        tvShowDao.saveBookmark(show)
 
         // Act
-        tvShowDao.saveBookmark(show) // Save the show
-        tvShowDao.removeBookmark(show.id) // Remove the show
-        val result = tvShowDao.getSavedBookMarks().find { it.id == show.id }
+        tvShowDao.removeBookmark(show.id)
+        val result = tvShowDao.getSavedBookMarks()
+            .find { it.id == show.id }
 
         // Assert
-        assertNull(result) // Expect null since the show should have been removed
+        assertNull(result)
     }
 
     @Test
     fun getSavedBookMarksReturnsAllBookmarkedShows() = runTest {
         // Arrange
         val shows = getShowList()
-        coEvery { tvShowDao.getSavedBookMarks() } returns shows  // Mocking behavior of the method
+        shows.forEach { tvShowDao.saveBookmark(it) }
 
         // Act
         val result = tvShowDao.getSavedBookMarks()
 
         // Assert
         assertNotNull(result)
-        assertEquals(2, result.size)
-        assertEquals(shows[0].id, result[0].id)
-        assertEquals(shows[1].id, result[1].id)
+        assertEquals(shows.size, result.size)
+        shows.forEachIndexed { index, show ->
+            assertEquals(show.id, result[index].id)
+        }
     }
+
 
 }
 
