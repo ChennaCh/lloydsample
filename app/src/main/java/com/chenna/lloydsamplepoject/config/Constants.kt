@@ -7,7 +7,8 @@ package com.chenna.lloydsamplepoject.config
  */
 object Constants {
 
-    const val CONNECTION_ERROR: String = "We couldn't load the data. Ensure your device is connected to the internet."
+    const val CONNECTION_ERROR: String =
+        "We couldn't load the data. Ensure your device is connected to the internet."
     const val SEARCH_INFORMATION = "Discover your favorite TvShows and find detailed information"
 
     object DB {
@@ -15,7 +16,8 @@ object Constants {
     }
 
     enum class AppRoute {
-        SHOW_DETAILS
+        SHOW_DETAILS,
+        REDIRECT_TO_WEB,
     }
 
     object Errors {

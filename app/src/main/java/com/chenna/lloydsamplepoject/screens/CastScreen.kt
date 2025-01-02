@@ -1,6 +1,5 @@
 package com.chenna.lloydsamplepoject.screens
 
-import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -90,7 +89,7 @@ fun CastScreen(
         state = pullToRefreshState,
         onRefresh = { viewModel.onActionEvent(CastActionEvent.Retry) },
     ) {
-        CastsListContent(uiState.value, context) {
+        CastsListContent(uiState.value) {
             viewModel.onActionEvent(it)
         }
     }
@@ -100,7 +99,6 @@ fun CastScreen(
 @Composable
 fun CastsListContent(
     uiState: UiState<CastStateModel>,
-    context: Context,
     action: (CastActionEvent) -> Unit,
 ) {
 
@@ -137,7 +135,6 @@ fun CastsListContent(
                             action(
                                 CastActionEvent.RedirectToWeb(
                                     url = it,
-                                    context = context
                                 )
                             )
                         })

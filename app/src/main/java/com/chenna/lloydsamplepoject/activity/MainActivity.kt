@@ -31,6 +31,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -49,6 +50,7 @@ import com.chenna.lloydsamplepoject.config.Constants
 import com.chenna.lloydsamplepoject.screens.DashboardNavComp
 import com.chenna.lloydsamplepoject.screens.utils.NavigationGraphBuilder.DashboardGraph
 import com.chenna.lloydsamplepoject.ui.theme.LLoydSamplePojectTheme
+import com.chenna.lloydsamplepoject.util.Utility
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -192,6 +194,7 @@ fun BottomNavGraph(
     updateElevation: (elevation: Dp) -> Unit,
     updateBottomNavVisibility: (Boolean) -> Unit,
 ) {
+    val context = LocalContext.current
     DashboardGraph(
         navHostController = navHostController,
         modifier = modifier,
@@ -206,6 +209,12 @@ fun BottomNavGraph(
                     navigationEvent.any
                 )
                 navHostController.navigate(DashboardNavComp.ShowDetails.route)
+            }
+
+            Constants.AppRoute.REDIRECT_TO_WEB -> {
+                navigationEvent.any?.let {
+                    Utility.navigateToWebUrl(context = context, url = it.toString())
+                }
             }
         }
     }

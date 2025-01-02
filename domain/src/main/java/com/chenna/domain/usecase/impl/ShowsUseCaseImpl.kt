@@ -28,7 +28,8 @@ class ShowsUseCaseImpl @Inject constructor(
 
         return ResponseMapper.map(result)
     }
-    override suspend fun getSearchList(text:String): Work<List<SearchShowModel>> {
+
+    override suspend fun getSearchList(text: String): Work<List<SearchShowModel>> {
         val result = withContext(Dispatchers.IO) {
             repository.getSearchList(text)
         }

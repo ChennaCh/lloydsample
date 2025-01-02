@@ -11,6 +11,7 @@ import com.chenna.domain.models.Work
 import com.chenna.domain.usecase.ShowsUseCase
 import com.chenna.lloydsamplepoject.config.Constants
 import com.chenna.lloydsamplepoject.models.CastActionEvent
+import com.chenna.lloydsamplepoject.util.NavigationEvent
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -18,6 +19,7 @@ import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
@@ -140,6 +142,22 @@ class CastViewModelTest {
     }
 
     @Test
+    fun `WHEN click on show THEN redirect to web page`() = runTest {
+        val actionEvent = CastActionEvent.RedirectToWeb(WEB_URL)
+        val navigationEvent = NavigationEvent(
+            route = Constants.AppRoute.REDIRECT_TO_WEB,
+            any = actionEvent.url
+        )
+        val navigationEvents = mutableListOf<NavigationEvent>()
+        val job = collectEvents(viewModel.navigationEvent, navigationEvents)
+
+        viewModel.onActionEvent(actionEvent)
+        advanceUntilIdle()
+        job.cancel()
+        assertEquals(navigationEvent, navigationEvents.last())
+    }
+
+    @Test
     fun `Retry action sets isRefreshing to true and fetches casts`() = runTest {
         val tvShows = getShowCasts()
         coEvery { useCase.fetchCasts() } returns Work.Result(data = tvShows)
@@ -193,6 +211,9 @@ class CastViewModelTest {
         assertEquals(Constants.Errors.TV_SHOW_CASTS, resultState.error?.description)
     }
 
+    companion object {
+        const val WEB_URL = "https://www.tvmaze.com/shows/197/da-vincis-demons"
+    }
 
     // Sample data generator
     private fun getShowCasts(): List<CastModel> {

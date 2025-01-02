@@ -17,18 +17,6 @@
       <entry key="domain.main">
         <State />
       </entry>
-      <entry key="getSavedBookMarksReturnsAllBookmarkedShows()">
-        <State />
-      </entry>
-      <entry key="isShowBookmarkedReturnsCorrectValueWhenShowIsBookmarked()">
-        <State />
-      </entry>
-      <entry key="removeBookmarkRemovesTheShowCorrectly()">
-        <State />
-      </entry>
-      <entry key="saveBookmark_insertsAndReplacesData()">
-        <State />
-      </entry>
     </value>
   </component>
 </project>

@@ -12,7 +12,6 @@ import com.chenna.lloydsamplepoject.models.UiState
 import com.chenna.lloydsamplepoject.util.NavigationEvent
 import com.chenna.lloydsamplepoject.viewmodels.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -34,7 +33,7 @@ class TvShowsViewModel @Inject constructor(private val useCase: ShowsUseCase) : 
     fun onActionEvent(actionEvent: TvShowActionEvent) {
         when (actionEvent) {
             is TvShowActionEvent.FetchTvShows -> fetchTVShows()
-            is TvShowActionEvent.RedirectToShowDetails -> redirectToTVShowDetails(actionEvent)
+            is TvShowActionEvent.RedirectToShowDetails -> redirectToTvShowDetails(actionEvent)
             is TvShowActionEvent.Retry -> {
                 fetchTVShows()
                 isRefreshing.value = true
@@ -42,7 +41,7 @@ class TvShowsViewModel @Inject constructor(private val useCase: ShowsUseCase) : 
         }
     }
 
-    private fun redirectToTVShowDetails(actionEvent: TvShowActionEvent.RedirectToShowDetails) {
+    private fun redirectToTvShowDetails(actionEvent: TvShowActionEvent.RedirectToShowDetails) {
         viewModelScope.launch {
             _navigationEvent.emit(
                 NavigationEvent(
@@ -56,7 +55,6 @@ class TvShowsViewModel @Inject constructor(private val useCase: ShowsUseCase) : 
     private fun fetchTVShows() {
         if (resultState.value.data?.list?.isNotEmpty() == true) {
             viewModelScope.launch {
-                delay(100)
                 isRefreshing.value = false
             }
             return

@@ -19,7 +19,6 @@ import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
@@ -156,7 +155,6 @@ class SearchViewModelTest {
     fun `cancelJob cancels active job`() = runTest {
         val query = "Breaking Bad"
         coEvery { useCase.getSearchList(query) } coAnswers {
-            delay(5000) // Simulate a long-running job
             Work.Result(data = getSearchShowList())
         }
 
