@@ -17,6 +17,9 @@
       <entry key="domain.main">
         <State />
       </entry>
+      <entry key="getSavedBookMarksReturnsAllBookmarkedShows()">
+        <State />
+      </entry>
       <entry key="isShowBookmarkedReturnsCorrectValueWhenShowIsBookmarked()">
         <State />
       </entry>
